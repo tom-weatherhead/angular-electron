@@ -1,6 +1,6 @@
 {
 	"name": "thaw-angular-electron",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A sample application built with Angular, Bootstrap, Docker, and Electron",
 	"keywords": [
 		"Angular",
@@ -9,7 +9,6 @@
 		"Electron",
 		"TypeScript"
 	],
-	"private": true,
 	"homepage": "https://github.com/tom-weatherhead/angular-electron",
 	"repository": "github:tom-weatherhead/angular-electron",
 	"bugs": {
