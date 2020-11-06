@@ -26,7 +26,9 @@ function getElectronPath(): string {
 		// 	break;
 
 		default:
-			throw new Error(`e2e: getElectronPath() : Unexpected platform '${platform()}'`);
+			throw new Error(
+				`e2e: getElectronPath() : Unexpected platform '${platform()}'`
+			);
 	}
 
 	return join(__dirname, '../node_modules/electron/dist', str);
