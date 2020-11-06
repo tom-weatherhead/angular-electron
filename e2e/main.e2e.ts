@@ -1,3 +1,5 @@
+// angular-electron/e2e/main.e2e.ts
+
 import { expect } from 'chai';
 import { SpectronClient } from 'spectron';
 

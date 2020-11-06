@@ -1,12 +1,36 @@
-// const Application = require('spectron').Application;
+// angular-electron/e2e/common-setup.ts
+
+import { platform } from 'os';
+
+import { join } from 'path';
 
 import { Application } from 'spectron';
 
 // const electronPath = require('electron'); // Require Electron from the binaries included in node_modules.
 // import * as electron from 'electron';
 
-// const path = require('path');
-import * as path from 'path';
+function getElectronPath(): string {
+	let str: string;
+
+	switch (platform()) {
+		case 'darwin':
+			str = 'Electron.app/Contents/MacOS/Electron';
+			break;
+
+		case 'linux':
+			str = 'electron';
+			break;
+
+		// case 'win32':
+		// 	str = '';
+		// 	break;
+
+		default:
+			throw new Error(`e2e: getElectronPath() : Unexpected platform '${platform()}'`);
+	}
+
+	return join(__dirname, '../node_modules/electron/dist', str);
+}
 
 export default function setup(): void {
 	beforeEach(async function () {
@@ -14,11 +38,7 @@ export default function setup(): void {
 			// Your electron path can be any binary
 			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
 			// But for the sake of the example we fetch it from our node_modules.
-			path: path.join(
-				__dirname,
-				'../node_modules/electron/dist/Electron.app/Contents/MacOS/Electron' // macOS
-				// '../node_modules/electron/dist/electron' // Linux
-			),
+			path: getElectronPath(),
 
 			// Assuming you have the following directory structure
 
@@ -33,7 +53,7 @@ export default function setup(): void {
 
 			// The following line tells spectron to look and use the main.js file
 			// and the package.json located 1 level above.
-			args: [path.join(__dirname, '..')],
+			args: [join(__dirname, '..')],
 			webdriverOptions: {}
 		});
 
