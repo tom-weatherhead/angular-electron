@@ -21,7 +21,6 @@ Obligatory BadgeFest:
 [![technical debt][technical-debt-badge-image]][technical-debt-url]
 [![maintainability][maintainability-badge-image]][maintainability-url]
 [![test coverage][test-coverage-badge-image]][test-coverage-url]
-[![tested with jest][jest-badge-image]][jest-url]
 [![code style: prettier][prettier-badge-image]][prettier-url]
 [![license][license-badge-image]][license-url]
 [![FOSSA Status][fossa-badge-image]][fossa-badge-url]
@@ -68,8 +67,6 @@ Obligatory BadgeFest:
 [maintainability-url]: https://codeclimate.com/github/tom-weatherhead/angular-electron/maintainability
 [test-coverage-badge-image]: https://api.codeclimate.com/v1/badges/2a66d64a08223583a60d/test_coverage
 [test-coverage-url]: https://codeclimate.com/github/tom-weatherhead/angular-electron/test_coverage
-[jest-badge-image]: https://img.shields.io/badge/tested_with-jest-99424f.svg
-[jest-url]: https://github.com/facebook/jest
 [prettier-badge-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
 [license-badge-image]: https://img.shields.io/github/license/mashape/apistatus.svg
