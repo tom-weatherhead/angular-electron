@@ -1,0 +1,62 @@
+<main>
+	<div class="d-flex" [ngClass]="toggleStatus ? 'toggled' : ''" id="wrapper">
+		<!-- Sidebar -->
+		<div class="bg-light border-right" id="sidebar-wrapper">
+			<div class="sidebar-heading">angular-electron</div>
+			<div class="list-group list-group-flush">
+				<a routerLink="/" href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+				<a routerLink="/increment" href="#" class="list-group-item list-group-item-action bg-light">Increment</a>
+				<a routerLink="/bitmap-loader" href="#" class="list-group-item list-group-item-action bg-light">Bitmap Loader</a>
+			</div>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div id="page-content-header">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+					<button class="btn btn-primary" id="menu-toggle" (click)="menuToggle()">Toggle Sidebar</button>
+
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+							<li class="nav-item active">
+								<a class="nav-link" routerLink="/" href="#">Home <span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" routerLink="/" href="#">Dashboard</a>
+							</li>
+							<li class="nav-item dropdown">
+								<!-- ThAW 2019-07-16 : CSS for this li: display: list-item; -->
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Dropdown
+								</a>
+								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" routerLink="/" href="#">Home</a>
+									<a class="dropdown-item" routerLink="/" href="#">Dashboard</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" routerLink="/page2" href="#">Page 2</a>
+									<a class="dropdown-item" routerLink="/page3" href="#">Page 3</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+
+				<div id="message-bar" *ngIf="isMessageBarVisible" [class]="messageBarCssClass">
+					{{ messageBarText }}
+				</div>
+			</div>
+
+			<div id="angular-electron-page-content">
+				<!-- router-outlet : The Dashboard, etc. components will appear here: -->
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+	</div>
+	<!-- /#wrapper -->
+</main>

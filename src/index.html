@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="author" content="Tom Weatherhead" />
+        <meta name="description" content="angular-electron" />
+		<meta name="keywords" content="Angular Electron" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<title>angular-electron</title>
+		<base href="." /> <!-- Was "./" -->
+
+		<!-- Electron Security Warning (Insecure Content-Security-Policy) -->
+		<!-- TODO: Find a way to remove script-src 'unsafe-eval' without breaking the app. -->
+		<!-- Solution: Use Angular's ahead-of-time (aot) compiler
+		instead of its just-in-time (jit) compiler;
+		e.g. ng build --aot, ng serve --aot -->
+
+		<!-- ws:// is the WebSocket protocol -->
+		<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self';
+		style-src 'unsafe-inline';
+		img-src data: file: http://localhost:4200/;
+		connect-src ws://localhost:4200/ http://localhost:4200/ http://localhost/" />
+
+		<!-- <link rel="icon" type="image/x-icon" href="assets/icons/favicon.png" /> -->
+		<link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+	</head>
+
+	<body>
+		<app-root></app-root>
+	</body>
+</html>

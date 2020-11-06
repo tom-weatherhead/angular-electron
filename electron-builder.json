@@ -1,0 +1,44 @@
+{
+	"productName": "angular-electron",
+	"appId": "org.2hrd4u.app.angular-electron",
+	"directories": {
+		"output": "release/"
+	},
+	"files": [
+		"**/*",
+		"dist/assets/icons/**/*",
+		"!**/*.ts",
+		"!*.code-workspace",
+		"!*.tgz",
+		"!README.md",
+		"!LICENSE",
+		"!package.json",
+		"!package-lock.json",
+		"!src/",
+		"!e2e/",
+		"!hooks/",
+		"!angular.json",
+		"!_config.yml",
+		"!karma.conf.js",
+		"!tsconfig*.json"
+	],
+	"win": {
+		"icon": "dist/assets/icons/tom-weatherhead-512x512.png",
+		"target": [
+			"portable"
+		]
+	},
+	"mac": {
+		"icon": "dist/assets/icons/tom-weatherhead-512x512.png",
+		"target": [
+			"dmg"
+		]
+	},
+	"linux": {
+		"category": "Development",
+		"icon": "dist/assets/icons/tom-weatherhead-512x512.png",
+		"target": [
+			"AppImage"
+		]
+	}
+}

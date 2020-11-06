@@ -1,0 +1,16 @@
+.git
+dist
+e2e
+node_modules
+platform-specific
+.dockerignore
+.editorconfig
+.gitignore
+karma.conf.js
+package-lock.json
+protractor.conf.js
+LICENSE
+README.md
+run.sh
+tslint.json
+*.log

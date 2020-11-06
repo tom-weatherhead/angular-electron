@@ -1,0 +1,81 @@
+body {
+	overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+	min-height: 100vh;
+	margin-left: -15rem;
+	-webkit-transition: margin .25s ease-out;
+	-moz-transition: margin .25s ease-out;
+	-o-transition: margin .25s ease-out;
+	transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+	padding: 0.875rem 1.25rem;
+	font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+	width: 15rem;
+}
+
+#page-content-wrapper {
+	min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	margin-left: 0;
+}
+
+@media (min-width: 768px) {
+	#sidebar-wrapper {
+		margin-left: 0;
+	}
+
+	#page-content-wrapper {
+		min-width: 0;
+		width: 100%;
+	}
+
+	#wrapper.toggled #sidebar-wrapper {
+		margin-left: -15rem;
+	}
+}
+
+/* Transitions are at 768 px (sidebar appears/disappears) and 992 px (navbar expands/contracts). */
+
+/* ThAW 2019-07-12 : Hack 1: Prevents the right side of the drop-down menu from extending outside the browser window. */
+/* This works too: .dropdown-menu { */
+/* .nav-item.dropdown .dropdown-menu {
+	position: absolute;
+	left: 0;
+} */
+
+@media (min-width: 992px) {
+	/* This works too: .dropdown-menu { */
+	.nav-item.dropdown .dropdown-menu {
+		left: auto;
+	}
+}
+
+/* Hack 2: When the browser window width is < 992 px and the hamburger menu -> drop-down list is opened, it should push the page content down.
+ * /
+.nav-item.dropdown {
+	display: list-item;
+} */
+
+.messageBarGreen {
+	color: green;
+	background-color: magenta;
+}
+
+.messageBarYellow {
+	color: yellow;
+	background-color: blue;
+}
+
+.messageBarRed {
+	color: red;
+	background-color: cyan;
+}

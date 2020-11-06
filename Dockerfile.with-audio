@@ -1,0 +1,58 @@
+FROM node:slim
+LABEL maintainer "Tom Weatherhead <null@2hrd4u.org>"
+
+ENV APPDIR /usr/src/app
+ENV UNAME tomw
+
+ENV GNAME $UNAME
+ENV HOME /home/$UNAME
+
+RUN apt-get update && apt-get install -qy \
+	libcanberra-gtk3-module \
+	libnss3 \
+	libxss1 \
+	pulseaudio \
+	sox \
+	--no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Create a directory where our application will be placed:
+RUN mkdir -p $APPDIR
+
+# Change the current directory so that our commands run inside the new application directory:
+WORKDIR $APPDIR
+
+# Copy the application dependency definitions:
+COPY package.json $APPDIR
+
+# Install the dependecies:
+RUN npm install
+
+# Get all of the code and resources needed to run the application:
+COPY . .
+
+# Build the application within the container:
+RUN npm run build-ng-prod
+
+# Fix the ownership and permissions of the Chrome sandbox:
+RUN chown -R root $APPDIR/node_modules/electron/dist/chrome-sandbox \
+	&& chmod -R 4755 $APPDIR/node_modules/electron/dist/chrome-sandbox
+
+# Create the unprivileged user that will run the application:
+RUN useradd $UNAME \
+	&& usermod -aG audio,pulse,pulse-access $UNAME \
+	&& chown -R $UNAME:$GNAME $HOME \
+	&& chown -R $UNAME:$GNAME $APPDIR/dist \
+	&& mkdir -p /etc/sudoers.d \
+	&& echo "$UNAME ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$UNAME \
+	&& chmod 0440 /etc/sudoers.d/$UNAME
+
+# Make this new user the current user:
+USER $UNAME
+
+# Copy the PulseAudio configuration files into the container:
+COPY pulseaudio/client.conf /etc/pulse/client.conf
+COPY pulseaudio/daemon.conf /etc/pulse/daemon.conf
+COPY pulseaudio/default.pa /etc/pulse/default.pa
+
+CMD ["npm", "run", "electron"]

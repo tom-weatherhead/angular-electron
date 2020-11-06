@@ -1,0 +1,4 @@
+Coverage Testing
+
+In Travis CI, set the value of the environment variable CC_TEST_REPORTER_ID to the appropriate value provided for this project at codeclimate.com . This will enable Travis CI to send coverage testing results to codeclimate.com .
+

@@ -1,0 +1,32 @@
+Installation for Windows 10 Home -> Windows Command Prompt without audio
+
+!!! Note: Currently (2019-10-02), electron and chromium-browser do not run from WSL. But we can run our electron+docker+etc. demo app on Windows with X-windows and PulseAudio by running it from the Windows command prompt. See platform-specific/Windows10Cmd.with-audio/*
+
+- Running Docker Toolbox with WSL on Windows 10 Home: See https://www.freecodecamp.org/news/how-to-set-up-docker-and-windows-subsystem-for-linux-a-love-story-35c856968991/
+
+- See https://trzeci.eu/configure-graphic-and-sound-on-wsl/
+- See https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
+- See https://token2shell.com/howto/x410/enabling-sound-in-wsl-ubuntu-let-it-sing/
+
+- See https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde :
+
+- In an admin Windows command prompt: choco install vcxsrv
+- Run XLaunch from the start menu and configure it as follows:
+	- Display settings: Multiple windows; Display number: -1
+	- Client startup: Start no client
+	- Extra settings: Check everything, including 'Disable access control'
+	- Finish configuration: Save it to the Desktop with a particular filename.
+
+- Docker: Download and install Docker Toolbox (for Windows 10 Home) or Docker Desktop (for Windows 10 Pro or +)
+	- Note: The programs in Docker Toolbox (e.g. docker.exe) can be run from either the Windows command prompt or a WSL shell (e.g. Ubuntu + Bash).
+
+Then build and run the app:
+
+rmdir /S dist
+rmdir /S node_modules
+del package-lock.json
+npm i
+npm start
+
+build.bat
+run.bat

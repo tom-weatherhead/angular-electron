@@ -1,0 +1,51 @@
+Installation for Windows 10 Home -> Windows Command Prompt with audio
+
+!!! Note: Currently (2019-10-02), electron and chromium-browser do not run from WSL. But we can run our electron+docker+etc. demo app on Windows with X-windows and PulseAudio by running it from the Windows command prompt. See platform-specific/Windows10Cmd.with-audio/*
+
+- Running Docker Toolbox with WSL on Windows 10 Home: See https://www.freecodecamp.org/news/how-to-set-up-docker-and-windows-subsystem-for-linux-a-love-story-35c856968991/
+
+- See https://trzeci.eu/configure-graphic-and-sound-on-wsl/
+- See https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
+- See https://token2shell.com/howto/x410/enabling-sound-in-wsl-ubuntu-let-it-sing/
+
+- See https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde :
+
+- In an admin Windows command prompt: choco install vcxsrv
+- Run XLaunch from the start menu and configure it as follows:
+	- Display settings: Multiple windows; Display number: -1
+	- Client startup: Start no client
+	- Extra settings: Check everything, including 'Disable access control'
+	- Finish configuration: Save it to the Desktop with a particular filename.
+
+- Docker: Download and install Docker Toolbox (for Windows 10 Home) or Docker Desktop (for Windows 10 Pro or +)
+	- Note: The programs in Docker Toolbox (e.g. docker.exe) can be run from either the Windows command prompt or a WSL shell (e.g. Ubuntu + Bash).
+
+- PulseAudio: Download and unzip http://bosmans.ch/pulseaudio/pulseaudio-1.1.zip
+	- From https://www.freedesktop.org/wiki/Software/PulseAudio/Ports/Windows/Support/
+	- From https://token2shell.com/howto/x410/enabling-sound-in-wsl-ubuntu-let-it-sing/
+- Place the pulseaudio folder in e.g. C:\NoArchiv\
+- Edit 'etc\pulse\default.pa' line 42:
+FROM: load-module module-waveout sink_name=output source_name=input
+TO:   load-module module-waveout sink_name=output source_name=input record=0
+	- Please note that for security and privacy concerns Windows 10 (April 2018 Update) seems to restrict the access to audio recording devices. You can probably somehow override this feature, but since we just want to hear the sound we're simply disabling it from the PulseAudio server by adding the 'record=0'.
+- Edit 'etc\pulse\default.pa' line 61:
+FROM #load-module module-native-protocol-tcp
+TO:  load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+	- This enables the PulseAudio server to accept connections only from 127.0.0.1 via TCP.
+- Edit 'etc\pulse\daemon.conf' line 39:
+FROM ; exit-idle-time = 20
+TO:  exit-idle-time = -1
+	- If this option is set to a non negative value, the server automatically terminates itself when the last client disconnects and the time is passed more than this option (in seconds).
+- Test run 'bin\pulseaudio.exe' : When you first run pulseaudio.exe, you'll see the Windows Firewall Alert popup that asks you if you want to allow other devices for connecting to the server. Since we'll only be using a loopback address (= 127.0.0.1), you should select 'Cancel'; you don't have to allow other devices.
+	- Press CTRL+C to stop the server.
+
+Then build and run the app:
+
+rmdir /S dist
+rmdir /S node_modules
+del package-lock.json
+npm i
+npm start
+
+build.bat
+run.bat

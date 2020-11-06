@@ -1,0 +1,21 @@
+Installation for Ubuntu with audio
+
+- Install Docker:
+	# apt update && apt -y dist-upgrade && apt install -y docker-ce
+
+- Ensure that your user is a member of the 'docker' group:
+	# usermod -aG docker $USER
+	- Log out and in, or reboot
+	- To verify: $ groups
+
+- In the root directory of this repository:
+	$ ln -s Dockerfile.with-audio Dockerfile
+	$ ln -sf platform-specific/build.sh
+	$ ln -sf platform-specific/Ubuntu.with-audio/run.sh
+	$ ./build.sh
+	$ ./run.sh
+
+**** Notes ****
+
+- This successfully ran a sound test in an Ubuntu VM on a macOS host:
+	$ docker run -it --device /dev/snd -v ~/.config/pulse:/home/pulseaudio/.config/pulse --entrypoint speaker-test --rm jess/pulseaudio -c 2 -l 1 -t wav

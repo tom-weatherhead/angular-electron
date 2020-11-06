@@ -1,0 +1,12 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": ".",
+		"resolveJsonModule": true,
+		"target": "es5"
+	},
+	"files": [
+		"main.ts"
+	]
+}

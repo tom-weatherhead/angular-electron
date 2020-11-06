@@ -1,0 +1,71 @@
+Installation for macOS with audio
+
+- Install HomeBrew: See https://brew.sh/
+
+- Install Docker Desktop Community: See... (TODO)
+
+- Install PulseAudio via HomeBrew:
+	$ brew install pulseaudio
+
+? Ensure that your user is a member of the 'docker' group:
+	# usermod -aG docker $USER
+	- Log out and in, or reboot
+	- To verify: $ groups
+
+- In the root directory of this repository:
+	$ ln -s Dockerfile.with-audio Dockerfile
+	$ ln -sf platform-specific/build.sh
+	$ ln -sf platform-specific/macOS.with-audio/run.sh
+	$ ./build.sh
+	$ ./run.sh
+
+- 2019-10-09 : In homebrew.mxcl.pulseaudio.plist, replace:
+    <string>--start</string>
+... with
+    <string>--load=module-native-protocol-tcp</string>
+    <string>--exit-idle-time=-1</string>
+    <string>--daemon</string>
+    <string>-vvvv</string>
+... like this:
+
+> cat /usr/local/Cellar/pulseaudio/13.0/homebrew.mxcl.pulseaudio.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>homebrew.mxcl.pulseaudio</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/opt/pulseaudio/bin/pulseaudio</string>
+    <string>--load=module-native-protocol-tcp</string>
+    <string>--exit-idle-time=-1</string>
+    <string>--daemon</string>
+    <string>-vvvv</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+
+... then:
+$ brew services stop pulseaudio
+- Wait at least 10 seconds, then:
+$ brew services start pulseaudio
+- Then do something like one of these commands:
+	$ pacmd
+		- (then you may have to restart the pulseaudio service again)
+	or:
+	$ paplay Beethoven5.wav
+
+- To see the statuses of all Homebrew services:
+$ brew services list
+
+****
+
+- Docker Desktop Community
+	- See https://hub.docker.com/editions/community/docker-ce-desktop-mac
+
+- PulseAudio via Homebrew
+	- See https://brew.sh/
+	$ brew install pulseaudio
