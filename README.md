@@ -63,9 +63,9 @@ Obligatory BadgeFest:
 [lines-of-code-url]: https://badgen.net/codeclimate/loc/tom-weatherhead/angular-electron
 [technical-debt-badge-image]: https://badgen.net/codeclimate/tech-debt/tom-weatherhead/angular-electron
 [technical-debt-url]: https://badgen.net/codeclimate/tech-debt/tom-weatherhead/angular-electron
-[maintainability-badge-image]: https://api.codeclimate.com/v1/badges/2a66d64a08223583a60d/maintainability
+[maintainability-badge-image]: https://api.codeclimate.com/v1/badges/008f506db6b5175ccf55/maintainability
 [maintainability-url]: https://codeclimate.com/github/tom-weatherhead/angular-electron/maintainability
-[test-coverage-badge-image]: https://api.codeclimate.com/v1/badges/2a66d64a08223583a60d/test_coverage
+[test-coverage-badge-image]: https://api.codeclimate.com/v1/badges/008f506db6b5175ccf55/test_coverage
 [test-coverage-url]: https://codeclimate.com/github/tom-weatherhead/angular-electron/test_coverage
 [prettier-badge-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
