@@ -1,6 +1,6 @@
 {
 	"name": "thaw-angular-electron",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A sample application built with Angular, Bootstrap, Docker, and Electron",
 	"keywords": [
 		"Angular",
