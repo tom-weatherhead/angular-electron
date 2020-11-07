@@ -36,6 +36,7 @@ function getElectronPath(): string {
 
 export default function setup(): void {
 	beforeEach(async function () {
+		console.log('BEGIN common-setup beforeEach');
 		this.app = new Application({
 			// Your electron path can be any binary
 			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
@@ -60,11 +61,14 @@ export default function setup(): void {
 		});
 
 		await this.app.start();
+		console.log('END common-setup beforeEach');
 	});
 
 	afterEach(async function () {
+		console.log('BEGIN common-setup afterEach');
 		if (this.app && this.app.isRunning()) {
 			await this.app.stop();
 		}
+		console.log('END common-setup afterEach');
 	});
 }

@@ -12,18 +12,24 @@ describe('angular-electron App', () => {
 	let originalTimeout: number;
 
 	beforeEach(function () {
+		console.log('BEGIN beforeEach');
 		client = this.app.client;
 		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+		console.log('END beforeEach');
 	});
 
 	afterEach(() => {
+		console.log('BEGIN afterEach');
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+		console.log('END afterEach');
 	});
 
 	it('Creates initial app window', async () => {
+		console.log('BEGIN test: Creates initial app window');
 		const count = await client.getWindowCount();
 		// expect(count).toEqual(1);
 		expect(count).to.equal(1);
+		console.log('END test: Creates initial app window');
 	});
 
 	// it('should display message saying App works !', async () => {
