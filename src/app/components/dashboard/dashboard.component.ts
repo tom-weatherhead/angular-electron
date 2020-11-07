@@ -228,13 +228,14 @@ export class DashboardComponent
 	}
 
 	public ngAfterContentChecked(): void {
+		console.log('Dashboard ngAfterContentChecked()');
 		// 2020-10-30 : Successful test of file system access via Electron:
 
-		console.log(
-			'electronService.fs is',
-			typeof this.electronService.fs,
-			this.electronService.fs
-		);
+		// console.log(
+		// 	'electronService.fs is',
+		// 	typeof this.electronService.fs,
+		// 	this.electronService.fs
+		// );
 
 		// console.log(
 		// 	this.electronService.fs.readFileSync('/Users/tomw/.npmrc', {

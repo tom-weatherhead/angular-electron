@@ -122,42 +122,42 @@ export class ElectronService {
 			// console.log(`Current directory: ${this._process.cwd()}`); // -> /usr/local/git/sandbox/angular-electron
 			// console.log(`Current directory: ${__dirname}`); // -> /usr/local/git/sandbox/angular-electron/dist
 
-			console.log('process.sandboxed :', this.process.sandboxed);
-			console.log('process.type :', this.process.type);
-			console.log(
-				'process.versions.chrome :',
-				this.process.versions.chrome
-			);
-			console.log(
-				'process.versions.electron :',
-				this.process.versions.electron
-			);
-			console.log(
-				'process.getCreationTime() :',
-				this.process.getCreationTime()
-			);
-			console.log(
-				'process.getCPUUsage() :',
-				this.process.getCPUUsage()
-			);
-			console.log(
-				'process.getHeapStatistics() :',
-				this.process.getHeapStatistics()
-			);
-			console.log(
-				'process.getSystemMemoryInfo() :',
-				this.process.getSystemMemoryInfo()
-			);
-			console.log(
-				'process.getSystemVersion() :',
-				this.process.getSystemVersion()
-			);
+			// console.log('process.sandboxed :', this.process.sandboxed);
+			// console.log('process.type :', this.process.type);
+			// console.log(
+			// 	'process.versions.chrome :',
+			// 	this.process.versions.chrome
+			// );
+			// console.log(
+			// 	'process.versions.electron :',
+			// 	this.process.versions.electron
+			// );
+			// console.log(
+			// 	'process.getCreationTime() :',
+			// 	this.process.getCreationTime()
+			// );
+			// console.log(
+			// 	'process.getCPUUsage() :',
+			// 	this.process.getCPUUsage()
+			// );
+			// console.log(
+			// 	'process.getHeapStatistics() :',
+			// 	this.process.getHeapStatistics()
+			// );
+			// console.log(
+			// 	'process.getSystemMemoryInfo() :',
+			// 	this.process.getSystemMemoryInfo()
+			// );
+			// console.log(
+			// 	'process.getSystemVersion() :',
+			// 	this.process.getSystemVersion()
+			// );
 
-			console.log('app.getAppPath() :', this.remote.app.getAppPath()); // -> '/usr/local/git/sandbox/angular-electron'
-			console.log(
-				'clipboard.availableFormats:',
-				this.clipboard.availableFormats()
-			); // -> 'text/plain'
+			// console.log('app.getAppPath() :', this.remote.app.getAppPath()); // -> '/usr/local/git/sandbox/angular-electron'
+			// console.log(
+			// 	'clipboard.availableFormats:',
+			// 	this.clipboard.availableFormats()
+			// ); // -> 'text/plain'
 
 			console.log(
 				'Setting handler for Electron event: gpu-info-update'

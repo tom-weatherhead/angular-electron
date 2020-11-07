@@ -37,28 +37,37 @@ function getElectronPath(): string {
 export default function setup(): void {
 	beforeEach(async function () {
 		console.log('BEGIN common-setup beforeEach');
-		this.app = new Application({
-			// Your electron path can be any binary
-			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
-			// But for the sake of the example we fetch it from our node_modules.
-			path: getElectronPath(),
+		if (platform() === 'linux') {
+			this.app = new Application({
+				path: join(
+					__dirname,
+					'../release/angular-electron-0.0.3.AppImage'
+				)
+			});
+		} else {
+			this.app = new Application({
+				// Your electron path can be any binary
+				// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
+				// But for the sake of the example we fetch it from our node_modules.
+				path: getElectronPath(),
 
-			// Assuming you have the following directory structure
+				// Assuming you have the following directory structure
 
-			//  |__ my project
-			//     |__ ...
-			//     |__ main.js
-			//     |__ package.json
-			//     |__ index.html
-			//     |__ ...
-			//     |__ test
-			//        |__ spec.js  <- You are here! ~ Well you should be.
+				//  |__ my project
+				//     |__ ...
+				//     |__ main.js
+				//     |__ package.json
+				//     |__ index.html
+				//     |__ ...
+				//     |__ test
+				//        |__ spec.js  <- You are here! ~ Well you should be.
 
-			// The following line tells spectron to look and use the main.js file
-			// and the package.json located 1 level above.
-			args: [join(__dirname, '..')],
-			webdriverOptions: {}
-		});
+				// The following line tells spectron to look and use the main.js file
+				// and the package.json located 1 level above.
+				args: [join(__dirname, '..')],
+				webdriverOptions: {}
+			});
+		}
 
 		console.log('this.app is', typeof this.app, this.app);
 
