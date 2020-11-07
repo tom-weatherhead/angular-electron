@@ -60,7 +60,20 @@ export default function setup(): void {
 			webdriverOptions: {}
 		});
 
+		console.log('this.app is', typeof this.app, this.app);
+
+		console.log('Starting the app...');
 		await this.app.start();
+		console.log('The app has started.');
+
+		if (this.app) {
+			console.log(
+				'this.app.client is',
+				typeof this.app.client,
+				this.app.client
+			);
+		}
+
 		console.log('END common-setup beforeEach');
 	});
 
