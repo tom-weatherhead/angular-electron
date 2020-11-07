@@ -26,6 +26,6 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - npm run travis1 && xvfb-run npm test
+  - npm run travis1 && xvfb-run --auto-servernum --server-num=1 npm test
 after_script:
   - ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT
