@@ -37,7 +37,7 @@
 		"prettier-list": "prettier --list-different \"**/*.js\" \"**/*.ts\"",
 		"prettier-format": "prettier --write \"**/*.js\" \"**/*.ts\"",
 		"unit-tests": "xvfb-maybe ng test --watch=false",
-		"e2e": "cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' xvfb-maybe jasmine-ts --config=e2e/jasmine.json",
+		"e2e": "xvfb-maybe cross-env TS_NODE_PROJECT='e2e/tsconfig.e2e.json' jasmine-ts --config=e2e/jasmine.json",
 		"pre-build-tests": "npm run prettier-check && npm run lint && npm run ng-lint",
 		"test": "npm run unit-tests && npm run e2e",
 		"build-dev-and-test": "npm run pre-build-tests && npm run build:dev && npm test",
