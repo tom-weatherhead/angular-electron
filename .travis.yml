@@ -20,6 +20,8 @@ before_install:
 install:
   - npm install
   - npm install -D jasmine
+  - ls -l /home/travis/build/tom-weatherhead/angular-electron/node_modules/electron
+  - ls -l /home/travis/build/tom-weatherhead/angular-electron/node_modules/electron/dist
 before_script:
   - "export DISPLAY=:99.0"
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
