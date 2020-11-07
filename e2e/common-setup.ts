@@ -72,7 +72,14 @@ export default function setup(): void {
 		console.log('this.app is', typeof this.app, this.app);
 
 		console.log('Starting the app...');
-		await this.app.start();
+
+		try {
+			await this.app.start();
+		} catch (error) {
+			console.error('app.start error:', typeof error, error);
+			throw error;
+		}
+
 		console.log('The app has started.');
 
 		if (this.app) {
