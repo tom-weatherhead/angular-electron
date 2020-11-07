@@ -39,10 +39,14 @@ export default function setup(): void {
 		console.log('BEGIN common-setup beforeEach');
 		if (platform() === 'linux') {
 			this.app = new Application({
-				path: join(
-					__dirname,
-					'../release/angular-electron-0.0.3.AppImage'
-				)
+				// path: join(
+				// 	__dirname,
+				// 	'../release/angular-electron-0.0.3.AppImage'
+				// ),
+				path: '/home/travis/build/tom-weatherhead/angular-electron/release/angular-electron-0.0.3.AppImage',
+				// args: [join(__dirname, '..')],
+				args: ['/home/travis/build/tom-weatherhead/angular-electron'],
+				webdriverOptions: {}
 			});
 		} else {
 			this.app = new Application({
