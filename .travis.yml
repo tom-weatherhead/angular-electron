@@ -9,7 +9,6 @@ addons:
     update: true
     packages:
       - xvfb
-  chrome: stable
 branches:
   only:
     - main
@@ -23,7 +22,7 @@ install:
   - npm install -D jasmine
 before_script:
   - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - sleep 3 # give xvfb some time to start
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
