@@ -9,8 +9,9 @@ addons:
     update: true
     packages:
       - python
-      - xvfb
   chrome: stable
+services:
+  - xvfb
 branches:
   only:
     - main
@@ -20,8 +21,6 @@ cache:
 before_install:
   - npm update
 install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   - npm install
   - npm install -D jasmine
 before_script:
