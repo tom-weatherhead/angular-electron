@@ -236,16 +236,14 @@ function createWindow() {
 	// launchInfo is defined only on macOS
 	// console.log('launchInfo is', typeof launchInfo, launchInfo);
 
-	if (isPlatformLinux) {
-		console.log('isUnityRunning? :', app.isUnityRunning());
-	}
+	// if (isPlatformLinux) {
+	// 	console.log('isUnityRunning? :', app.isUnityRunning());
+	// }
 
 	const aboutPanelOptions = {
 		applicationName,
 		applicationVersion,
-		// TODO:
 		copyright: `Copyright (c) 2018-${new Date().getUTCFullYear()} tom-weatherhead`,
-		// copyright: 'Copyright (c) 2018-2020 tom-weatherhead',
 		version: applicationVersion, // macOS only
 		credits: 'Praise the LORD!', // macOS and Windows
 		authors: ['tom-weatherhead'], // Linux only
@@ -307,8 +305,8 @@ function createWindow() {
 	// Create the browser window.
 	win = new BrowserWindow(browserWindowConfig);
 
-	win.loadFile('dist/index.html');
-	// win.loadFile(`file://${__dirname}/dist/index.html`);
+	// win.loadFile('dist/index.html');
+	win.loadFile(`${__dirname}/dist/index.html`);
 
 	// Event that fires when the window is closed.
 	win.on('closed', () => {
