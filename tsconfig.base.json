@@ -24,7 +24,7 @@
 			{ "name": "@angular/language-service" }
 		],
 		"outDir": "./dist/out-tsc",
-		"sourceMap": false,
+		"sourceMap": true,
 		"typeRoots": [
 			"node_modules/@types"
 		],
