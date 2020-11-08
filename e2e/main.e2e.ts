@@ -81,7 +81,12 @@ describe('Application launch', function () {
 
 			// The following line tells spectron to look and use the main.js file
 			// and the package.json located 1 level above.
-			args: [path.join(__dirname, '..')]
+			args: [path.join(__dirname, '..')],
+			chromeDriverArgs: [
+				'--no-sandbox',
+				'--whitelisted-ips=',
+				'--disable-dev-shm-usage'
+			]
 		});
 
 		await this.app.start();
