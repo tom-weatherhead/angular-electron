@@ -1,94 +1,101 @@
 // angular-electron/e2e/main.e2e.ts
 
 import { expect } from 'chai';
-import { SpectronClient } from 'spectron';
+// import { SpectronClient } from 'spectron';
 
-// import * as electron from 'electron';
+// // import * as electron from 'electron';
 
-import commonSetup from './common-setup';
+// import commonSetup from './common-setup';
 
-describe('angular-electron App', () => {
-	commonSetup.apply(this);
+// describe('angular-electron App', () => {
+// 	commonSetup.apply(this);
 
-	let client: SpectronClient;
-	let originalTimeout: number;
+// 	let client: SpectronClient;
+// 	let originalTimeout: number;
 
-	beforeEach(function () {
-		console.log('BEGIN beforeEach');
-		client = this.app.client;
-		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-		console.log('END beforeEach');
-	});
+// 	beforeEach(function () {
+// 		console.log('BEGIN beforeEach');
+// 		client = this.app.client;
+// 		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+// 		console.log('END beforeEach');
+// 	});
 
-	afterEach(() => {
-		console.log('BEGIN afterEach');
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-		console.log('END afterEach');
-	});
+// 	afterEach(() => {
+// 		console.log('BEGIN afterEach');
+// 		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+// 		console.log('END afterEach');
+// 	});
 
-	it('Creates initial app window', async () => {
-		console.log('BEGIN test: Creates initial app window');
-		// console.log('electron is', typeof electron, electron);
-		const count = await client.getWindowCount();
-		// expect(count).toEqual(1);
-		expect(count).to.equal(1);
-		console.log('END test: Creates initial app window');
-	});
+// 	it('Creates initial app window', async () => {
+// 		console.log('BEGIN test: Creates initial app window');
+// 		// console.log('electron is', typeof electron, electron);
+// 		const count = await client.getWindowCount();
+// 		// expect(count).toEqual(1);
+// 		expect(count).to.equal(1);
+// 		console.log('END test: Creates initial app window');
+// 	});
 
-	// it('should display message saying App works !', async () => {
-	// 	const elem = await client.$('app-home h1');
-	// 	const text = await elem.getText();
-	// 	expect(text).toEqual('App works !');
-	// });
-});
+// 	// it('should display message saying App works !', async () => {
+// 	// 	const elem = await client.$('app-home h1');
+// 	// 	const text = await elem.getText();
+// 	// 	expect(text).toEqual('App works !');
+// 	// });
+// });
 
 // const Application = require('spectron').Application;
 // const assert = require('assert');
 // const electronPath = require('electron'); // Require Electron from the binaries included in node_modules.
 // const path = require('path');
 
-// import * as electron from 'electron';
+import { Application } from 'spectron';
 
-// describe('Application launch', function () {
-// 	this.timeout(10000);
+import * as electron from 'electron';
+import * as path from 'path';
 
-// 	beforeEach(function () {
-// 		this.app = new Application({
-// 			// Your electron path can be any binary
-// 			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
-// 			// But for the sake of the example we fetch it from our node_modules.
-// 			path: electronPath,
+describe('Application launch', function () {
+	// this.timeout(10000);
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
-// 			// Assuming you have the following directory structure
+	beforeEach(function () {
+		const electronPath = electron.toString();
 
-// 			//  |__ my project
-// 			//     |__ ...
-// 			//     |__ main.js
-// 			//     |__ package.json
-// 			//     |__ index.html
-// 			//     |__ ...
-// 			//     |__ test
-// 			//        |__ spec.js  <- You are here! ~ Well you should be.
+		this.app = new Application({
+			// Your electron path can be any binary
+			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
+			// But for the sake of the example we fetch it from our node_modules.
+			path: electronPath,
 
-// 			// The following line tells spectron to look and use the main.js file
-// 			// and the package.json located 1 level above.
-// 			args: [path.join(__dirname, '..')]
-// 		});
+			// Assuming you have the following directory structure
 
-// 		return this.app.start();
-// 	});
+			//  |__ my project
+			//     |__ ...
+			//     |__ main.js
+			//     |__ package.json
+			//     |__ index.html
+			//     |__ ...
+			//     |__ test
+			//        |__ spec.js  <- You are here! ~ Well you should be.
 
-// 	afterEach(function () {
-// 		if (this.app && this.app.isRunning()) {
-// 			return this.app.stop();
-// 		}
-// 	});
+			// The following line tells spectron to look and use the main.js file
+			// and the package.json located 1 level above.
+			args: [path.join(__dirname, '..')]
+		});
 
-// 	it('shows an initial window', function () {
-// 		return this.app.client.getWindowCount().then(function (count) {
-// 			assert.equal(count, 1);
-// 			// Please note that getWindowCount() will return 2 if `dev tools` are opened.
-// 			// assert.equal(count, 2)
-// 		});
-// 	});
-// });
+		return this.app.start();
+	});
+
+	afterEach(function () {
+		if (this.app && this.app.isRunning()) {
+			return this.app.stop();
+		}
+	});
+
+	it('shows an initial window', function () {
+		return this.app.client.getWindowCount().then(function (count) {
+			// assert.equal(count, 1);
+			expect(count).to.equal(1);
+			// Please note that getWindowCount() will return 2 if `dev tools` are opened.
+			// assert.equal(count, 2)
+		});
+	});
+});
