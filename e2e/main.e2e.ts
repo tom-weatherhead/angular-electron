@@ -53,11 +53,14 @@ import * as electron from 'electron';
 import * as path from 'path';
 
 describe('Application launch', function () {
-	// this.timeout(10000);
-	jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+	let originalTimeout: number;
 
-	beforeEach(function () {
+	// this.timeout(10000);
+
+	beforeEach(async function () {
 		const electronPath = electron.toString();
+
+		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 
 		this.app = new Application({
 			// Your electron path can be any binary
@@ -81,21 +84,24 @@ describe('Application launch', function () {
 			args: [path.join(__dirname, '..')]
 		});
 
-		return this.app.start();
+		await this.app.start();
 	});
 
-	afterEach(function () {
+	afterEach(async function () {
 		if (this.app && this.app.isRunning()) {
-			return this.app.stop();
+			await this.app.stop();
 		}
+
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 	});
 
-	it('shows an initial window', function () {
-		return this.app.client.getWindowCount().then(function (count) {
-			// assert.equal(count, 1);
-			expect(count).to.equal(1);
-			// Please note that getWindowCount() will return 2 if `dev tools` are opened.
-			// assert.equal(count, 2)
-		});
+	it('shows an initial window', async function () {
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+
+		const count = await this.app.client.getWindowCount();
+
+		expect(count).to.equal(1);
+		// Please note that getWindowCount() will return 2 if `dev tools` are opened.
+		// assert.equal(count, 2)
 	});
 });

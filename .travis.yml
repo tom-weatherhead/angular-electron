@@ -12,12 +12,6 @@ services:
 branches:
   only:
     - main
-cache:
-  directories:
-    - node_modules
-before_install:
-  - npm update
-  - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
 install:
   - npm install
   - npm install -D jasmine
@@ -25,7 +19,8 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - export DISPLAY=:99.0
 script:
-  - npm run travis1 && xvfb-run --auto-servernum --server-num=1 npm test
+  - npm run travis1 && npm test
 after_script:
   - ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT
