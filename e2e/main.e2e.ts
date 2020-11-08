@@ -89,7 +89,14 @@ describe('Application launch', function () {
 			]
 		});
 
-		await this.app.start();
+		// await this.app.start();
+
+		try {
+			await this.app.start();
+		} catch (error) {
+			console.error('app.start error:', typeof error, error);
+			throw error;
+		}
 	});
 
 	afterEach(async function () {
