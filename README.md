@@ -12,8 +12,6 @@ Obligatory BadgeFest:
 [![forks][forks-badge-image]][forks-url]
 [![repo dependents][repo-dependents-badge-image]][repo-dependents-url]
 [![pkg dependents][pkg-dependents-badge-image]][pkg-dependents-url]
-[![commits][commits-badge-image]][commits-url]
-[![last commit][last-commit-badge-image]][last-commit-url]
 [![types][types-badge-image]][types-url]
 [![install size][install-size-badge-image]][install-size-url]
 [![known vulnerabilities][known-vulnerabilities-badge-image]][known-vulnerabilities-url]
@@ -24,6 +22,8 @@ Obligatory BadgeFest:
 [![code style: prettier][prettier-badge-image]][prettier-url]
 [![license][license-badge-image]][license-url]
 [![FOSSA Status][fossa-badge-image]][fossa-badge-url]
+<!-- [![commits][commits-badge-image]][commits-url]
+[![last commit][last-commit-badge-image]][last-commit-url] -->
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" width="100" />
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg" width="100" />
