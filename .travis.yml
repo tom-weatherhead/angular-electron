@@ -14,5 +14,9 @@ install:
 before_script:
   - export DISPLAY=:99.0
 script:
+  - npm run prettier-check
+  - npm run lint
+  - npm run ng-lint
+  - npm run build-electron-main
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run unit-tests ; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run e2e ; fi
