@@ -307,7 +307,6 @@ function createWindow() {
 
 	// win.loadFile('dist/index.html');
 	win.loadFile(`${__dirname}/dist/index.html`);
-	// win.loadFile(`${__dirname}/bollocks.html`);
 
 	// Event that fires when the window is closed.
 	win.on('closed', () => {
