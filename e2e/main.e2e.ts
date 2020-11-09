@@ -1,63 +1,19 @@
 // angular-electron/e2e/main.e2e.ts
 
+import * as path from 'path';
+import * as electron from 'electron';
+import { Application, SpectronClient } from 'spectron';
 import { expect } from 'chai';
-// import { SpectronClient } from 'spectron';
-
-// // import * as electron from 'electron';
 
 // import commonSetup from './common-setup';
 
-// describe('angular-electron App', () => {
-// 	commonSetup.apply(this);
-
-// 	let client: SpectronClient;
-// 	let originalTimeout: number;
-
-// 	beforeEach(function () {
-// 		console.log('BEGIN beforeEach');
-// 		client = this.app.client;
-// 		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-// 		console.log('END beforeEach');
-// 	});
-
-// 	afterEach(() => {
-// 		console.log('BEGIN afterEach');
-// 		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-// 		console.log('END afterEach');
-// 	});
-
-// 	it('Creates initial app window', async () => {
-// 		console.log('BEGIN test: Creates initial app window');
-// 		// console.log('electron is', typeof electron, electron);
-// 		const count = await client.getWindowCount();
-// 		// expect(count).toEqual(1);
-// 		expect(count).to.equal(1);
-// 		console.log('END test: Creates initial app window');
-// 	});
-
-// 	// it('should display message saying App works !', async () => {
-// 	// 	const elem = await client.$('app-home h1');
-// 	// 	const text = await elem.getText();
-// 	// 	expect(text).toEqual('App works !');
-// 	// });
-// });
-
-// const Application = require('spectron').Application;
-// const assert = require('assert');
-// const electronPath = require('electron'); // Require Electron from the binaries included in node_modules.
-// const path = require('path');
-
-import { Application } from 'spectron';
-
-import * as electron from 'electron';
-import * as path from 'path';
-
 describe('Application launch', function () {
+	// commonSetup.apply(this);
+
+	let client: SpectronClient;
 	let originalTimeout: number;
 
-	// this.timeout(10000);
-
-	beforeAll(async function (done) {
+	beforeEach(async function (done) {
 		const electronPath = electron.toString();
 
 		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -82,17 +38,8 @@ describe('Application launch', function () {
 
 			// The following line tells spectron to look and use the main.js file
 			// and the package.json located 1 level above.
-			args: [
-				path.join(__dirname, '..')
-			] /* ,
-			chromeDriverArgs: [
-				'--no-sandbox',
-				'--whitelisted-ips=',
-				'--disable-dev-shm-usage'
-			] */
+			args: [path.join(__dirname, '..')]
 		});
-
-		// await this.app.start();
 
 		try {
 			await this.app.start();
@@ -101,10 +48,11 @@ describe('Application launch', function () {
 			throw error;
 		}
 
+		client = this.app.client;
 		done();
 	});
 
-	afterAll(async function (done) {
+	afterEach(async function (done) {
 		if (this.app && this.app.isRunning()) {
 			await this.app.stop();
 		}
@@ -115,9 +63,8 @@ describe('Application launch', function () {
 	});
 
 	it('shows an initial window', async function (done) {
-		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
-
-		const count = await this.app.client.getWindowCount();
+		// const count = await this.app.client.getWindowCount();
+		const count = await client.getWindowCount();
 
 		expect(count).to.equal(1);
 		// Please note that getWindowCount() will return 2 if `dev tools` are opened.
@@ -127,9 +74,8 @@ describe('Application launch', function () {
 	});
 
 	it('should display a sidebar-heading that reads: angular-electron', async function (done) {
-		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
-
-		const elem = await this.app.client.$('div.sidebar-heading');
+		// const elem = await this.app.client.$('div.sidebar-heading');
+		const elem = await client.$('div.sidebar-heading');
 		const text = await elem.getText();
 
 		expect(text).to.equal('angular-electron');
@@ -138,9 +84,10 @@ describe('Application launch', function () {
 	});
 
 	it('should display an h1 header in the dashboard-controls-wrapper div that reads: Dashboard Component', async function (done) {
-		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
-
-		const elem = await this.app.client.$('div#dashboard-controls-wrapper h1');
+		// const elem = await this.app.client.$(
+		// 	'div#dashboard-controls-wrapper h1'
+		// );
+		const elem = await client.$('div#dashboard-controls-wrapper h1');
 		const text = await elem.getText();
 
 		expect(text).to.equal('Dashboard Component');
