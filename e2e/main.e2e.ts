@@ -57,10 +57,11 @@ describe('Application launch', function () {
 
 	// this.timeout(10000);
 
-	beforeEach(async function () {
+	beforeAll(async function (done) {
 		const electronPath = electron.toString();
 
 		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
 
 		this.app = new Application({
 			// Your electron path can be any binary
@@ -81,7 +82,9 @@ describe('Application launch', function () {
 
 			// The following line tells spectron to look and use the main.js file
 			// and the package.json located 1 level above.
-			args: [path.join(__dirname, '..')] /* ,
+			args: [
+				path.join(__dirname, '..')
+			] /* ,
 			chromeDriverArgs: [
 				'--no-sandbox',
 				'--whitelisted-ips=',
@@ -97,30 +100,51 @@ describe('Application launch', function () {
 			console.error('app.start error:', typeof error, error);
 			throw error;
 		}
+
+		done();
 	});
 
-	afterEach(async function () {
+	afterAll(async function (done) {
 		if (this.app && this.app.isRunning()) {
 			await this.app.stop();
 		}
 
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+
+		done();
 	});
 
-	it('shows an initial window', async function () {
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+	it('shows an initial window', async function (done) {
+		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
 
 		const count = await this.app.client.getWindowCount();
 
 		expect(count).to.equal(1);
 		// Please note that getWindowCount() will return 2 if `dev tools` are opened.
 		// assert.equal(count, 2)
+
+		done();
 	});
 
-	it('should display a sidebar-heading that reads: angular-electron', async () => {
-		const elem = await client.$('div.sidebar-heading');
+	it('should display a sidebar-heading that reads: angular-electron', async function (done) {
+		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+
+		const elem = await this.app.client.$('div.sidebar-heading');
 		const text = await elem.getText();
 
-		expect(text).toEqual('angular-electron');
+		expect(text).to.equal('angular-electron');
+
+		done();
+	});
+
+	it('should display an h1 header in the dashboard-controls-wrapper div that reads: Dashboard Component', async function (done) {
+		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+
+		const elem = await this.app.client.$('div#dashboard-controls-wrapper h1');
+		const text = await elem.getText();
+
+		expect(text).to.equal('Dashboard Component');
+
+		done();
 	});
 });
