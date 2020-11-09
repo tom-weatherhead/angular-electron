@@ -81,12 +81,12 @@ describe('Application launch', function () {
 
 			// The following line tells spectron to look and use the main.js file
 			// and the package.json located 1 level above.
-			args: [path.join(__dirname, '..')],
+			args: [path.join(__dirname, '..')] /* ,
 			chromeDriverArgs: [
 				'--no-sandbox',
 				'--whitelisted-ips=',
 				'--disable-dev-shm-usage'
-			]
+			] */
 		});
 
 		// await this.app.start();
@@ -115,5 +115,12 @@ describe('Application launch', function () {
 		expect(count).to.equal(1);
 		// Please note that getWindowCount() will return 2 if `dev tools` are opened.
 		// assert.equal(count, 2)
+	});
+
+	it('should display a sidebar-heading that reads: angular-electron', async () => {
+		const elem = await client.$('div.sidebar-heading');
+		const text = await elem.getText();
+
+		expect(text).toEqual('angular-electron');
 	});
 });
