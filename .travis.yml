@@ -1,35 +1,17 @@
 language: node_js
 os:
   - linux
-dist: bionic
 node_js:
-  - 12
-addons:
-  apt:
-    update: true
-    packages:
-      - xvfb
-      - libxtst6
-      - libxss1
-      - libgtk2.0-0
-      - libnss3
-      - libasound2
-      - libgconf-2-4
+  - 'lts/*'
 services:
   - xvfb
 branches:
   only:
     - main
 install:
+  - npm set progress=false
   - npm install
-  - npm install -D jasmine
 before_script:
   - export DISPLAY=:99.0
-  - sleep 5
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 script:
-  - npm run travis1 && npm test
-after_script:
-  - ./cc-test-reporter after-build -t lcov --debug --exit-code $TRAVIS_TEST_RESULT
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run e2e ; fi
