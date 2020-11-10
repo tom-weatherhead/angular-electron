@@ -154,6 +154,11 @@ function toggleTouchBar() {
 // 	event.reply('asynchronous-reply', 'pong');
 // });
 
+ipcMain.on('ipc-ping', (event, ...args) => {
+	console.log('Received ping. Sending pong...');
+	event.reply('ipc-pong', 'IPC Pong!');
+});
+
 ipcMain.on('toggle-touchbar-visibility', (event, ...args) => {
 	console.log('toggle-touchbar-visibility: event is', typeof event, event);
 	console.log('toggle-touchbar-visibility: args is', typeof args, args);

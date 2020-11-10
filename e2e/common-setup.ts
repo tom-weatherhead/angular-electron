@@ -1,12 +1,7 @@
 // angular-electron/e2e/common-setup.ts
 
-// import { platform } from 'os';
-
 import { join } from 'path';
-
 import { Application } from 'spectron';
-
-// const electronPath = require('electron'); // Require Electron from the binaries included in node_modules.
 import * as electron from 'electron';
 
 /*
@@ -49,12 +44,8 @@ Note: This is only required if your tests are accessing any Electron APIs. You d
  */
 
 export default function setup(): void {
-	// let originalTimeout: number;
-
 	beforeEach(async function (done) {
-		// console.log('BEGIN common-setup beforeEach');
 		const electronPath = electron.toString();
-		// console.log('electronPath is', typeof electronPath, electronPath);
 
 		this.originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
@@ -63,10 +54,9 @@ export default function setup(): void {
 			// Your electron path can be any binary
 			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
 			// But for the sake of the example we fetch it from our node_modules.
-			// path: getElectronPath(),
 			path: electronPath,
 
-			// Assuming you have the following directory structure
+			// Assuming you have the following directory structure:
 
 			//  |__ my project
 			//     |__ ...
@@ -77,16 +67,11 @@ export default function setup(): void {
 			//     |__ test
 			//        |__ spec.js  <- You are here! ~ Well you should be.
 
-			// The following line tells spectron to look and use the main.js file
-			// and the package.json located 1 level above.
+			// The following line tells spectron to look and use the main.js
+			// file and the package.json located 1 level above.
 			args: [join(__dirname, '..')],
 			webdriverOptions: {}
 		});
-		// }
-
-		// console.log('this.app is', typeof this.app, this.app);
-
-		// console.log('Starting the app...');
 
 		try {
 			await this.app.start();
@@ -95,31 +80,16 @@ export default function setup(): void {
 			throw error;
 		}
 
-		// console.log('The app has started.');
-
-		// if (this.app) {
-		// 	console.log(
-		// 		'this.app.client is',
-		// 		typeof this.app.client,
-		// 		this.app.client
-		// 	);
-		// }
-
 		this.client = this.app.client;
-		// console.log('END common-setup beforeEach');
 		done();
 	});
 
 	afterEach(async function (done) {
-		// console.log('BEGIN common-setup afterEach');
-
 		if (this.app && this.app.isRunning()) {
 			await this.app.stop();
 		}
 
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = this.originalTimeout;
-
-		// console.log('END common-setup afterEach');
 		done();
 	});
 }

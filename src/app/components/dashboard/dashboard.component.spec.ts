@@ -19,7 +19,6 @@ import { LoggerService } from '../../services/logger/logger.service';
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
-	// const expectedSymbols = ['A', 'B', 'C', 'D', 'E'];
 	let fixture: ComponentFixture<DashboardComponent>;
 	let component: DashboardComponent;
 
@@ -49,10 +48,6 @@ describe('DashboardComponent', () => {
 	it('should create the dashboard component', () => {
 		expect(component).toBeTruthy();
 	});
-
-	// it('should populate the Symbols drop-down list from the mock DataFeedProviderService', () => {
-	// 	expect(component.quoteSymbols).toEqual(expectedSymbols);
-	// });
 });
 
 // - Angular: Testing with Dependency Injection:

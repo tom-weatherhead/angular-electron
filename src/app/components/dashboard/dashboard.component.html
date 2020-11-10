@@ -3,7 +3,14 @@
 <div id="dashboard-controls-wrapper">
 	<h1>Dashboard Component</h1>
 
-	<div class="centre">
+	<div class="centre" style="padding-top: 10px">
 		<button class="btn-primary" ngbButtonLabel (click)="onClickStart()">Start</button>
+	</div>
+	<div class="centre" style="padding-top: 10px">
+		<button class="btn-primary" ngbButtonLabel (click)="onClickIpcPing()">IPC Ping!</button>
+		<span id="ipcPong">{{ ipcPongSpanText }}</span>
+	</div>
+	<div class="centre" style="padding-top: 10px">
+		<button class="btn-primary" ngbButtonLabel (click)="onClickReadConfig()">Read config</button>
 	</div>
 </div>
