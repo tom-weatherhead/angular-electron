@@ -49,10 +49,16 @@ Note: This is only required if your tests are accessing any Electron APIs. You d
  */
 
 export default function setup(): void {
-	beforeEach(async function () {
+	// let originalTimeout: number;
+
+	beforeEach(async function (done) {
 		// console.log('BEGIN common-setup beforeEach');
 		const electronPath = electron.toString();
 		// console.log('electronPath is', typeof electronPath, electronPath);
+
+		this.originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+
 		this.app = new Application({
 			// Your electron path can be any binary
 			// i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
@@ -99,14 +105,21 @@ export default function setup(): void {
 		// 	);
 		// }
 
+		this.client = this.app.client;
 		// console.log('END common-setup beforeEach');
+		done();
 	});
 
-	afterEach(async function () {
+	afterEach(async function (done) {
 		// console.log('BEGIN common-setup afterEach');
+
 		if (this.app && this.app.isRunning()) {
 			await this.app.stop();
 		}
+
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = this.originalTimeout;
+
 		// console.log('END common-setup afterEach');
+		done();
 	});
 }
