@@ -154,6 +154,7 @@ function toggleTouchBar() {
 // 	event.reply('asynchronous-reply', 'pong');
 // });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 ipcMain.on('ipc-ping', (event, ...args) => {
 	console.log('Received ping. Sending pong...');
 	event.reply('ipc-pong', 'IPC Pong!');

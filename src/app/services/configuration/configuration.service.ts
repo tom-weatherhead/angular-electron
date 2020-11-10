@@ -17,34 +17,23 @@ export interface IAppConfigurationData {
 export class ConfigurationService {
 	constructor(private electronService: ElectronService) {}
 
-	public get(): IAppConfigurationData {
-		let str = '';
-
-		try {
-			str = this.electronService.fs.readFileSync(
-				this.electronService.path.join(
-					this.electronService.cwd(),
-					'config',
-					'config.json'
-				),
-				{
-					encoding: 'utf8',
-					flag: 'r'
-				}
-			);
-		} catch (error) {
-			console.error(
-				'Error in ConfigurationService.get() :',
-				typeof error,
-				error
-			);
-		}
-
+	public async get(): Promise<IAppConfigurationData> {
+		const path = this.electronService.path.join(
+			this.electronService.cwd(),
+			'config',
+			'config.json'
+		);
 		const defaultConfig: IAppConfigurationData = {
 			foo: 'default',
 			obso: 911
 		};
 
-		return safeJsonParse(str, defaultConfig);
+		return safeJsonParse(
+			await this.electronService.fs.promises.readFile(path, {
+				encoding: 'utf8',
+				flag: 'r'
+			}),
+			defaultConfig
+		);
 	}
 }

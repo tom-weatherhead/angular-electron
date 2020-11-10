@@ -10,9 +10,10 @@ import {
 	ChangeDetectorRef,
 	Component,
 	// DoCheck, // lifecycle
+	ElementRef,
 	// OnChanges, // lifecycle
-	OnInit // ,
-	// ViewChild
+	OnInit,
+	ViewChild
 } from '@angular/core';
 
 import { IpcRendererEvent } from 'electron';
@@ -27,11 +28,15 @@ import { IpcRendererEvent } from 'electron';
 
 // Interfaces
 
+import { createCanvasImage } from '../../models/image.model';
+
 // Services
 
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 
 import { ElectronService } from '../../services/electron/electron.service';
+
+import { FileService } from '../../services/file/file.service';
 
 import { LoggerService } from '../../services/logger/logger.service';
 
@@ -42,12 +47,17 @@ import { LoggerService } from '../../services/logger/logger.service';
 })
 /* implements AfterContentChecked */
 export class DashboardComponent implements OnInit {
+	@ViewChild('sampleCanvas', { static: false })
+	sampleCanvas: ElementRef<HTMLCanvasElement>;
+
+	public isCanvasVisible = true;
 	public ipcPongSpanText = '';
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
 		private configurationService: ConfigurationService,
 		private electronService: ElectronService,
+		private fileService: FileService,
 		private loggerService: LoggerService
 	) {}
 
@@ -106,9 +116,11 @@ export class DashboardComponent implements OnInit {
 
 	public onClickIpcPing(): void {
 		const fnIpcPongListener = (
+			/* eslint-disable @typescript-eslint/no-unused-vars */
 			event: IpcRendererEvent,
 			...args: unknown[]
-		): void => {
+		): /* eslint-enable @typescript-eslint/no-unused-vars */
+		void => {
 			console.log('IPC Pong!');
 			this.ipcPongSpanText = 'IPC Pong!';
 			this.changeDetectorRef.detectChanges();
@@ -127,8 +139,31 @@ export class DashboardComponent implements OnInit {
 	}
 
 	public onClickReadConfig(): void {
-		const config = this.configurationService.get();
+		this.configurationService
+			.get()
+			.then((config) => {
+				console.log('Config is', config);
+			})
+			.catch((error) => {
+				console.error(
+					'DashboardComponent configurationService.get() error:',
+					typeof error,
+					error
+				);
+			});
+	}
 
-		console.log('Config is', config);
+	public async onClickImageTest(): Promise<void> {
+		const path = this.electronService.path.join(
+			this.electronService.cwd(),
+			'src/assets/images/image256x256.jpg'
+		);
+		const image = await this.fileService.loadJpegImageFromFile(path);
+		const canvasImage = createCanvasImage(this.sampleCanvas);
+
+		canvasImage.copyFromArray(image.width, image.height, image.data);
+		canvasImage.drawOnCanvas(0, 0);
+		// this.isCanvasVisible = true;
+		this.changeDetectorRef.detectChanges();
 	}
 }

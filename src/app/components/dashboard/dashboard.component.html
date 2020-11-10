@@ -11,6 +11,12 @@
 		<span id="ipcPong">{{ ipcPongSpanText }}</span>
 	</div>
 	<div class="centre" style="padding-top: 10px">
-		<button class="btn-primary" ngbButtonLabel (click)="onClickReadConfig()">Read config</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickReadConfig()">Read Config</button>
+	</div>
+	<div class="centre" style="padding-top: 10px">
+		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()">Image Test</button>
+	</div>
+	<div *ngIf="isCanvasVisible" class="centre" style="padding-top: 10px">
+		<canvas #sampleCanvas width="256" height="256" style="width: 100%"></canvas>
 	</div>
 </div>
