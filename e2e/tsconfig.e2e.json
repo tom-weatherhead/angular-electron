@@ -5,7 +5,9 @@
 		"outDir": "../dist/out-tsc/e2e",
 		"target": "es5",
 		"types": [
-			"jasmine",
+			"mocha",
+			"chai",
+			"chai-as-promised",
 			"node"
 		]
 	},

@@ -44,11 +44,20 @@ Note: This is only required if your tests are accessing any Electron APIs. You d
  */
 
 export default function setup(): void {
-	beforeEach(async function (done) {
+	// beforeEach(async function (done) {
+	beforeEach(function () {
 		const electronPath = electron.toString();
 
-		this.originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+		// From http://www.matthiassommer.it/programming/web/integration-e2e-test-electron-mocha-spectron-chai/ :
+
+		// let electronPath = path.join(__dirname, "../../node_modules", ".bin", "electron");
+		// const appPath = path.join(__dirname, "../../dist");
+		// if (process.platform === "win32") {
+		// 	electronPath += ".cmd";
+		// }
+
+		// this.originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+		// jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
 
 		this.app = new Application({
 			// Your electron path can be any binary
@@ -70,26 +79,42 @@ export default function setup(): void {
 			// The following line tells spectron to look and use the main.js
 			// file and the package.json located 1 level above.
 			args: [join(__dirname, '..')],
-			webdriverOptions: {}
+			webdriverOptions: {},
+
+			// From http://www.matthiassommer.it/programming/web/integration-e2e-test-electron-mocha-spectron-chai/ :
+
+			env: {
+				ELECTRON_ENABLE_LOGGING: true,
+				ELECTRON_ENABLE_STACK_DUMPING: true,
+				NODE_ENV: 'development'
+			},
+			startTimeout: 20000 // ,
+			// chromeDriverLogPath: '../chromedriverlog.txt'
 		});
 
-		try {
-			await this.app.start();
-		} catch (error) {
-			console.error('app.start error:', typeof error, error);
-			throw error;
-		}
+		// this.chaiAsPromised.transferPromiseness = this.app.transferPromiseness;
 
-		this.client = this.app.client;
-		done();
+		// try {
+		// 	await this.app.start();
+		// } catch (error) {
+		// 	console.error('app.start error:', typeof error, error);
+		// 	throw error;
+		// }
+
+		// this.client = this.app.client;
+		// done();
+
+		return this.app.start();
 	});
 
-	afterEach(async function (done) {
+	// afterEach(async function (done) {
+	afterEach(function () {
 		if (this.app && this.app.isRunning()) {
-			await this.app.stop();
+			// await this.app.stop();
+			this.app.stop();
 		}
 
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = this.originalTimeout;
-		done();
+		// jasmine.DEFAULT_TIMEOUT_INTERVAL = this.originalTimeout;
+		// done();
 	});
 }
