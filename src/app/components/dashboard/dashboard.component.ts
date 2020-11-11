@@ -51,6 +51,7 @@ export class DashboardComponent implements OnInit {
 	sampleCanvas: ElementRef<HTMLCanvasElement>;
 
 	public isCanvasVisible = true;
+	public configObsoText = '';
 	public ipcPongSpanText = '';
 
 	constructor(
@@ -143,6 +144,8 @@ export class DashboardComponent implements OnInit {
 			.get()
 			.then((config) => {
 				console.log('Config is', config);
+				this.configObsoText = `Obso${config.obso}`;
+				this.changeDetectorRef.detectChanges();
 			})
 			.catch((error) => {
 				console.error(

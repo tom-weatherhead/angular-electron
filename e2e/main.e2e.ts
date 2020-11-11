@@ -157,4 +157,38 @@ describe('Application launch', function () {
 	// 		.should.eventually.have.property('height')
 	// 		.and.be.above(0);
 	// });
+
+	// From http://www.matthiassommer.it/programming/web/integration-e2e-test-electron-mocha-spectron-chai/ :
+
+	// app is our Electron application. Client is the renderer process. This simple example also shows how Chai-as-promised can be used with Spectron. By appending should.eventually.equal(1) we create a promise which is resolved when a window is loaded before the default timeout of five seconds is over. Otherwise, the promise is rejected and the test fails.
+
+	// it('open window', function () {
+	// 	return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(1);
+	// });
+
+	// We can also simulate clicks and filling out forms.
+
+	// it("go to login view", function () {
+	// 	return app.client.element('#sidebar').element("a*=credentials").click();
+	// });
+
+	// This test searches for a DOM element with the ID #sidebar. Within this element it looks for another element which matches the CSS selector a*=credentials . Finally, we simulate a click on this element (in this case a link to another view).
+
+	// For a reference on CSS selectors, I would recommend to have a look on this and this page.
+
+	// You can simulate a click on a button <button>Store login credentials</button> whose text includes Store by using click and the *-selector. Use = to search for an exact match.
+
+	// click('button*=Store')
+
+	it("Click 'Read Config' and check for Obso1337", async function () {
+		const buttonElement = await this.app.client.$('button*=Config');
+		buttonElement.click();
+
+		// sleep(1);
+
+		const spanElement = await this.app.client.$('span#configObso');
+		const text = await spanElement.getText();
+
+		expect(text).to.equal('Obso1337');
+	});
 });
