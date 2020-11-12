@@ -41,6 +41,8 @@ import { MessageService } from './services/message/message.service';
 import { AppComponent } from './components/app/app.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+// import { BasicCanvasComponent } from './components/basic-canvas/basic-canvas.component';
+import { PaletteComponent } from './components/palette/palette.component';
 
 @NgModule({
 	// schemas: [
@@ -67,7 +69,11 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 		AppComponent,
 
 		// Page components
-		DashboardComponent
+		DashboardComponent,
+
+		// BasicCanvasComponent,
+
+		PaletteComponent
 	],
 	providers: [
 		ConfigurationService,

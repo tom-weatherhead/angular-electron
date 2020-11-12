@@ -40,6 +40,8 @@ import { FileService } from '../../services/file/file.service';
 
 import { LoggerService } from '../../services/logger/logger.service';
 
+import { PaletteComponent } from '../palette/palette.component';
+
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',

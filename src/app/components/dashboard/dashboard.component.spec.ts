@@ -16,6 +16,8 @@ import { ElectronService } from '../../services/electron/electron.service';
 
 import { LoggerService } from '../../services/logger/logger.service';
 
+import { PaletteComponent } from '../palette/palette.component';
+
 import { DashboardComponent } from './dashboard.component';
 
 describe('DashboardComponent', () => {
@@ -29,7 +31,7 @@ describe('DashboardComponent', () => {
 					FormsModule, // For e.g. NgModel
 					HttpClientModule
 				],
-				declarations: [DashboardComponent],
+				declarations: [DashboardComponent, PaletteComponent],
 				providers: [
 					ConfigurationService,
 					ElectronService,
