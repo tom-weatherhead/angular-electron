@@ -20,7 +20,6 @@ import { expect } from 'chai';
 
 describe('Application launch', function () {
 	this.timeout(10000);
-	// this.chaiAsPromised = chaiAsPromised;
 	// commonSetup.apply(this);
 
 	beforeEach(function () {
@@ -42,32 +41,13 @@ describe('Application launch', function () {
 			waitTimeout: 20000
 		});
 
-		// chaiAsPromised.transferPromiseness = this.app.transferPromiseness;
-		// chaiAsPromised.transferPromiseness = function (assertion, promise) {
-		// 	assertion.then = promise.then.bind(promise); // this is all you get by default
-		// 	assertion.finally = promise.finally.bind(promise);
-		// 	assertion.done = promise.done.bind(promise);
-		// };
-
 		return this.app.start(); // Return a Promise
-
-		// await this.app.start();
-
-		// done();
 	});
-
-	// beforeEach(function () {
-	// 	chaiAsPromised.transferPromiseness = this.app.transferPromiseness;
-	// });
 
 	afterEach(function () {
 		if (this.app && this.app.isRunning()) {
 			return this.app.stop();
-			// await this.app.stop();
 		}
-
-		// done();
-		// return Promise.resolve(true);
 	});
 
 	it('shows an initial window', async function () {
@@ -80,6 +60,8 @@ describe('Application launch', function () {
 		// done();
 	});
 
+	// Using chai-as-promised:
+
 	// it('open window', function () {
 	// 	return this.app.client
 	// 		.waitUntilWindowLoaded()
@@ -87,28 +69,11 @@ describe('Application launch', function () {
 	// 		.should.eventually.equal(1);
 	// });
 
-	// it('open window', function () {
-	// 	// const result = await v.waitUntilWindowLoaded();
-
-	// 	// console.log(
-	// 	// 	'**** waitUntilWindowLoaded() returned:',
-	// 	// 	typeof result,
-	// 	// 	result
-	// 	// );
-
-	// 	// 1.should.equal(1);
-	// 	// result.getWindowCount().should.eventually.equal(1);
-	// 	this.app.client.getWindowCount().should.eventually.equal(1);
-	// 	// done();
-	// });
-
 	it('should display a sidebar-heading that reads: angular-electron', async function () {
 		const elem = await this.app.client.$('div.sidebar-heading');
 		const text = await elem.getText();
 
 		expect(text).to.equal('angular-electron');
-
-		// done();
 	});
 
 	it('should display an h1 header in the dashboard-controls-wrapper div that reads: Dashboard Component', async function () {
@@ -118,29 +83,7 @@ describe('Application launch', function () {
 		const text = await elem.getText();
 
 		expect(text).to.equal('Dashboard Component');
-
-		// done();
 	});
-
-	// it('opens a window 2', function () {
-	// 	const foo = this.app.client
-	// 		// .waitUntilWindowLoaded()
-	// 		.getWindowCount()
-	// 		.should.eventually.have.at.least(11);
-	// 	// .should.have.at.least(11);
-
-	// 	console.log('opens a window 2: foo is', typeof foo, foo);
-
-	// 	return this.app.client.browserWindow.isMinimized().should.eventually
-	// 		.be.false; // .browserWindow.isVisible()
-	// 	// .should.eventually.be.true.browserWindow.isFocused()
-	// 	// .should.eventually.be.true.browserWindow.getBounds()
-	// 	// .should.eventually.have.property('width')
-	// 	// .and.be.above(0)
-	// 	// .browserWindow.getBounds()
-	// 	// .should.eventually.have.property('height')
-	// 	// .and.be.above(0)
-	// });
 
 	// it('opens a window xxx', function () {
 	// 	return this.app.client

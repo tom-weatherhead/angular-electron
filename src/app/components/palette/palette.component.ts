@@ -5,8 +5,13 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	OnInit,
 	ViewChild
 } from '@angular/core';
+
+import { Observable, of, Subject } from 'rxjs';
+
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { Colours } from 'thaw-colour';
 
@@ -68,12 +73,15 @@ const fourBitPaletteColours = [
 	'#ffffff'
 ];
 
+// TODO: When a palette colour is clicked on, use an RxJS Subject to notify
+// any subscribers of the clicked-on colour.
+
 @Component({
 	selector: 'app-palette',
 	templateUrl: './palette.component.html' // ,
 	// styleUrls: ['./palette.component.scss']
 })
-export class PaletteComponent implements AfterViewInit {
+export class PaletteComponent implements AfterViewInit, OnInit {
 	@ViewChild('canvas', { static: true })
 	canvas: ElementRef<HTMLCanvasElement>;
 
@@ -82,10 +90,13 @@ export class PaletteComponent implements AfterViewInit {
 	private readonly canvasWidth = 256;
 	private readonly canvasHeight = 16;
 
+	private selectedColour: Subject<string>;
+
 	constructor(protected changeDetectorRef: ChangeDetectorRef) {}
 
-	// ngOnInit(): void {
-	// }
+	ngOnInit(): void {
+		this.selectedColour = new Subject<string>();
+	}
 
 	ngAfterViewInit(): void {
 		this.canvasContext = this.canvas.nativeElement.getContext('2d');
@@ -93,12 +104,24 @@ export class PaletteComponent implements AfterViewInit {
 		this.drawPalette();
 	}
 
-	public onClickCanvas(event: unknown): void {
+	public onClickCanvas(event: { offsetX: number; offsetY: number }): void {
 		console.log(
 			'PaletteComponent.onClickCanvas() : event is',
 			typeof event,
 			event
 		);
+		console.log(
+			`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
+		);
+
+		const selectedColour =
+			fourBitPaletteColours[Math.floor(event.offsetX / 16)];
+
+		console.log('selectedColour:', selectedColour);
+
+		// subject.next(selectedColour);
+
+		this.selectedColour.next(selectedColour);
 	}
 
 	protected clearCanvas(): void {

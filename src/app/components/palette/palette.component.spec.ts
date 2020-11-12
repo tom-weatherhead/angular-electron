@@ -1,3 +1,5 @@
+// angular-electron/src/app/components/palette/palette.component.spec.ts
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PaletteComponent } from './palette.component';
