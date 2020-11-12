@@ -35,43 +35,52 @@ import { Observable, /* of, */ Subject } from 'rxjs';
 // Aqua::	00FFFF (cyan)
 // White:	FFFFFF
 
+// **** BEGIN: Move this to thaw-colour ****
+
+// This array enforces the order of the colours in the palette.
+
+const fourBitPaletteColourNames = [
+	'Black',
+	'Maroon',
+	'Green',
+	'Olive',
+	'Navy',
+	'Purple',
+	'Teal',
+	'Silver',
+	'Grey',
+	'Red',
+	'Lime',
+	'Yellow',
+	'Blue',
+	'Fuchsia',
+	'Aqua',
+	'White'
+];
+
+const fourBitPalette: Record<string, string> = {
+	Black: '#000000',
+	Maroon: '#800000',
+	Green: '#008000',
+	Olive: '#808000',
+	Navy: '#000080',
+	Purple: '#800080',
+	Teal: '#008080',
+	Silver: '#c0c0c0',
+	Grey: '#808080',
+	Red: '#ff0000',
+	Lime: '#00ff00',
+	Yellow: '#ffff00',
+	Blue: '#0000ff',
+	Fuchsia: '#ff00ff',
+	Aqua: '#00ffff',
+	White: '#ffffff'
+};
+
+// **** END: Move this to thaw-colour ****
+
 // Draw the above colours on a canvas in 16 NxN squares,
 // where N is e.g. 16
-
-const fourBitPaletteColours = [
-	// Colours.black,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.,
-	// Colours.red,
-	// Colours.lime,
-	// Colours.yellow,
-	// Colours.blue,
-	// Colours.magenta,
-	// Colours.cyan,
-	// Colours.white
-	'#000000',
-	'#800000',
-	'#008000',
-	'#808000',
-	'#000080',
-	'#800080',
-	'#008080',
-	'#c0c0c0',
-	'#808080',
-	'#ff0000',
-	'#00ff00',
-	'#ffff00',
-	'#0000ff',
-	'#ff00ff',
-	'#00ffff',
-	'#ffffff'
-];
 
 const paletteColourSwatchWidth = 32;
 const paletteColourSwatchHeight = 32;
@@ -91,7 +100,7 @@ export class PaletteComponent implements AfterViewInit, OnInit {
 	public canvasContext: CanvasRenderingContext2D; // View
 
 	private readonly canvasWidth =
-		paletteColourSwatchWidth * fourBitPaletteColours.length;
+		paletteColourSwatchWidth * fourBitPaletteColourNames.length;
 	private readonly canvasHeight = paletteColourSwatchHeight;
 
 	private selectedColour: Subject<string>;
@@ -104,7 +113,6 @@ export class PaletteComponent implements AfterViewInit, OnInit {
 
 	ngAfterViewInit(): void {
 		this.canvasContext = this.canvas.nativeElement.getContext('2d');
-		// this.clearCanvas();
 		this.drawPalette();
 	}
 
@@ -112,50 +120,21 @@ export class PaletteComponent implements AfterViewInit, OnInit {
 		return this.selectedColour;
 	}
 
-	public onClickCanvas(event: { offsetX: number; offsetY: number }): void {
-		// console.log(
-		// 	'PaletteComponent.onClickCanvas() : event is',
-		// 	typeof event,
-		// 	event
-		// );
-		// console.log(
-		// 	`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
-		// );
-
+	public onClickCanvas(event: { offsetX: number }): void {
 		const selectedColourAsString =
-			fourBitPaletteColours[
-				Math.floor(event.offsetX / paletteColourSwatchWidth)
+			fourBitPalette[
+				fourBitPaletteColourNames[
+					Math.floor(event.offsetX / paletteColourSwatchWidth)
+				]
 			];
-
-		// console.log('selectedColour:', selectedColour);
-
-		// subject.next(selectedColour);
 
 		this.selectedColour.next(selectedColourAsString);
 	}
 
-	// protected clearCanvas(): void {
-	// 	if (this.canvasContext) {
-	// 		this.canvasContext.fillStyle = Colours.black;
-	// 		this.canvasContext.beginPath();
-	// 		this.canvasContext.fillRect(
-	// 			0,
-	// 			0,
-	// 			this.canvasWidth,
-	// 			this.canvasHeight
-	// 		);
-	// 		// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
-	// 		this.canvasContext.stroke(); // Actually draw the shapes that are described above.
-	// 	}
-
-	// 	// console.log(
-	// 	// 	`Canvas width and height: ${this.canvasWidth} x ${this.canvasHeight}`
-	// 	// );
-	// }
-
 	private drawPalette(): void {
-		for (let i = 0; i < fourBitPaletteColours.length; i++) {
-			this.canvasContext.fillStyle = fourBitPaletteColours[i];
+		for (let i = 0; i < fourBitPaletteColourNames.length; i++) {
+			this.canvasContext.fillStyle =
+				fourBitPalette[fourBitPaletteColourNames[i]];
 			this.canvasContext.fillRect(
 				i * paletteColourSwatchWidth,
 				0,

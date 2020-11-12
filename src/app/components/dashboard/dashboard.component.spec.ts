@@ -16,6 +16,8 @@ import { ElectronService } from '../../services/electron/electron.service';
 
 import { LoggerService } from '../../services/logger/logger.service';
 
+import { BasicCanvasComponent } from '../basic-canvas/basic-canvas.component';
+
 import { PaletteComponent } from '../palette/palette.component';
 
 import { DashboardComponent } from './dashboard.component';
@@ -31,7 +33,11 @@ describe('DashboardComponent', () => {
 					FormsModule, // For e.g. NgModel
 					HttpClientModule
 				],
-				declarations: [DashboardComponent, PaletteComponent],
+				declarations: [
+					DashboardComponent,
+					BasicCanvasComponent,
+					PaletteComponent
+				],
 				providers: [
 					ConfigurationService,
 					ElectronService,

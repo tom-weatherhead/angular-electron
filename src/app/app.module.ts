@@ -40,9 +40,11 @@ import { MessageService } from './services/message/message.service';
 // **** Components ****
 import { AppComponent } from './components/app/app.component';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { BasicCanvasComponent } from './components/basic-canvas/basic-canvas.component';
+import { BasicCanvasComponent } from './components/basic-canvas/basic-canvas.component';
+
 import { PaletteComponent } from './components/palette/palette.component';
+
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
 	// schemas: [
@@ -71,8 +73,7 @@ import { PaletteComponent } from './components/palette/palette.component';
 		// Page components
 		DashboardComponent,
 
-		// BasicCanvasComponent,
-
+		BasicCanvasComponent,
 		PaletteComponent
 	],
 	providers: [

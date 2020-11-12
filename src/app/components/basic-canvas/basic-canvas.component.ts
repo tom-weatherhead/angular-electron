@@ -24,7 +24,7 @@ const barYMarginHeight = 2;
 	selector: 'app-basic-canvas',
 	templateUrl: './basic-canvas.component.html'
 })
-export class GenericChartCanvasComponent implements AfterViewInit {
+export class BasicCanvasComponent implements AfterViewInit {
 	@ViewChild('canvas', { static: true })
 	canvas: ElementRef<HTMLCanvasElement>;
 

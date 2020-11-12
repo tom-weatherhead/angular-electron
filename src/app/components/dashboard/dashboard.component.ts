@@ -18,7 +18,7 @@ import {
 
 import { IpcRendererEvent } from 'electron';
 
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 // import {
 // 	getDateTimeUTCString,
@@ -40,6 +40,10 @@ import { FileService } from '../../services/file/file.service';
 
 import { LoggerService } from '../../services/logger/logger.service';
 
+// Components
+
+import { BasicCanvasComponent } from '../basic-canvas/basic-canvas.component';
+
 import { PaletteComponent } from '../palette/palette.component';
 
 @Component({
@@ -55,6 +59,9 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	@ViewChild('palette', { static: false })
 	palette: PaletteComponent;
 
+	@ViewChild('basicCanvas', { static: false })
+	basicCanvas: BasicCanvasComponent;
+
 	public isCanvasVisible = true;
 	public configObsoText = '';
 	public ipcPongSpanText = '';
@@ -67,7 +74,19 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		private electronService: ElectronService,
 		private fileService: FileService,
 		private loggerService: LoggerService
-	) {}
+	) {
+		if (window) {
+			window.addEventListener(
+				'resize',
+				_.debounce((e) => {
+					e.preventDefault();
+					// that.onWindowResize();
+					// console.log('Window resize event:', typeof e, e);
+					this.updateBasicCanvasSize();
+				}, 100)
+			);
+		}
+	}
 
 	public ngOnInit(): void {
 		if (this.electronService.isAvailable) {
@@ -190,5 +209,57 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		canvasImage.drawOnCanvas(0, 0);
 		// this.isCanvasVisible = true;
 		this.changeDetectorRef.detectChanges();
+	}
+
+	private updateBasicCanvasSize(): void {
+		if (!this.basicCanvas) {
+			return;
+		}
+
+		// const pageContentHeader = window.document.getElementById(
+		// 	'page-content-header'
+		// );
+		// const controlsWrapper = window.document.getElementById(
+		// 	'dashboard-controls-wrapper'
+		// );
+		const basicCanvasWrapper = window.document.getElementById(
+			'dashboard-basic-canvas-wrapper'
+		);
+
+		// if (!pageContentHeader || !controlsWrapper || !chartsWrapper) {
+		// 	return;
+		// }
+
+		if (!basicCanvasWrapper) {
+			return;
+		}
+
+		const widthReservedForOtherHorizontalSpacing = 20;
+		// const heightReservedForOtherVerticalSpacing = 20;
+
+		// if (
+		// 	chartsWrapper.clientWidth !==
+		// 		this.previousDashboardChartsWrapperClientWidth ||
+		// 	chartsWrapper.clientHeight !==
+		// 		this.previousDashboardChartsWrapperClientHeight
+		// ) {
+		const w =
+			basicCanvasWrapper.clientWidth -
+			widthReservedForOtherHorizontalSpacing;
+		// const h =
+		// 	window.innerHeight -
+		// 	pageContentHeader.clientHeight -
+		// 	controlsWrapper.clientHeight -
+		// 	heightReservedForOtherVerticalSpacing;
+		// const h2 = Math.round(h / 3);
+		// const h1 = h - h2;
+
+		this.basicCanvas.setCanvasSize(w, 500);
+
+		// this.previousDashboardChartsWrapperClientWidth =
+		// 	chartsWrapper.clientWidth;
+		// this.previousDashboardChartsWrapperClientHeight =
+		// 	chartsWrapper.clientHeight;
+		// }
 	}
 }

@@ -123,15 +123,34 @@ describe('Application launch', function () {
 
 	// click('button*=Store')
 
-	it("Click 'Read Config' and check for Obso1337", async function () {
-		const buttonElement = await this.app.client.$('button*=Config');
-		buttonElement.click();
+	// Version 1:
 
-		// sleep(1);
+	// it("Click 'Read Config' and check for Obso1337", async function () {
+	// 	const buttonElement = await this.app.client.$('button*=Config');
+	// 	buttonElement.click();
 
-		const spanElement = await this.app.client.$('span#configObso');
-		const text = await spanElement.getText();
+	// 	// sleep(1);
 
-		expect(text).to.equal('Obso1337');
+	// 	const spanElement = await this.app.client.$('span#configObso');
+	// 	const text = await spanElement.getText();
+
+	// 	expect(text).to.equal('Obso1337');
+	// });
+
+	// Version 2:
+
+	it("Click 'Read Config' and check for Obso1337", function (done) {
+		this.app.client
+			.$('button*=Config')
+			.then((buttonElement) => {
+				buttonElement.click();
+
+				return this.app.client.$('span#configObso');
+			})
+			.then((spanElement) => spanElement.getText())
+			.then((text) => {
+				expect(text).to.equal('Obso1337');
+				done();
+			});
 	});
 });
