@@ -9,11 +9,11 @@ import {
 	ViewChild
 } from '@angular/core';
 
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, /* of, */ Subject } from 'rxjs';
 
-import { switchMap, takeUntil } from 'rxjs/operators';
+// import { switchMap, takeUntil } from 'rxjs/operators';
 
-import { Colours } from 'thaw-colour';
+// import { Colours } from 'thaw-colour';
 
 // 16-color palette
 // From https://thestarman.pcministry.com/RGB/16WinColorT.html :
@@ -73,6 +73,9 @@ const fourBitPaletteColours = [
 	'#ffffff'
 ];
 
+const paletteColourSwatchWidth = 32;
+const paletteColourSwatchHeight = 32;
+
 // TODO: When a palette colour is clicked on, use an RxJS Subject to notify
 // any subscribers of the clicked-on colour.
 
@@ -87,8 +90,9 @@ export class PaletteComponent implements AfterViewInit, OnInit {
 
 	public canvasContext: CanvasRenderingContext2D; // View
 
-	private readonly canvasWidth = 256;
-	private readonly canvasHeight = 16;
+	private readonly canvasWidth =
+		paletteColourSwatchWidth * fourBitPaletteColours.length;
+	private readonly canvasHeight = paletteColourSwatchHeight;
 
 	private selectedColour: Subject<string>;
 
@@ -104,49 +108,60 @@ export class PaletteComponent implements AfterViewInit, OnInit {
 		this.drawPalette();
 	}
 
+	public get selectedColourObservable(): Observable<string> {
+		return this.selectedColour;
+	}
+
 	public onClickCanvas(event: { offsetX: number; offsetY: number }): void {
-		console.log(
-			'PaletteComponent.onClickCanvas() : event is',
-			typeof event,
-			event
-		);
-		console.log(
-			`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
-		);
+		// console.log(
+		// 	'PaletteComponent.onClickCanvas() : event is',
+		// 	typeof event,
+		// 	event
+		// );
+		// console.log(
+		// 	`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
+		// );
 
-		const selectedColour =
-			fourBitPaletteColours[Math.floor(event.offsetX / 16)];
+		const selectedColourAsString =
+			fourBitPaletteColours[
+				Math.floor(event.offsetX / paletteColourSwatchWidth)
+			];
 
-		console.log('selectedColour:', selectedColour);
+		// console.log('selectedColour:', selectedColour);
 
 		// subject.next(selectedColour);
 
-		this.selectedColour.next(selectedColour);
+		this.selectedColour.next(selectedColourAsString);
 	}
 
-	protected clearCanvas(): void {
-		if (this.canvasContext) {
-			this.canvasContext.fillStyle = Colours.black;
-			this.canvasContext.beginPath();
-			this.canvasContext.fillRect(
-				0,
-				0,
-				this.canvasWidth,
-				this.canvasHeight
-			);
-			// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
-			this.canvasContext.stroke(); // Actually draw the shapes that are described above.
-		}
+	// protected clearCanvas(): void {
+	// 	if (this.canvasContext) {
+	// 		this.canvasContext.fillStyle = Colours.black;
+	// 		this.canvasContext.beginPath();
+	// 		this.canvasContext.fillRect(
+	// 			0,
+	// 			0,
+	// 			this.canvasWidth,
+	// 			this.canvasHeight
+	// 		);
+	// 		// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
+	// 		this.canvasContext.stroke(); // Actually draw the shapes that are described above.
+	// 	}
 
-		// console.log(
-		// 	`Canvas width and height: ${this.canvasWidth} x ${this.canvasHeight}`
-		// );
-	}
+	// 	// console.log(
+	// 	// 	`Canvas width and height: ${this.canvasWidth} x ${this.canvasHeight}`
+	// 	// );
+	// }
 
 	private drawPalette(): void {
 		for (let i = 0; i < fourBitPaletteColours.length; i++) {
 			this.canvasContext.fillStyle = fourBitPaletteColours[i];
-			this.canvasContext.fillRect(i * 16, 0, 16, this.canvasHeight);
+			this.canvasContext.fillRect(
+				i * paletteColourSwatchWidth,
+				0,
+				paletteColourSwatchWidth,
+				this.canvasHeight
+			);
 		}
 	}
 }

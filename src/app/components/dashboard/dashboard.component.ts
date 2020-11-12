@@ -3,7 +3,7 @@
 // Declaring ngDoCheck and ngOnChanges method in a class is not recommended
 
 import {
-	// AfterContentChecked,
+	AfterContentChecked,
 	// AfterContentInit, // lifecycle
 	// AfterViewChecked, // lifecycle
 	// AfterViewInit,
@@ -48,13 +48,18 @@ import { PaletteComponent } from '../palette/palette.component';
 	styleUrls: ['./dashboard.component.scss']
 })
 /* implements AfterContentChecked */
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterContentChecked, OnInit {
 	@ViewChild('sampleCanvas', { static: false })
 	sampleCanvas: ElementRef<HTMLCanvasElement>;
+
+	@ViewChild('palette', { static: false })
+	palette: PaletteComponent;
 
 	public isCanvasVisible = true;
 	public configObsoText = '';
 	public ipcPongSpanText = '';
+
+	private subscribedToSelectedColourObservable = false;
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -72,27 +77,42 @@ export class DashboardComponent implements OnInit {
 		}
 	}
 
-	// public ngAfterContentChecked(): void {
-	// 	console.log('Dashboard ngAfterContentChecked()');
-	// 	// 2020-10-30 : Successful test of file system access via Electron:
+	public ngAfterContentChecked(): void {
+		// console.log('Dashboard ngAfterContentChecked()');
+		// 2020-10-30 : Successful test of file system access via Electron:
 
-	// 	// console.log(
-	// 	// 	'electronService.fs is',
-	// 	// 	typeof this.electronService.fs,
-	// 	// 	this.electronService.fs
-	// 	// );
+		// console.log(
+		// 	'electronService.fs is',
+		// 	typeof this.electronService.fs,
+		// 	this.electronService.fs
+		// );
 
-	// 	// console.log(
-	// 	// 	this.electronService.fs.readFileSync('/Users/tomw/.npmrc', {
-	// 	// 		encoding: 'utf8',
-	// 	// 		flag: 'r'
-	// 	// 	})
-	// 	// );
+		// console.log(
+		// 	this.electronService.fs.readFileSync('/Users/tomw/.npmrc', {
+		// 		encoding: 'utf8',
+		// 		flag: 'r'
+		// 	})
+		// );
 
-	// 	// console.log(this.configurationService.get());
+		// console.log(this.configurationService.get());
 
-	// 	// this.electronService.openGitHubInBrowser();
-	// }
+		// this.electronService.openGitHubInBrowser();
+
+		if (
+			typeof this.palette !== 'undefined' &&
+			!this.subscribedToSelectedColourObservable
+		) {
+			this.palette.selectedColourObservable.subscribe(
+				(selectedColour: string) => {
+					console.log(
+						'Dashboard: selectedColour is',
+						selectedColour
+					);
+				}
+			);
+			this.subscribedToSelectedColourObservable = true;
+		}
+	}
 
 	public onClickStart(): void {
 		// this.loggerService.writeTest();

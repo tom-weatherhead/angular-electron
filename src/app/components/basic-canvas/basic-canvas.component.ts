@@ -10,7 +10,7 @@ import {
 	ViewChild
 } from '@angular/core';
 
-import { pointwise } from 'thaw-common-utilities.ts';
+// import { pointwise } from 'thaw-common-utilities.ts';
 
 import { Colours } from 'thaw-colour';
 
@@ -18,8 +18,6 @@ const widthPerDataPoint = 16;
 const widthPerDot = 6;
 
 const barXMarginWidth = 2;
-const candlestickXMarginWidth = 1;
-
 const barYMarginHeight = 2;
 
 @Component({
