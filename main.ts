@@ -37,7 +37,7 @@ const isPlatformLinux = platform === 'linux';
 
 // const screen = !isPlatformWindows && require('electron').screen;
 
-let win;
+let win: BrowserWindow;
 
 // macOS: The screen is 1680x1050 (??? I thought it was 2880x1800. The difference between logical pixels and device pixels, I would guess.)
 
@@ -315,9 +315,10 @@ function createWindow() {
 	win.loadFile(`${__dirname}/dist/index.html`);
 
 	// Event that fires when the window is closed.
-	win.on('closed', () => {
-		win = null;
-	});
+	// win.on('closed', () => {
+	// 	// win = null;
+	// 	win = undefined;
+	// });
 
 	// win.on('resize', () => {
 	// 	ipcMain.send('on-browser-window-resize', primaryDisplayWorkArea.x, primaryDisplayWorkArea.y, primaryDisplayWorkArea.width, primaryDisplayWorkArea.height);

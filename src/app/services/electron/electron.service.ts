@@ -162,51 +162,54 @@ export class ElectronService {
 			console.log(
 				'Setting handler for Electron event: gpu-info-update'
 			);
-			this.app.on('gpu-info-update', (event) => {
-				event.preventDefault();
-				console.log('Electron event: gpu-info-update');
+			this.app.on(
+				'gpu-info-update',
+				(event: { preventDefault: () => void }) => {
+					event.preventDefault();
+					console.log('Electron event: gpu-info-update');
 
-				// GPUFeatureStatus on macOS when Electron hardware acceleration is enabled:
+					// GPUFeatureStatus on macOS when Electron hardware acceleration is enabled:
 
-				// 2d_canvas: "enabled"
-				// flash_3d: "enabled"
-				// flash_stage3d: "enabled"
-				// flash_stage3d_baseline: "enabled"
-				// gpu_compositing: "enabled"
-				// metal: "disabled_off"
-				// multiple_raster_threads: "enabled_on"
-				// oop_rasterization: "enabled"
-				// opengl: "enabled_on"
-				// protected_video_decode: "unavailable_off"
-				// rasterization: "enabled"
-				// skia_renderer: "disabled_off_ok"
-				// video_decode: "enabled"
-				// webgl: "enabled"
-				// webgl2: "enabled"
+					// 2d_canvas: "enabled"
+					// flash_3d: "enabled"
+					// flash_stage3d: "enabled"
+					// flash_stage3d_baseline: "enabled"
+					// gpu_compositing: "enabled"
+					// metal: "disabled_off"
+					// multiple_raster_threads: "enabled_on"
+					// oop_rasterization: "enabled"
+					// opengl: "enabled_on"
+					// protected_video_decode: "unavailable_off"
+					// rasterization: "enabled"
+					// skia_renderer: "disabled_off_ok"
+					// video_decode: "enabled"
+					// webgl: "enabled"
+					// webgl2: "enabled"
 
-				// When Electron hardware acceleration is disabled:
+					// When Electron hardware acceleration is disabled:
 
-				// 2d_canvas: "unavailable_software"
-				// flash_3d: "disabled_software"
-				// flash_stage3d: "disabled_software"
-				// flash_stage3d_baseline: "disabled_software"
-				// gpu_compositing: "disabled_software"
-				// metal: "disabled_off"
-				// multiple_raster_threads: "enabled_on"
-				// oop_rasterization: "disabled_off"
-				// opengl: "disabled_off"
-				// protected_video_decode: "disabled_off"
-				// rasterization: "disabled_software"
-				// skia_renderer: "disabled_off_ok"
-				// video_decode: "disabled_software"
-				// webgl: "unavailable_software"
-				// webgl2: "unavailable_software"
+					// 2d_canvas: "unavailable_software"
+					// flash_3d: "disabled_software"
+					// flash_stage3d: "disabled_software"
+					// flash_stage3d_baseline: "disabled_software"
+					// gpu_compositing: "disabled_software"
+					// metal: "disabled_off"
+					// multiple_raster_threads: "enabled_on"
+					// oop_rasterization: "disabled_off"
+					// opengl: "disabled_off"
+					// protected_video_decode: "disabled_off"
+					// rasterization: "disabled_software"
+					// skia_renderer: "disabled_off_ok"
+					// video_decode: "disabled_software"
+					// webgl: "unavailable_software"
+					// webgl2: "unavailable_software"
 
-				console.log(
-					'GPUFeatureStatus:',
-					this.app.getGPUFeatureStatus()
-				);
-			});
+					console.log(
+						'GPUFeatureStatus:',
+						this.app.getGPUFeatureStatus()
+					);
+				}
+			);
 		}
 	}
 

@@ -81,8 +81,8 @@
 		"popper.js": "^1.16.1",
 		"rxjs": "^6.6.3",
 		"thaw-angular-service-library": "^0.0.0",
-		"thaw-colour": "0.0.2",
-		"thaw-common-utilities.ts": "^0.0.2",
+		"thaw-colour": "0.0.3",
+		"thaw-common-utilities.ts": "^0.0.3",
 		"tslib": "^2.0.3",
 		"zone.js": "~0.10.3"
 	},

@@ -80,9 +80,17 @@ describe('AppComponent', () => {
 	// Test using a CSS selector:
 
 	it('should render the app name in a specific div tag', () => {
-		expect(
-			nativeElement.querySelector('div.sidebar-heading').textContent
-		).toEqual('angular-electron');
+		const sidebarHeadingElement = nativeElement.querySelector(
+			'div.sidebar-heading'
+		);
+
+		expect(sidebarHeadingElement).toBeTruthy();
+
+		if (sidebarHeadingElement) {
+			expect(sidebarHeadingElement.textContent).toEqual(
+				'angular-electron'
+			);
+		}
 	});
 
 	it('should display 10 links in the sidebar', () => {

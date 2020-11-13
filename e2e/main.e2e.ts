@@ -142,13 +142,15 @@ describe('Application launch', function () {
 	it("Click 'Read Config' and check for Obso1337", function (done) {
 		this.app.client
 			.$('button*=Config')
-			.then((buttonElement) => {
+			.then((buttonElement: { click: () => void }) => {
 				buttonElement.click();
 
 				return this.app.client.$('span#configObso');
 			})
-			.then((spanElement) => spanElement.getText())
-			.then((text) => {
+			.then((spanElement: { getText: () => Promise<string> }) =>
+				spanElement.getText()
+			)
+			.then((text: string) => {
 				expect(text).to.equal('Obso1337');
 				done();
 			});

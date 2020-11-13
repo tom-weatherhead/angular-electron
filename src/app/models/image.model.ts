@@ -200,6 +200,13 @@ class CanvasImage extends ImageBase implements ICanvasImage {
 
 	constructor(canvas: ElementRef<HTMLCanvasElement>) {
 		const context = canvas.nativeElement.getContext('2d');
+
+		if (!context) {
+			throw new Error(
+				"CanvasImage constructor: The canvas's context is falsy"
+			);
+		}
+
 		const imageData = context.createImageData(
 			canvas.nativeElement.width,
 			canvas.nativeElement.height

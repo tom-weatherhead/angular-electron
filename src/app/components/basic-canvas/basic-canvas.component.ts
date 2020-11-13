@@ -28,15 +28,17 @@ export class BasicCanvasComponent implements AfterViewInit {
 	@ViewChild('canvas', { static: true })
 	canvas: ElementRef<HTMLCanvasElement>;
 
-	public canvasContext: CanvasRenderingContext2D; // View
+	public canvasContext: CanvasRenderingContext2D | null = null; // View
+
+	public canvasWidthValue = 1152;
+	public canvasHeightValue = 500;
+
+	public selectedColour = '';
 
 	private priceAtCanvasTop = NaN;
 	private priceAtCanvasBottom = NaN;
 	private autoSetMinY = true;
 	private autoSetMaxY = true;
-
-	public canvasWidthValue = 1152;
-	public canvasHeightValue = 500;
 
 	constructor(protected changeDetectorRef: ChangeDetectorRef) {}
 
@@ -106,9 +108,19 @@ export class BasicCanvasComponent implements AfterViewInit {
 	// }
 
 	public onClickCanvas(event: { offsetX: number; offsetY: number }): void {
-		console.log(
-			`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
-		);
+		// console.log(
+		// 	`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
+		// );
+
+		if (this.selectedColour) {
+			this.drawFilledRectangle(
+				event.offsetX,
+				event.offsetY,
+				100,
+				100,
+				this.selectedColour
+			);
+		}
 	}
 
 	public drawFilledRectangle(
@@ -206,6 +218,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 	}
 
 	protected drawLine(data: number[], lineColour: string): void {
+		if (!this.canvasContext) {
+			return;
+		}
+
 		data = data.slice(-this.canvasWidthInDataPoints);
 
 		let x =
@@ -239,6 +255,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 	}
 
 	protected drawHorizontalLine(y: number, lineColour: string): void {
+		if (!this.canvasContext) {
+			return;
+		}
+
 		y = this.mapPriceToYCoord(y);
 
 		this.canvasContext.strokeStyle = lineColour;
@@ -255,6 +275,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 		barOutlineColour: string,
 		barFillColour: string
 	): void {
+		if (!this.canvasContext) {
+			return;
+		}
+
 		y = this.mapPriceToYCoord(y);
 		this.canvasContext.strokeStyle = barOutlineColour;
 		this.canvasContext.fillStyle = barFillColour;
@@ -302,6 +326,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 	): void {
 		// widthPerDot
 
+		if (!this.canvasContext) {
+			return;
+		}
+
 		y = this.mapPriceToYCoord(y);
 
 		const dx1 = Math.floor((widthPerDataPoint - widthPerDot) / 2);
@@ -342,6 +370,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 		timeResults: number[],
 		lineColour: string
 	): void {
+		if (!this.canvasContext) {
+			return;
+		}
+
 		times = times.slice(-this.canvasWidthInDataPoints);
 
 		if (times.length === 0) {
@@ -391,6 +423,10 @@ export class BasicCanvasComponent implements AfterViewInit {
 		barOutlineColour: string,
 		barFillColour: string
 	): void {
+		if (!this.canvasContext) {
+			return;
+		}
+
 		// y = this.mapPriceToYCoord(y);
 		this.canvasContext.strokeStyle = barOutlineColour;
 		this.canvasContext.fillStyle = barFillColour;

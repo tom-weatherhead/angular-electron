@@ -67,6 +67,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	public ipcPongSpanText = '';
 
 	private subscribedToSelectedColourObservable = false;
+	// public selectedColour = '';
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -97,7 +98,10 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	}
 
 	public ngAfterContentChecked(): void {
-		// console.log('Dashboard ngAfterContentChecked()');
+		if (!this.subscribedToSelectedColourObservable) {
+			console.log('DashboardComponent.ngAfterContentChecked()');
+		}
+
 		// 2020-10-30 : Successful test of file system access via Electron:
 
 		// console.log(
@@ -121,12 +125,18 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			typeof this.palette !== 'undefined' &&
 			!this.subscribedToSelectedColourObservable
 		) {
+			console.log(
+				'DashboardComponent.ngAfterContentChecked() : Subscribe to palette clicks'
+			);
+
 			this.palette.selectedColourObservable.subscribe(
 				(selectedColour: string) => {
 					console.log(
 						'Dashboard: selectedColour is',
 						selectedColour
 					);
+					// this.selectedColour = selectedColour;
+					this.basicCanvas.selectedColour = selectedColour;
 					this.basicCanvas.drawFilledRectangle(
 						0,
 						0,
