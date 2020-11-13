@@ -83,7 +83,7 @@ const fourBitPalette: Record<string, string> = {
 // where N is e.g. 16
 
 const paletteColourSwatchWidth = 32;
-const paletteColourSwatchHeight = 32;
+const paletteColourSwatchHeight = paletteColourSwatchWidth;
 
 // TODO: When a palette colour is clicked on, use an RxJS Subject to notify
 // any subscribers of the clicked-on colour.
