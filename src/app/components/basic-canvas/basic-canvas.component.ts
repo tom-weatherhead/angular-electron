@@ -111,19 +111,40 @@ export class BasicCanvasComponent implements AfterViewInit {
 		);
 	}
 
-	protected clearCanvas(): void {
+	public drawFilledRectangle(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		fillColour: string
+	): void {
 		if (this.canvasContext) {
-			this.canvasContext.fillStyle = Colours.black;
-			this.canvasContext.beginPath();
-			this.canvasContext.fillRect(
-				0,
-				0,
-				this.canvasWidth,
-				this.canvasHeight
-			);
-			// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
-			this.canvasContext.stroke(); // Actually draw the shapes that are described above.
+			this.canvasContext.fillStyle = fillColour;
+			this.canvasContext.fillRect(x, y, width, height);
 		}
+	}
+
+	protected clearCanvas(): void {
+		this.drawFilledRectangle(
+			0,
+			0,
+			this.canvasWidth,
+			this.canvasHeight,
+			Colours.black
+		);
+
+		// if (this.canvasContext) {
+		// 	this.canvasContext.fillStyle = Colours.black;
+		// 	this.canvasContext.beginPath();
+		// 	this.canvasContext.fillRect(
+		// 		0,
+		// 		0,
+		// 		this.canvasWidth,
+		// 		this.canvasHeight
+		// 	);
+		// 	// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
+		// 	this.canvasContext.stroke(); // Actually draw the shapes that are described above.
+		// }
 
 		// console.log(
 		// 	`Canvas width and height: ${this.canvasWidth} x ${this.canvasHeight}`

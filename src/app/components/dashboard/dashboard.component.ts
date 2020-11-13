@@ -127,6 +127,13 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 						'Dashboard: selectedColour is',
 						selectedColour
 					);
+					this.basicCanvas.drawFilledRectangle(
+						0,
+						0,
+						100,
+						100,
+						selectedColour
+					);
 				}
 			);
 			this.subscribedToSelectedColourObservable = true;
