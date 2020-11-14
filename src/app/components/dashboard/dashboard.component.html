@@ -15,7 +15,7 @@
 		<span id="configObso">{{ configObsoText }}</span>
 	</div>
 	<div class="centre" style="padding-top: 10px">
-		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()">Image Test</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()" tooltip="Tooltip on top" placement="top">Image Test</button>
 	</div>
 	<div *ngIf="isCanvasVisible" class="centre" style="padding-top: 10px">
 		<canvas #imageCanvas width="256" height="256"></canvas>

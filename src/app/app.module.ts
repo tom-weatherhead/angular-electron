@@ -26,6 +26,8 @@ import {
 	NgbDropdownModule
 } from '@ng-bootstrap/ng-bootstrap';
 
+import { TooltipModule } from 'ng2-tooltip-directive';
+
 import { HttpJsonClientModule } from 'thaw-angular-service-library';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -63,6 +65,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 		// NgbModule.forRoot(),
 		NgbButtonsModule,
 		NgbDropdownModule,
+
+		TooltipModule,
 
 		// Service modules from thaw-angular-service-library
 		HttpJsonClientModule

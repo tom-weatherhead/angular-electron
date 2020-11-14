@@ -77,6 +77,7 @@
 		"core-js": "^3.7.0",
 		"jpeg-js": "^0.4.2",
 		"jquery": "^3.5.1",
+		"ng2-tooltip-directive": "^2.9.22",
 		"node-sass": "<5",
 		"popper.js": "^1.16.1",
 		"rxjs": "^6.6.3",
