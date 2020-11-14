@@ -15,6 +15,9 @@
 		<span id="configObso">{{ configObsoText }}</span>
 	</div>
 	<div class="centre" style="padding-top: 10px">
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProgress()">Progress</button>
+	</div>
+	<div class="centre" style="padding-top: 10px">
 		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()" tooltip="Auto-Placed Tooltip" autoPlacement="true">Image Test</button>
 	</div>
 	<div *ngIf="isCanvasVisible" class="centre" style="padding-top: 10px">

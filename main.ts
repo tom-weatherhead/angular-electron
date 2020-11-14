@@ -199,7 +199,7 @@ ipcMain.on('set-progress-bar-value-message', (event, ...args) => {
 		const n = args[0];
 
 		// If n < 0 then the progress bar will be removed.
-		// If n > 1 then the progress bar will be switched to intermediate mode.
+		// If n > 1 then the progress bar will be switched to indeterminate mode  (Windows only - it will clamp to 100% otherwise).
 
 		if (n === parseFloat(n) && !Number.isNaN(n) && win) {
 			win.setProgressBar(n);

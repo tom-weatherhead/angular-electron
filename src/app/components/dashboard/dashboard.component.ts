@@ -101,6 +101,10 @@ import { PaletteComponent } from '../palette/palette.component';
 // 	}
 // }
 
+// function loadJpegImageIntoCanvas(jpegImagePath: string, canvas: ElementRef<HTMLCanvasElement>, scaleToFit: boolean, preserveAspectRatio: boolean): void {
+// 	const foo = mapImageRectToCanvasRect(imageWidth, imageHeight, canvasWidth, canvasHeight, scaleToFit, preserveAspectRatio);
+// }
+
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -280,6 +284,22 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		canvasImage.copyFromArray(image.width, image.height, image.data);
 		canvasImage.drawOnCanvas(0, 0);
 		this.changeDetectorRef.detectChanges();
+	}
+
+	public async onClickProgress(n = 0): Promise<void> {
+		await this.electronService.setProgressBarValue(n);
+
+		if (n >= 0) {
+			if (n >= 1) {
+				n = -1; // Hide the progress bar
+			} else {
+				n += 0.125 * 0.125; // 1 / 64
+			}
+
+			setTimeout(async () => {
+				await this.onClickProgress(n);
+			}, 125);
+		}
 	}
 
 	private updateBasicCanvasSize(): void {

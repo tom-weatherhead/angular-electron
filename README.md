@@ -12,8 +12,8 @@ Obligatory BadgeFest:
 [![forks][forks-badge-image]][forks-url]
 [![repo dependents][repo-dependents-badge-image]][repo-dependents-url]
 [![pkg dependents][pkg-dependents-badge-image]][pkg-dependents-url]
-[![types][types-badge-image]][types-url]
-[![install size][install-size-badge-image]][install-size-url]
+<!-- [![types][types-badge-image]][types-url] -->
+<!-- [![install size][install-size-badge-image]][install-size-url] -->
 [![known vulnerabilities][known-vulnerabilities-badge-image]][known-vulnerabilities-url]
 [![lines of code][lines-of-code-badge-image]][lines-of-code-url]
 [![technical debt][technical-debt-badge-image]][technical-debt-url]
@@ -25,8 +25,16 @@ Obligatory BadgeFest:
 <!-- [![commits][commits-badge-image]][commits-url]
 [![last commit][last-commit-badge-image]][last-commit-url] -->
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" width="100" />
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg" width="100" />
+<table>
+	<tr>
+		<td>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" width="100" />
+		</td>
+		<td>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg" width="100" />
+		</td>
+	</tr>
+</table>
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
@@ -70,6 +78,6 @@ Obligatory BadgeFest:
 [prettier-badge-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
 [license-badge-image]: https://img.shields.io/github/license/mashape/apistatus.svg
-[license-url]: https://github.com/tom-weatherhead/thaw-macd/blob/master/LICENSE
+[license-url]: https://github.com/tom-weatherhead/angular-electron/blob/master/LICENSE
 [fossa-badge-image]: https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmoment%2Fmoment.svg?type=shield
 [fossa-badge-url]: https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmoment%2Fmoment?ref=badge_shield
