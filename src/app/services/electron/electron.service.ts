@@ -104,23 +104,6 @@ export class ElectronService {
 			this._fs = window.require('fs');
 			this._os = window.require('os');
 			this._path = window.require('path');
-			// this._process = window.require('process');
-
-			// if (this.screen) {
-			// 	const primaryDisplay = this.screen.getPrimaryDisplay();
-
-			// 	console.log('primaryDisplay is', primaryDisplay);
-			// 	console.log(
-			// 		'primaryDisplay.workArea is',
-			// 		primaryDisplay.workArea
-			// 	);
-			// } else {
-			// 	console.log('this.screen is', this.screen);
-			// }
-
-			// console.log(`Platform: ${this._os.platform()}`); // -> darwin
-			// console.log(`Current directory: ${this._process.cwd()}`); // -> /usr/local/git/sandbox/angular-electron
-			// console.log(`Current directory: ${__dirname}`); // -> /usr/local/git/sandbox/angular-electron/dist
 
 			// console.log('process.sandboxed :', this.process.sandboxed);
 			// console.log('process.type :', this.process.type);
@@ -153,15 +136,14 @@ export class ElectronService {
 			// 	this.process.getSystemVersion()
 			// );
 
-			// console.log('app.getAppPath() :', this.remote.app.getAppPath()); // -> '/usr/local/git/sandbox/angular-electron'
 			// console.log(
 			// 	'clipboard.availableFormats:',
 			// 	this.clipboard.availableFormats()
 			// ); // -> 'text/plain'
 
-			console.log(
-				'Setting handler for Electron event: gpu-info-update'
-			);
+			// console.log(
+			// 	'Setting handler for Electron event: gpu-info-update'
+			// );
 			this.app.on(
 				'gpu-info-update',
 				(event: { preventDefault: () => void }) => {
@@ -234,8 +216,6 @@ export class ElectronService {
 	}
 
 	// public get process(): typeof process {
-	// 	// return this._process;
-
 	// 	return this.process;
 	// }
 
@@ -255,93 +235,93 @@ export class ElectronService {
 		this.app.showAboutPanel();
 	}
 
+	// childProcess.exec() returns a ChildProcess:
+
+	// interface ChildProcess extends events.EventEmitter {
+	// 	stdin: Writable | null;
+	// 	stdout: Readable | null;
+	// 	stderr: Readable | null;
+	// 	readonly channel?: Pipe | null;
+	// 	readonly stdio: [
+	// 		Writable | null, // stdin
+	// 		Readable | null, // stdout
+	// 		Readable | null, // stderr
+	// 		Readable | Writable | null | undefined, // extra
+	// 		Readable | Writable | null | undefined // extra
+	// 	];
+	// 	readonly killed: boolean;
+	// 	readonly pid: number;
+	// 	readonly connected: boolean;
+	// 	readonly exitCode: number | null;
+	// 	readonly signalCode: number | null;
+	// 	readonly spawnargs: string[];
+	// 	readonly spawnfile: string;
+	// 	kill(signal?: NodeJS.Signals | number): boolean;
+	// 	send(message: any, callback?: (error: Error | null) => void): boolean;
+	// 	send(message: any, sendHandle?: net.Socket | net.Server, callback?: (error: Error | null) => void): boolean;
+	// 	send(message: any, sendHandle?: net.Socket | net.Server, options?: MessageOptions, callback?: (error: Error | null) => void): boolean;
+	// 	disconnect(): void;
+	// 	unref(): void;
+	// 	ref(): void;
+
+	// 	/**
+	// 	* events.EventEmitter
+	// 	* 1. close
+	// 	* 2. disconnect
+	// 	* 3. error
+	// 	* 4. exit
+	// 	* 5. message
+	// 	*/
+
+	// 	addListener(event: string, listener: (...args: any[]) => void): this;
+	// 	addListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
+	// 	addListener(event: "disconnect", listener: () => void): this;
+	// 	addListener(event: "error", listener: (err: Error) => void): this;
+	// 	addListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
+	// 	addListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
+
+	// 	emit(event: string | symbol, ...args: any[]): boolean;
+	// 	emit(event: "close", code: number, signal: NodeJS.Signals): boolean;
+	// 	emit(event: "disconnect"): boolean;
+	// 	emit(event: "error", err: Error): boolean;
+	// 	emit(event: "exit", code: number | null, signal: NodeJS.Signals | null): boolean;
+	// 	emit(event: "message", message: any, sendHandle: net.Socket | net.Server): boolean;
+
+	// 	on(event: string, listener: (...args: any[]) => void): this;
+	// 	on(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
+	// 	on(event: "disconnect", listener: () => void): this;
+	// 	on(event: "error", listener: (err: Error) => void): this;
+	// 	on(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
+	// 	on(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
+
+	// 	once(event: string, listener: (...args: any[]) => void): this;
+	// 	once(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
+	// 	once(event: "disconnect", listener: () => void): this;
+	// 	once(event: "error", listener: (err: Error) => void): this;
+	// 	once(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
+	// 	once(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
+
+	// 	prependListener(event: string, listener: (...args: any[]) => void): this;
+	// 	prependListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
+	// 	prependListener(event: "disconnect", listener: () => void): this;
+	// 	prependListener(event: "error", listener: (err: Error) => void): this;
+	// 	prependListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
+	// 	prependListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
+
+	// 	prependOnceListener(event: string, listener: (...args: any[]) => void): this;
+	// 	prependOnceListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
+	// 	prependOnceListener(event: "disconnect", listener: () => void): this;
+	// 	prependOnceListener(event: "error", listener: (err: Error) => void): this;
+	// 	prependOnceListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
+	// 	prependOnceListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
+	// }
+
 	public executeChildProcess(command: string): Promise<string> {
 		return new Promise<string>(
 			(
 				resolve: (value?: string) => void,
 				reject: (reason?: unknown) => void
 			): void => {
-				// childProcess.exec() returns a ChildProcess:
-
-				// interface ChildProcess extends events.EventEmitter {
-				// 	stdin: Writable | null;
-				// 	stdout: Readable | null;
-				// 	stderr: Readable | null;
-				// 	readonly channel?: Pipe | null;
-				// 	readonly stdio: [
-				// 		Writable | null, // stdin
-				// 		Readable | null, // stdout
-				// 		Readable | null, // stderr
-				// 		Readable | Writable | null | undefined, // extra
-				// 		Readable | Writable | null | undefined // extra
-				// 	];
-				// 	readonly killed: boolean;
-				// 	readonly pid: number;
-				// 	readonly connected: boolean;
-				// 	readonly exitCode: number | null;
-				// 	readonly signalCode: number | null;
-				// 	readonly spawnargs: string[];
-				// 	readonly spawnfile: string;
-				// 	kill(signal?: NodeJS.Signals | number): boolean;
-				// 	send(message: any, callback?: (error: Error | null) => void): boolean;
-				// 	send(message: any, sendHandle?: net.Socket | net.Server, callback?: (error: Error | null) => void): boolean;
-				// 	send(message: any, sendHandle?: net.Socket | net.Server, options?: MessageOptions, callback?: (error: Error | null) => void): boolean;
-				// 	disconnect(): void;
-				// 	unref(): void;
-				// 	ref(): void;
-
-				// 	/**
-				// 	* events.EventEmitter
-				// 	* 1. close
-				// 	* 2. disconnect
-				// 	* 3. error
-				// 	* 4. exit
-				// 	* 5. message
-				// 	*/
-
-				// 	addListener(event: string, listener: (...args: any[]) => void): this;
-				// 	addListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
-				// 	addListener(event: "disconnect", listener: () => void): this;
-				// 	addListener(event: "error", listener: (err: Error) => void): this;
-				// 	addListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
-				// 	addListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
-
-				// 	emit(event: string | symbol, ...args: any[]): boolean;
-				// 	emit(event: "close", code: number, signal: NodeJS.Signals): boolean;
-				// 	emit(event: "disconnect"): boolean;
-				// 	emit(event: "error", err: Error): boolean;
-				// 	emit(event: "exit", code: number | null, signal: NodeJS.Signals | null): boolean;
-				// 	emit(event: "message", message: any, sendHandle: net.Socket | net.Server): boolean;
-
-				// 	on(event: string, listener: (...args: any[]) => void): this;
-				// 	on(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
-				// 	on(event: "disconnect", listener: () => void): this;
-				// 	on(event: "error", listener: (err: Error) => void): this;
-				// 	on(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
-				// 	on(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
-
-				// 	once(event: string, listener: (...args: any[]) => void): this;
-				// 	once(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
-				// 	once(event: "disconnect", listener: () => void): this;
-				// 	once(event: "error", listener: (err: Error) => void): this;
-				// 	once(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
-				// 	once(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
-
-				// 	prependListener(event: string, listener: (...args: any[]) => void): this;
-				// 	prependListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
-				// 	prependListener(event: "disconnect", listener: () => void): this;
-				// 	prependListener(event: "error", listener: (err: Error) => void): this;
-				// 	prependListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
-				// 	prependListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
-
-				// 	prependOnceListener(event: string, listener: (...args: any[]) => void): this;
-				// 	prependOnceListener(event: "close", listener: (code: number, signal: NodeJS.Signals) => void): this;
-				// 	prependOnceListener(event: "disconnect", listener: () => void): this;
-				// 	prependOnceListener(event: "error", listener: (err: Error) => void): this;
-				// 	prependOnceListener(event: "exit", listener: (code: number | null, signal: NodeJS.Signals | null) => void): this;
-				// 	prependOnceListener(event: "message", listener: (message: any, sendHandle: net.Socket | net.Server) => void): this;
-				// }
-
 				this.childProcess.exec(
 					command,
 					(
@@ -351,8 +331,14 @@ export class ElectronService {
 					): void => {
 						const execException = error as ExecException;
 
-						// if (error) {
-						if (typeof execException !== 'undefined') {
+						if (execException) {
+							console.error(
+								'execException:',
+								typeof execException,
+								execException
+							);
+							reject(execException);
+						} else if (error) {
 							console.error(
 								'childProcess.exec error:',
 								typeof error,
@@ -390,18 +376,18 @@ export class ElectronService {
 		}
 	}
 
-	public addAsynchronousReplyListener(
-		channel: string,
-		fnListener: (event: IpcRendererEvent, ...args: unknown[]) => void
-	): void {
-		// Angular receives a message from the Electron main process.
-		// This message could be a reply to a previous message sent from
-		// the Electron main process to Angular.
+	// public addAsynchronousReplyListener(
+	// 	channel: string,
+	// 	fnListener: (event: IpcRendererEvent, ...args: unknown[]) => void
+	// ): void {
+	// 	// Angular receives a message from the Electron main process.
+	// 	// This message could be a reply to a previous message sent from
+	// 	// the Electron main process to Angular.
 
-		if (isElectronAvailable()) {
-			this.ipcRenderer.on(channel, fnListener);
-		}
-	}
+	// 	if (isElectronAvailable()) {
+	// 		this.ipcRenderer.on(channel, fnListener);
+	// 	}
+	// }
 
 	public addAsynchronousReplyOneTimeListener(
 		channel: string,
@@ -442,48 +428,6 @@ export class ElectronService {
 		} else {
 			return this.remote.getCurrentWindow();
 		}
-	}
-
-	public getConfigJson(): Promise<unknown> {
-		if (!isElectronAvailable()) {
-			return Promise.reject(new Error('Electron is not available'));
-		}
-
-		return new Promise<unknown>(
-			(
-				resolve: (value?: unknown) => void,
-				reject: (reason?: unknown) => void
-			): void => {
-				this.addAsynchronousReplyOneTimeListener(
-					'get-config-json-reply',
-					(event: IpcRendererEvent, ...args: unknown[]): void => {
-						console.log(
-							'getConfigJson() : get-config-json-reply reply:',
-							args.length,
-							...args
-						);
-
-						if (args.length === 1 && args[0]) {
-							const configJson = args[0];
-
-							console.log(
-								'getConfigJson() : configJson is:',
-								typeof configJson,
-								configJson
-							);
-
-							resolve(configJson);
-						} else {
-							reject(
-								new Error('Could not get the config.json')
-							);
-						}
-					}
-				);
-
-				this.sendAsynchronousMessage('get-config-json-message');
-			}
-		);
 	}
 
 	public setProgressBarValue(n: number): Promise<boolean> {

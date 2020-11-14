@@ -10,15 +10,13 @@ import {
 	ViewChild
 } from '@angular/core';
 
-// import { pointwise } from 'thaw-common-utilities.ts';
-
 import { Colours } from 'thaw-colour';
 
 const widthPerDataPoint = 16;
-const widthPerDot = 6;
+// const widthPerDot = 6;
 
-const barXMarginWidth = 2;
-const barYMarginHeight = 2;
+// const barXMarginWidth = 2;
+// const barYMarginHeight = 2;
 
 @Component({
 	selector: 'app-basic-canvas',
@@ -108,10 +106,6 @@ export class BasicCanvasComponent implements AfterViewInit {
 	// }
 
 	public onClickCanvas(event: { offsetX: number; offsetY: number }): void {
-		// console.log(
-		// 	`(offsetX, offsetY) : (${event.offsetX}, ${event.offsetY})`
-		// );
-
 		if (this.selectedColour) {
 			this.drawFilledRectangle(
 				event.offsetX,
@@ -144,306 +138,285 @@ export class BasicCanvasComponent implements AfterViewInit {
 			this.canvasHeight,
 			Colours.black
 		);
-
-		// if (this.canvasContext) {
-		// 	this.canvasContext.fillStyle = Colours.black;
-		// 	this.canvasContext.beginPath();
-		// 	this.canvasContext.fillRect(
-		// 		0,
-		// 		0,
-		// 		this.canvasWidth,
-		// 		this.canvasHeight
-		// 	);
-		// 	// For an unfilled rectangle, replace fillRect() with rect(). Then fillStyle does not need to be set.
-		// 	this.canvasContext.stroke(); // Actually draw the shapes that are described above.
-		// }
-
-		// console.log(
-		// 	`Canvas width and height: ${this.canvasWidth} x ${this.canvasHeight}`
-		// );
 	}
 
-	protected setChartMinMaxYValues(...data: number[][]): boolean {
-		const fnSliceAndFilter = (array: number[]) =>
-			array
-				.slice(-this.canvasWidthInDataPoints)
-				.filter((n) => !Number.isNaN(n));
+	// protected setChartMinMaxYValues(...data: number[][]): boolean {
+	// 	const fnSliceAndFilter = (array: number[]) =>
+	// 		array
+	// 			.slice(-this.canvasWidthInDataPoints)
+	// 			.filter((n) => !Number.isNaN(n));
 
-		const maxHigh = Math.max(
-			...data.map((data2) => Math.max(...fnSliceAndFilter(data2)))
-		);
-		const minLow = Math.min(
-			...data.map((data2) => Math.min(...fnSliceAndFilter(data2)))
-		);
+	// 	const maxHigh = Math.max(
+	// 		...data.map((data2) => Math.max(...fnSliceAndFilter(data2)))
+	// 	);
+	// 	const minLow = Math.min(
+	// 		...data.map((data2) => Math.min(...fnSliceAndFilter(data2)))
+	// 	);
 
-		if (maxHigh - minLow < 0.000005) {
-			this.priceAtCanvasBottom = NaN;
-			this.priceAtCanvasTop = NaN;
-			return false;
-		}
+	// 	if (maxHigh - minLow < 0.000005) {
+	// 		this.priceAtCanvasBottom = NaN;
+	// 		this.priceAtCanvasTop = NaN;
+	// 		return false;
+	// 	}
 
-		// Create a 10% margin at each of the top and bottom:
-		const yPriceMargin = (maxHigh - minLow) * 0.1;
+	// 	// Create a 10% margin at each of the top and bottom:
+	// 	const yPriceMargin = (maxHigh - minLow) * 0.1;
 
-		if (this.autoSetMinY) {
-			this.priceAtCanvasBottom = minLow - yPriceMargin;
-		}
+	// 	if (this.autoSetMinY) {
+	// 		this.priceAtCanvasBottom = minLow - yPriceMargin;
+	// 	}
 
-		if (this.autoSetMaxY) {
-			this.priceAtCanvasTop = maxHigh + yPriceMargin;
-		}
+	// 	if (this.autoSetMaxY) {
+	// 		this.priceAtCanvasTop = maxHigh + yPriceMargin;
+	// 	}
 
-		return true;
-	}
+	// 	return true;
+	// }
 
-	protected beginDrawing(...data: number[][]): boolean {
-		this.clearCanvas();
+	// protected beginDrawing(...data: number[][]): boolean {
+	// 	this.clearCanvas();
 
-		return this.setChartMinMaxYValues(...data);
-	}
+	// 	return this.setChartMinMaxYValues(...data);
+	// }
 
-	// public endDrawing(): void {
+	// private mapPriceToYCoord(price: number): number {
+	// 	return (
+	// 		this.canvasHeight -
+	// 		1 -
+	// 		Math.round(
+	// 			((price - this.priceAtCanvasBottom) * this.canvasHeight) /
+	// 				(this.priceAtCanvasTop - this.priceAtCanvasBottom)
+	// 		)
+	// 	);
+	// }
+
+	// protected drawLine(data: number[], lineColour: string): void {
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
+
+	// 	data = data.slice(-this.canvasWidthInDataPoints);
+
+	// 	let x =
+	// 		(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint +
+	// 		Math.floor(widthPerDataPoint / 2);
+	// 	let lineStarted = false;
+
+	// 	this.canvasContext.strokeStyle = lineColour;
+	// 	// lineCap, lineJoin, lineWidth, miterLimit
+	// 	this.canvasContext.lineWidth = 2; // ?
+	// 	this.canvasContext.beginPath();
+
+	// 	for (const datum of data) {
+	// 		if (Number.isNaN(datum)) {
+	// 			lineStarted = false;
+	// 		} else {
+	// 			const y = this.mapPriceToYCoord(datum);
+
+	// 			if (lineStarted) {
+	// 				this.canvasContext.lineTo(x, y);
+	// 			} else {
+	// 				this.canvasContext.moveTo(x, y);
+	// 				lineStarted = true;
+	// 			}
+	// 		}
+
+	// 		x += widthPerDataPoint;
+	// 	}
+
 	// 	this.canvasContext.stroke();
 	// }
 
-	private mapPriceToYCoord(price: number): number {
-		return (
-			this.canvasHeight -
-			1 -
-			Math.round(
-				((price - this.priceAtCanvasBottom) * this.canvasHeight) /
-					(this.priceAtCanvasTop - this.priceAtCanvasBottom)
-			)
-		);
-	}
+	// protected drawHorizontalLine(y: number, lineColour: string): void {
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
 
-	protected drawLine(data: number[], lineColour: string): void {
-		if (!this.canvasContext) {
-			return;
-		}
+	// 	y = this.mapPriceToYCoord(y);
 
-		data = data.slice(-this.canvasWidthInDataPoints);
+	// 	this.canvasContext.strokeStyle = lineColour;
+	// 	this.canvasContext.lineWidth = 2; // ?
+	// 	this.canvasContext.beginPath();
+	// 	this.canvasContext.moveTo(0, y);
+	// 	this.canvasContext.lineTo(this.canvasWidth, y);
+	// 	this.canvasContext.stroke();
+	// }
 
-		let x =
-			(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint +
-			Math.floor(widthPerDataPoint / 2);
-		let lineStarted = false;
+	// protected drawBar(
+	// 	x: number,
+	// 	y: number,
+	// 	barOutlineColour: string,
+	// 	barFillColour: string
+	// ): void {
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
 
-		this.canvasContext.strokeStyle = lineColour;
-		// lineCap, lineJoin, lineWidth, miterLimit
-		this.canvasContext.lineWidth = 2; // ?
-		this.canvasContext.beginPath();
+	// 	y = this.mapPriceToYCoord(y);
+	// 	this.canvasContext.strokeStyle = barOutlineColour;
+	// 	this.canvasContext.fillStyle = barFillColour;
+	// 	this.canvasContext.lineWidth = 1; // ?
+	// 	this.canvasContext.beginPath();
+	// 	this.canvasContext.fillRect(
+	// 		x + barXMarginWidth,
+	// 		y,
+	// 		widthPerDataPoint - 2 * barXMarginWidth,
+	// 		this.canvasHeight - y
+	// 	);
+	// 	this.canvasContext.rect(
+	// 		x + barXMarginWidth,
+	// 		y,
+	// 		widthPerDataPoint - 2 * barXMarginWidth,
+	// 		this.canvasHeight - y
+	// 	);
+	// 	this.canvasContext.stroke();
+	// }
 
-		for (const datum of data) {
-			if (Number.isNaN(datum)) {
-				lineStarted = false;
-			} else {
-				const y = this.mapPriceToYCoord(datum);
+	// protected drawBars(
+	// 	data: number[],
+	// 	barOutlineColour: string,
+	// 	barFillColour: string
+	// ): void {
+	// 	data = data.slice(-this.canvasWidthInDataPoints);
 
-				if (lineStarted) {
-					this.canvasContext.lineTo(x, y);
-				} else {
-					this.canvasContext.moveTo(x, y);
-					lineStarted = true;
-				}
-			}
+	// 	let x =
+	// 		(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint;
 
-			x += widthPerDataPoint;
-		}
+	// 	for (const datum of data) {
+	// 		if (!Number.isNaN(datum)) {
+	// 			this.drawBar(x, datum, barOutlineColour, barFillColour);
+	// 		}
 
-		this.canvasContext.stroke();
-	}
+	// 		x += widthPerDataPoint;
+	// 	}
+	// }
 
-	protected drawHorizontalLine(y: number, lineColour: string): void {
-		if (!this.canvasContext) {
-			return;
-		}
+	// protected drawDot(
+	// 	x: number,
+	// 	y: number,
+	// 	dotOutlineColour: string,
+	// 	dotFillColour: string
+	// ): void {
+	// 	// widthPerDot
 
-		y = this.mapPriceToYCoord(y);
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
 
-		this.canvasContext.strokeStyle = lineColour;
-		this.canvasContext.lineWidth = 2; // ?
-		this.canvasContext.beginPath();
-		this.canvasContext.moveTo(0, y);
-		this.canvasContext.lineTo(this.canvasWidth, y);
-		this.canvasContext.stroke();
-	}
+	// 	y = this.mapPriceToYCoord(y);
 
-	protected drawBar(
-		x: number,
-		y: number,
-		barOutlineColour: string,
-		barFillColour: string
-	): void {
-		if (!this.canvasContext) {
-			return;
-		}
+	// 	const dx1 = Math.floor((widthPerDataPoint - widthPerDot) / 2);
+	// 	const dy1 = -Math.floor(widthPerDot / 2);
 
-		y = this.mapPriceToYCoord(y);
-		this.canvasContext.strokeStyle = barOutlineColour;
-		this.canvasContext.fillStyle = barFillColour;
-		this.canvasContext.lineWidth = 1; // ?
-		this.canvasContext.beginPath();
-		this.canvasContext.fillRect(
-			x + barXMarginWidth,
-			y,
-			widthPerDataPoint - 2 * barXMarginWidth,
-			this.canvasHeight - y
-		);
-		this.canvasContext.rect(
-			x + barXMarginWidth,
-			y,
-			widthPerDataPoint - 2 * barXMarginWidth,
-			this.canvasHeight - y
-		);
-		this.canvasContext.stroke();
-	}
+	// 	this.canvasContext.strokeStyle = dotOutlineColour;
+	// 	this.canvasContext.fillStyle = dotFillColour;
+	// 	this.canvasContext.lineWidth = 1; // ?
+	// 	this.canvasContext.beginPath();
+	// 	this.canvasContext.fillRect(
+	// 		x + dx1,
+	// 		y + dy1,
+	// 		widthPerDot,
+	// 		widthPerDot
+	// 	);
+	// 	this.canvasContext.rect(x + dx1, y + dy1, widthPerDot, widthPerDot);
+	// 	this.canvasContext.stroke();
+	// }
 
-	protected drawBars(
-		data: number[],
-		barOutlineColour: string,
-		barFillColour: string
-	): void {
-		data = data.slice(-this.canvasWidthInDataPoints);
+	// public drawDots(data: number[], pointsColour: string): void {
+	// 	data = data.slice(-this.canvasWidthInDataPoints);
 
-		let x =
-			(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint;
+	// 	let x =
+	// 		(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint;
 
-		for (const datum of data) {
-			if (!Number.isNaN(datum)) {
-				this.drawBar(x, datum, barOutlineColour, barFillColour);
-			}
+	// 	for (const datum of data) {
+	// 		if (!Number.isNaN(datum)) {
+	// 			this.drawDot(x, datum, pointsColour, pointsColour);
+	// 		}
 
-			x += widthPerDataPoint;
-		}
-	}
+	// 		x += widthPerDataPoint;
+	// 	}
+	// }
 
-	protected drawDot(
-		x: number,
-		y: number,
-		dotOutlineColour: string,
-		dotFillColour: string
-	): void {
-		// widthPerDot
+	// protected drawPriceVsTimeLine(
+	// 	times: number[],
+	// 	priceResults: number[],
+	// 	timeResults: number[],
+	// 	lineColour: string
+	// ): void {
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
 
-		if (!this.canvasContext) {
-			return;
-		}
+	// 	times = times.slice(-this.canvasWidthInDataPoints);
 
-		y = this.mapPriceToYCoord(y);
+	// 	if (times.length === 0) {
+	// 		return;
+	// 	}
 
-		const dx1 = Math.floor((widthPerDataPoint - widthPerDot) / 2);
-		const dy1 = -Math.floor(widthPerDot / 2);
+	// 	timeResults = timeResults.filter((t) => t >= times[0]);
+	// 	priceResults = priceResults.slice(-timeResults.length);
 
-		this.canvasContext.strokeStyle = dotOutlineColour;
-		this.canvasContext.fillStyle = dotFillColour;
-		this.canvasContext.lineWidth = 1; // ?
-		this.canvasContext.beginPath();
-		this.canvasContext.fillRect(
-			x + dx1,
-			y + dy1,
-			widthPerDot,
-			widthPerDot
-		);
-		this.canvasContext.rect(x + dx1, y + dy1, widthPerDot, widthPerDot);
-		this.canvasContext.stroke();
-	}
+	// 	let x =
+	// 		(this.canvasWidthInDataPoints - times.length) *
+	// 			widthPerDataPoint +
+	// 		Math.floor(widthPerDataPoint / 2);
+	// 	let lineStarted = false;
+	// 	let i = 0;
 
-	public drawDots(data: number[], pointsColour: string): void {
-		data = data.slice(-this.canvasWidthInDataPoints);
+	// 	this.canvasContext.strokeStyle = lineColour;
+	// 	this.canvasContext.lineWidth = 2; // ?
+	// 	this.canvasContext.beginPath();
 
-		let x =
-			(this.canvasWidthInDataPoints - data.length) * widthPerDataPoint;
+	// 	for (const time of times) {
+	// 		if (Number.isNaN(time)) {
+	// 			lineStarted = false;
+	// 		} else if (i < timeResults.length && time >= timeResults[i]) {
+	// 			const y = this.mapPriceToYCoord(priceResults[i]);
 
-		for (const datum of data) {
-			if (!Number.isNaN(datum)) {
-				this.drawDot(x, datum, pointsColour, pointsColour);
-			}
+	// 			i++;
 
-			x += widthPerDataPoint;
-		}
-	}
+	// 			if (lineStarted) {
+	// 				this.canvasContext.lineTo(x, y);
+	// 			} else {
+	// 				this.canvasContext.moveTo(x, y);
+	// 				lineStarted = true;
+	// 			}
+	// 		}
 
-	protected drawPriceVsTimeLine(
-		times: number[],
-		priceResults: number[],
-		timeResults: number[],
-		lineColour: string
-	): void {
-		if (!this.canvasContext) {
-			return;
-		}
+	// 		x += widthPerDataPoint;
+	// 	}
 
-		times = times.slice(-this.canvasWidthInDataPoints);
+	// 	this.canvasContext.stroke();
+	// }
 
-		if (times.length === 0) {
-			return;
-		}
+	// private drawHorizontalBar(
+	// 	y: number,
+	// 	barWidth: number,
+	// 	barHeight: number,
+	// 	barOutlineColour: string,
+	// 	barFillColour: string
+	// ): void {
+	// 	if (!this.canvasContext) {
+	// 		return;
+	// 	}
 
-		timeResults = timeResults.filter((t) => t >= times[0]);
-		priceResults = priceResults.slice(-timeResults.length);
-
-		let x =
-			(this.canvasWidthInDataPoints - times.length) *
-				widthPerDataPoint +
-			Math.floor(widthPerDataPoint / 2);
-		let lineStarted = false;
-		let i = 0;
-
-		this.canvasContext.strokeStyle = lineColour;
-		this.canvasContext.lineWidth = 2; // ?
-		this.canvasContext.beginPath();
-
-		for (const time of times) {
-			if (Number.isNaN(time)) {
-				lineStarted = false;
-			} else if (i < timeResults.length && time >= timeResults[i]) {
-				const y = this.mapPriceToYCoord(priceResults[i]);
-
-				i++;
-
-				if (lineStarted) {
-					this.canvasContext.lineTo(x, y);
-				} else {
-					this.canvasContext.moveTo(x, y);
-					lineStarted = true;
-				}
-			}
-
-			x += widthPerDataPoint;
-		}
-
-		this.canvasContext.stroke();
-	}
-
-	private drawHorizontalBar(
-		y: number,
-		barWidth: number,
-		barHeight: number,
-		barOutlineColour: string,
-		barFillColour: string
-	): void {
-		if (!this.canvasContext) {
-			return;
-		}
-
-		// y = this.mapPriceToYCoord(y);
-		this.canvasContext.strokeStyle = barOutlineColour;
-		this.canvasContext.fillStyle = barFillColour;
-		this.canvasContext.lineWidth = 1; // ?
-		this.canvasContext.beginPath();
-		this.canvasContext.fillRect(
-			0,
-			y + barYMarginHeight,
-			barWidth,
-			barHeight - 2 * barYMarginHeight
-		);
-		this.canvasContext.rect(
-			0,
-			y + barYMarginHeight,
-			barWidth,
-			barHeight - 2 * barYMarginHeight
-		);
-		this.canvasContext.stroke();
-	}
+	// 	// y = this.mapPriceToYCoord(y);
+	// 	this.canvasContext.strokeStyle = barOutlineColour;
+	// 	this.canvasContext.fillStyle = barFillColour;
+	// 	this.canvasContext.lineWidth = 1; // ?
+	// 	this.canvasContext.beginPath();
+	// 	this.canvasContext.fillRect(
+	// 		0,
+	// 		y + barYMarginHeight,
+	// 		barWidth,
+	// 		barHeight - 2 * barYMarginHeight
+	// 	);
+	// 	this.canvasContext.rect(
+	// 		0,
+	// 		y + barYMarginHeight,
+	// 		barWidth,
+	// 		barHeight - 2 * barYMarginHeight
+	// 	);
+	// 	this.canvasContext.stroke();
+	// }
 }

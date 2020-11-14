@@ -122,7 +122,6 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	public ipcPongSpanText = '';
 
 	private subscribedToSelectedColourObservable = false;
-	// public selectedColour = '';
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -208,18 +207,19 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	public onClickStart(): void {
 		// this.loggerService.writeTest();
 
-		// this.electronService
-		// 	.testChildProcessExec('ls -lh /Users/tomw')
-		// 	.then((result: string) => {
-		// 		console.log('testChildProcessExec result:\n', result);
-		// 	})
-		// 	.catch((error: unknown) => {
-		// 		console.error(
-		// 			'testChildProcessExec error:',
-		// 			typeof error,
-		// 			error
-		// 		);
-		// 	});
+		this.electronService
+			// .executeChildProcess(`ls -lh ${this.electronService.cwd()}`)
+			.executeChildProcess('date')
+			.then((result: string) => {
+				console.log('executeChildProcess result:\n', result);
+			})
+			.catch((error: unknown) => {
+				console.error(
+					'executeChildProcess error:',
+					typeof error,
+					error
+				);
+			});
 
 		// console.log(
 		// 	'Clipboard:',
@@ -279,7 +279,6 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 
 		canvasImage.copyFromArray(image.width, image.height, image.data);
 		canvasImage.drawOnCanvas(0, 0);
-		// this.isCanvasVisible = true;
 		this.changeDetectorRef.detectChanges();
 	}
 
