@@ -37,7 +37,7 @@ const isPlatformLinux = platform === 'linux';
 
 // const screen = !isPlatformWindows && require('electron').screen;
 
-let win: BrowserWindow;
+let win: BrowserWindow | null = null;
 
 // macOS: The screen is 1680x1050 (??? I thought it was 2880x1800. The difference between logical pixels and device pixels, I would guess.)
 
@@ -102,7 +102,10 @@ function turnTouchBarOn() {
 		backgroundColor: '#7851A9',
 		click: () => {
 			console.log('Hello Buckwheat!');
-			win.webContents.send('touchbar-button-toggle-angular-colour');
+
+			if (win) {
+				win.webContents.send('touchbar-button-toggle-angular-colour');
+			}
 		}
 	});
 	const touchBar = new TouchBar({
@@ -120,11 +123,13 @@ function turnTouchBarOn() {
 		]
 	});
 
-	win.setTouchBar(touchBar);
+	if (win) {
+		win.setTouchBar(touchBar);
+	}
 }
 
 function turnTouchBarOff() {
-	if (!isPlatformMac) {
+	if (!isPlatformMac || !win) {
 		return;
 	}
 
@@ -196,7 +201,7 @@ ipcMain.on('set-progress-bar-value-message', (event, ...args) => {
 		// If n < 0 then the progress bar will be removed.
 		// If n > 1 then the progress bar will be switched to intermediate mode.
 
-		if (n === parseFloat(n) && !Number.isNaN(n)) {
+		if (n === parseFloat(n) && !Number.isNaN(n) && win) {
 			win.setProgressBar(n);
 			result = true;
 		}
@@ -315,10 +320,9 @@ function createWindow() {
 	win.loadFile(`${__dirname}/dist/index.html`);
 
 	// Event that fires when the window is closed.
-	// win.on('closed', () => {
-	// 	// win = null;
-	// 	win = undefined;
-	// });
+	win.on('closed', () => {
+		win = null;
+	});
 
 	// win.on('resize', () => {
 	// 	ipcMain.send('on-browser-window-resize', primaryDisplayWorkArea.x, primaryDisplayWorkArea.y, primaryDisplayWorkArea.width, primaryDisplayWorkArea.height);
@@ -389,7 +393,10 @@ function createWindow() {
 				// app.dock.setIcon(image: NativeImage | string);
 
 				case 'F5':
-					win.webContents.reload();
+					if (win) {
+						win.webContents.reload();
+					}
+
 					event.preventDefault();
 					break;
 
@@ -398,7 +405,10 @@ function createWindow() {
 					break;
 
 				case 'F12':
-					win.webContents.toggleDevTools();
+					if (win) {
+						win.webContents.toggleDevTools();
+					}
+
 					event.preventDefault();
 					break;
 
@@ -414,7 +424,9 @@ function createWindow() {
 	// Configure the application's icon in the tray
 
 	tray.on('click', () => {
-		win.isVisible() ? win.hide() : win.show();
+		if (win) {
+			win.isVisible() ? win.hide() : win.show();
+		}
 	});
 
 	// win.webContents.on('did-finish-load', () => {

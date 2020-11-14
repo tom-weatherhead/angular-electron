@@ -100,6 +100,8 @@ export class PaletteComponent implements AfterViewInit {
 
 	public canvasContext: CanvasRenderingContext2D | null = null; // View
 
+	public selectedColourName = '';
+
 	private readonly canvasWidth =
 		paletteColourSwatchWidth * fourBitPaletteColourNames.length;
 	private readonly canvasHeight = paletteColourSwatchHeight;
@@ -123,16 +125,19 @@ export class PaletteComponent implements AfterViewInit {
 
 	public onClickCanvas(event: { offsetX: number }): void {
 		const i = Math.floor(event.offsetX / paletteColourSwatchWidth);
-		const selectedColourName = fourBitPaletteColourNames[i];
-		const selectedColourAsString = fourBitPalette[selectedColourName];
 
-		console.log(
-			'PaletteComponent.onClickCanvas() : selectedColour is',
-			selectedColourName,
-			selectedColourAsString
-		);
+		this.selectedColourName = fourBitPaletteColourNames[i];
 
-		this.selectedColour.next(selectedColourAsString);
+		// const selectedColourAsString = fourBitPalette[this.selectedColourName];
+
+		// console.log(
+		// 	'PaletteComponent.onClickCanvas() : selectedColour is',
+		// 	this.selectedColourName,
+		// 	selectedColourAsString
+		// );
+
+		// this.selectedColour.next(selectedColourAsString);
+		this.selectedColour.next(fourBitPalette[this.selectedColourName]);
 	}
 
 	private drawPalette(): void {

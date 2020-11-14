@@ -46,6 +46,61 @@ import { BasicCanvasComponent } from '../basic-canvas/basic-canvas.component';
 
 import { PaletteComponent } from '../palette/palette.component';
 
+// Use this function when resizing / cropping / matting an image
+// in order to display it in an HTML canvas:
+
+// function mapImageRectToCanvasRect(
+// 	imageWidth: number,
+// 	imageHeight: number,
+// 	canvasWidth: number,
+// 	canvasHeight: number,
+// 	scaleToFit: boolean,
+// 	preserveAspectRatio: boolean
+// ): { x: number; y: number; w: number; h: number; needsMatting: boolean } {
+// 	if (!scaleToFit) {
+// 		return {
+// 			x: Math.floor((canvasWidth - imageWidth) / 2),
+// 			y: Math.floor((canvasHeight - imageHeight) / 2),
+// 			w: imageWidth,
+// 			h: imageHeight,
+// 			needsMatting:
+// 				imageWidth < canvasWidth || imageHeight < canvasHeight
+// 		};
+// 	} else if (!preserveAspectRatio) {
+// 		return {
+// 			x: 0,
+// 			y: 0,
+// 			w: canvasWidth,
+// 			h: canvasHeight,
+// 			needsMatting: false
+// 		};
+// 	} else if (imageWidth * canvasHeight >= imageHeight * canvasWidth) {
+// 		const newImageHeight = Math.round(
+// 			(imageHeight * canvasWidth) / imageWidth
+// 		); // <= canvasHeight
+
+// 		return {
+// 			x: 0,
+// 			y: Math.floor((canvasHeight - newImageHeight) / 2),
+// 			w: canvasWidth,
+// 			h: newImageHeight,
+// 			needsMatting: newImageHeight < canvasHeight
+// 		};
+// 	} else {
+// 		const newImageWidth = Math.round(
+// 			(imageWidth * canvasHeight) / imageHeight
+// 		); // <= canvasWidth
+
+// 		return {
+// 			x: Math.floor((canvasWidth - newImageWidth) / 2),
+// 			y: 0,
+// 			w: newImageWidth,
+// 			h: canvasHeight,
+// 			needsMatting: newImageWidth < canvasWidth
+// 		};
+// 	}
+// }
+
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -53,8 +108,8 @@ import { PaletteComponent } from '../palette/palette.component';
 })
 /* implements AfterContentChecked */
 export class DashboardComponent implements AfterContentChecked, OnInit {
-	@ViewChild('sampleCanvas', { static: false })
-	sampleCanvas: ElementRef<HTMLCanvasElement>;
+	@ViewChild('imageCanvas', { static: false })
+	imageCanvas: ElementRef<HTMLCanvasElement>;
 
 	@ViewChild('palette', { static: false })
 	palette: PaletteComponent;
@@ -131,19 +186,19 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 
 			this.palette.selectedColourObservable.subscribe(
 				(selectedColour: string) => {
-					console.log(
-						'Dashboard: selectedColour is',
-						selectedColour
-					);
+					// console.log(
+					// 	'Dashboard: selectedColour is',
+					// 	selectedColour
+					// );
 					// this.selectedColour = selectedColour;
 					this.basicCanvas.selectedColour = selectedColour;
-					this.basicCanvas.drawFilledRectangle(
-						0,
-						0,
-						100,
-						100,
-						selectedColour
-					);
+					// this.basicCanvas.drawFilledRectangle(
+					// 	0,
+					// 	0,
+					// 	100,
+					// 	100,
+					// 	selectedColour
+					// );
 				}
 			);
 			this.subscribedToSelectedColourObservable = true;
@@ -220,7 +275,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			'src/assets/images/image256x256.jpg'
 		);
 		const image = await this.fileService.loadJpegImageFromFile(path);
-		const canvasImage = createCanvasImage(this.sampleCanvas);
+		const canvasImage = createCanvasImage(this.imageCanvas);
 
 		canvasImage.copyFromArray(image.width, image.height, image.data);
 		canvasImage.drawOnCanvas(0, 0);
