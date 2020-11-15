@@ -84,6 +84,7 @@
 		"thaw-angular-service-library": "^0.0.0",
 		"thaw-colour": "0.0.3",
 		"thaw-common-utilities.ts": "^0.0.3",
+		"thaw-image-processing.ts": "file:thaw-image-processing.ts.tgz",
 		"tslib": "^2.0.3",
 		"zone.js": "~0.10.3"
 	},

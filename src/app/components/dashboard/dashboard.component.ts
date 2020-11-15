@@ -26,6 +26,11 @@ import * as _ from 'lodash';
 // 	ifDefinedThenElse
 // } from 'thaw-common-utilities.ts';
 
+import {
+	modeBicubic,
+	resampleImageFromBuffer
+} from 'thaw-image-processing.ts';
+
 // Interfaces
 
 import { createCanvasImage } from '../../models/image.model';
@@ -278,10 +283,15 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			this.electronService.cwd(),
 			'src/assets/images/image256x256.jpg'
 		);
-		const image = await this.fileService.loadJpegImageFromFile(path);
+		const image2 = await this.fileService.loadJpegImageFromFile(path);
+		const image = resampleImageFromBuffer(image2, 200, 100, modeBicubic);
 		const canvasImage = createCanvasImage(this.imageCanvas);
 
-		canvasImage.copyFromArray(image.width, image.height, image.data);
+		canvasImage.copyFromArray(
+			image.width,
+			image.height,
+			Uint8ClampedArray.from(image.data)
+		);
 		canvasImage.drawOnCanvas(0, 0);
 		this.changeDetectorRef.detectChanges();
 	}

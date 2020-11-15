@@ -4,19 +4,21 @@ import { Injectable } from '@angular/core';
 
 import * as jpeg from 'jpeg-js';
 
-import {
-	// ICreateImageOptions,
-	IImage
-} from '../../interfaces/iimage.interface';
+import { CreateThAWImage, IThAWImage } from 'thaw-image-processing.ts';
+
+// import {
+// 	// ICreateImageOptions,
+// 	IImage
+// } from '../../interfaces/iimage.interface';
 
 import { ElectronService } from '../electron/electron.service';
 
-import {
-	// createCanvasImage,
-	// createImage
-	// createImageFromExistingData
-	createOffscreenImage
-} from '../../models/image.model';
+// import {
+// 	// createCanvasImage,
+// 	// createImage
+// 	// createImageFromExistingData
+// 	createOffscreenImage
+// } from '../../models/image.model';
 
 // interface IElectronOffscreenImage {
 // 	width: number;
@@ -32,7 +34,9 @@ export class FileService {
 
 	// This method creates an offscreen image:
 
-	public async loadJpegImageFromFile(filePath: string): Promise<IImage> {
+	public async loadJpegImageFromFile(
+		filePath: string
+	): Promise<IThAWImage> {
 		if (!this.electronService.isAvailable) {
 			throw new Error(
 				'FileService.loadJpegImageFromFile() : Electron is unavailable'
@@ -46,10 +50,12 @@ export class FileService {
 
 		// The returned value is Promise<{ width: number; height number; data: ? }>
 
-		return createOffscreenImage(
-			image.width,
-			image.height,
-			Uint8ClampedArray.from(image.data)
-		);
+		// return createOffscreenImage(
+		// 	image.width,
+		// 	image.height,
+		// 	Uint8ClampedArray.from(image.data)
+		// );
+
+		return CreateThAWImage(image.width, image.height, -1, -1, image.data);
 	}
 }
