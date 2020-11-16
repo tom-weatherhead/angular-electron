@@ -17,14 +17,17 @@ import { ElementRef } from '@angular/core';
 // 	getTypeString
 // } from 'thaw-common-utilities.ts';
 
+// import { createThAWImage, IThAWImage } from 'thaw-image-processing.ts';
+import { defaultBytesPerPixel } from 'thaw-image-processing.ts';
+
 import {
 	ICanvasImage,
 	ICreateImageOptions,
-	IImage,
-	IOffscreenImage
+	IImage // ,
+	// IOffscreenImage
 } from '../interfaces/iimage.interface';
 
-const defaultBytesPerPixel = 4;
+// const defaultBytesPerPixel = 4;
 
 // In JavaScript's ImageData interface,
 // pixel data is always in the order RGBA.
@@ -75,123 +78,128 @@ abstract class ImageBase implements IImage {
 	): void;
 }
 
-class OffscreenImage extends ImageBase implements IOffscreenImage {
-	constructor(
-		width: number,
-		height: number,
-		data?: Uint8ClampedArray,
-		options?: ICreateImageOptions
-	) {
-		// TODO: If data is undefined then allocate a Uint8ClampedArray
-		// of the appropriate size
+// TODO? :
+// class OffscreenImage extends ThAWImage implements IOffscreenImage {
+// 	...
+// }
 
-		super(width, height, data, options);
-	}
+// class OffscreenImage extends ImageBase implements IOffscreenImage {
+// 	constructor(
+// 		width: number,
+// 		height: number,
+// 		data?: Uint8ClampedArray,
+// 		options?: ICreateImageOptions
+// 	) {
+// 		// TODO: If data is undefined then allocate a Uint8ClampedArray
+// 		// of the appropriate size
 
-	public copyFromArray(
-		arrayImageWidth: number,
-		arrayImageHeight: number,
-		arrayImageData: Uint8ClampedArray
-	): void {
-		console.error('OffscreenImage.copyFromArray() : Not implemented');
-		console.error(
-			'OffscreenImage.copyFromArray() : arrayImageWidth is',
-			arrayImageWidth
-		);
-		console.error(
-			'OffscreenImage.copyFromArray() : arrayImageHeight is',
-			arrayImageHeight
-		);
-		console.error(
-			'OffscreenImage.copyFromArray() : arrayImageData is',
-			arrayImageData
-		);
-	}
+// 		super(width, height, data, options);
+// 	}
 
-	public copyFromImage(
-		srcImage: IImage,
-		srcLeft: number,
-		srcTop: number,
-		dstLeft: number,
-		dstTop: number,
-		width: number,
-		height: number
-	): void {
-		console.error('OffscreenImage.copyFromImage() : Not implemented');
-		console.error(
-			'OffscreenImage.copyFromImage() : srcImage is',
-			srcImage
-		);
-		console.error('OffscreenImage.copyFromImage() : srcLeft is', srcLeft);
-		console.error('OffscreenImage.copyFromImage() : srcTop is', srcTop);
-		console.error('OffscreenImage.copyFromImage() : dstLeft is', dstLeft);
-		console.error('OffscreenImage.copyFromImage() : dstTop is', dstTop);
-		console.error('OffscreenImage.copyFromImage() : width is', width);
-		console.error('OffscreenImage.copyFromImage() : height is', height);
-	}
+// 	public copyFromArray(
+// 		arrayImageWidth: number,
+// 		arrayImageHeight: number,
+// 		arrayImageData: Uint8ClampedArray
+// 	): void {
+// 		console.error('OffscreenImage.copyFromArray() : Not implemented');
+// 		console.error(
+// 			'OffscreenImage.copyFromArray() : arrayImageWidth is',
+// 			arrayImageWidth
+// 		);
+// 		console.error(
+// 			'OffscreenImage.copyFromArray() : arrayImageHeight is',
+// 			arrayImageHeight
+// 		);
+// 		console.error(
+// 			'OffscreenImage.copyFromArray() : arrayImageData is',
+// 			arrayImageData
+// 		);
+// 	}
 
-	// The most generic image data copier:
+// 	public copyFromImage(
+// 		srcImage: IImage,
+// 		srcLeft: number,
+// 		srcTop: number,
+// 		dstLeft: number,
+// 		dstTop: number,
+// 		width: number,
+// 		height: number
+// 	): void {
+// 		console.error('OffscreenImage.copyFromImage() : Not implemented');
+// 		console.error(
+// 			'OffscreenImage.copyFromImage() : srcImage is',
+// 			srcImage
+// 		);
+// 		console.error('OffscreenImage.copyFromImage() : srcLeft is', srcLeft);
+// 		console.error('OffscreenImage.copyFromImage() : srcTop is', srcTop);
+// 		console.error('OffscreenImage.copyFromImage() : dstLeft is', dstLeft);
+// 		console.error('OffscreenImage.copyFromImage() : dstTop is', dstTop);
+// 		console.error('OffscreenImage.copyFromImage() : width is', width);
+// 		console.error('OffscreenImage.copyFromImage() : height is', height);
+// 	}
 
-	// public copyFromImageToImage(
-	// 	srcImage: IImage,
-	// 	srcLeft: number,
-	// 	srcTop: number,
-	// 	dstImage: IImage,
-	// 	dstLeft: number,
-	// 	dstTop: number,
-	// 	width: number,
-	// 	height: number
-	// ): void { ... }
-	public copyFromArrayToArray(
-		srcData: Uint8ClampedArray,
-		srcLeft: number,
-		srcTop: number,
-		srcImageWidth: number,
-		srcImageHeight: number,
-		srcBytesPerPixel: number,
-		srcBytesPerLine: number,
-		dstData: Uint8ClampedArray,
-		dstLeft: number,
-		dstTop: number,
-		dstImageWidth: number,
-		dstImageHeight: number,
-		dstBytesPerPixel: number,
-		dstBytesPerLine: number,
-		width: number,
-		height: number
-	): void {
-		console.error(
-			'OffscreenImage.copyFromArrayToArray() : Not implemented'
-		);
+// 	// The most generic image data copier:
 
-		// First, crop the region of interest (ROI).
-		// Cropping may change any of: srcLeft, srcTop, dstLeft, dstTop, width, height.
+// 	// public copyFromImageToImage(
+// 	// 	srcImage: IImage,
+// 	// 	srcLeft: number,
+// 	// 	srcTop: number,
+// 	// 	dstImage: IImage,
+// 	// 	dstLeft: number,
+// 	// 	dstTop: number,
+// 	// 	width: number,
+// 	// 	height: number
+// 	// ): void { ... }
+// 	public copyFromArrayToArray(
+// 		srcData: Uint8ClampedArray,
+// 		srcLeft: number,
+// 		srcTop: number,
+// 		srcImageWidth: number,
+// 		srcImageHeight: number,
+// 		srcBytesPerPixel: number,
+// 		srcBytesPerLine: number,
+// 		dstData: Uint8ClampedArray,
+// 		dstLeft: number,
+// 		dstTop: number,
+// 		dstImageWidth: number,
+// 		dstImageHeight: number,
+// 		dstBytesPerPixel: number,
+// 		dstBytesPerLine: number,
+// 		width: number,
+// 		height: number
+// 	): void {
+// 		console.error(
+// 			'OffscreenImage.copyFromArrayToArray() : Not implemented'
+// 		);
 
-		// Then copy using a double loop.
-		let srcRowOffset =
-			srcTop * srcBytesPerLine + srcLeft * srcBytesPerPixel;
-		let dstRowOffset =
-			dstTop * dstBytesPerLine + dstLeft * dstBytesPerPixel;
+// 		// First, crop the region of interest (ROI).
+// 		// Cropping may change any of: srcLeft, srcTop, dstLeft, dstTop, width, height.
 
-		for (let y = 0; y < height; y++) {
-			let srcPixelOffset = srcRowOffset;
-			let dstPixelOffset = dstRowOffset;
+// 		// Then copy using a double loop.
+// 		let srcRowOffset =
+// 			srcTop * srcBytesPerLine + srcLeft * srcBytesPerPixel;
+// 		let dstRowOffset =
+// 			dstTop * dstBytesPerLine + dstLeft * dstBytesPerPixel;
 
-			for (let x = 0; x < width; x++) {
-				dstData[dstPixelOffset + 3] = srcData[srcPixelOffset + 3];
-				dstData[dstPixelOffset + 2] = srcData[srcPixelOffset + 2];
-				dstData[dstPixelOffset + 1] = srcData[srcPixelOffset + 1];
-				dstData[dstPixelOffset + 0] = srcData[srcPixelOffset + 0];
+// 		for (let y = 0; y < height; y++) {
+// 			let srcPixelOffset = srcRowOffset;
+// 			let dstPixelOffset = dstRowOffset;
 
-				srcPixelOffset += srcBytesPerPixel;
-				dstPixelOffset += dstBytesPerPixel;
-			}
+// 			for (let x = 0; x < width; x++) {
+// 				dstData[dstPixelOffset + 3] = srcData[srcPixelOffset + 3];
+// 				dstData[dstPixelOffset + 2] = srcData[srcPixelOffset + 2];
+// 				dstData[dstPixelOffset + 1] = srcData[srcPixelOffset + 1];
+// 				dstData[dstPixelOffset + 0] = srcData[srcPixelOffset + 0];
 
-			srcRowOffset += srcBytesPerLine;
-			dstRowOffset += dstBytesPerLine;
-		}
-	}
-}
+// 				srcPixelOffset += srcBytesPerPixel;
+// 				dstPixelOffset += dstBytesPerPixel;
+// 			}
+
+// 			srcRowOffset += srcBytesPerLine;
+// 			dstRowOffset += dstBytesPerLine;
+// 		}
+// 	}
+// }
 
 class CanvasImage extends ImageBase implements ICanvasImage {
 	public readonly canvas: ElementRef<HTMLCanvasElement>;
@@ -259,14 +267,14 @@ class CanvasImage extends ImageBase implements ICanvasImage {
 	}
 }
 
-export function createOffscreenImage(
-	width: number,
-	height: number,
-	data?: Uint8ClampedArray,
-	options?: ICreateImageOptions
-): IOffscreenImage {
-	return new OffscreenImage(width, height, data, options);
-}
+// export function createOffscreenImage(
+// 	width: number,
+// 	height: number,
+// 	data?: Uint8ClampedArray,
+// 	options?: ICreateImageOptions
+// ): IOffscreenImage {
+// 	return new OffscreenImage(width, height, data, options);
+// }
 
 export function createCanvasImage(
 	canvas: ElementRef<HTMLCanvasElement>

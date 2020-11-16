@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 import * as jpeg from 'jpeg-js';
 
-import { CreateThAWImage, IThAWImage } from 'thaw-image-processing.ts';
+import { createThAWImage, IThAWImage } from 'thaw-image-processing.ts';
 
 // import {
 // 	// ICreateImageOptions,
@@ -56,6 +56,12 @@ export class FileService {
 		// 	Uint8ClampedArray.from(image.data)
 		// );
 
-		return CreateThAWImage(image.width, image.height, -1, -1, image.data);
+		return createThAWImage(
+			image.width,
+			image.height,
+			undefined,
+			undefined,
+			Uint8ClampedArray.from(image.data)
+		);
 	}
 }

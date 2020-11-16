@@ -40,10 +40,13 @@ export interface ICreateImageOptions {
 // so an Image or IImage can be passed as a parameter
 // to a JavaScript / Node.js function that takes a parameter of type ImageData
 
-export interface IImage {
-	readonly width: number;
-	readonly height: number;
-	readonly data: Uint8ClampedArray;
+// interface ImageData is defined in node_modules/typescript/lib/lib.dom.d.ts line 9552
+
+// export interface IImage {
+// 	readonly width: number;
+// 	readonly height: number;
+// 	readonly data: Uint8ClampedArray;
+export interface IImage extends ImageData {
 	readonly bytesPerPixel: number;
 	readonly bytesPerLine: number;
 
@@ -56,7 +59,7 @@ export interface IImage {
 
 // export interface IOffscreenImage extends IImage {
 // }
-export type IOffscreenImage = IImage;
+// export type IOffscreenImage = IImage;
 
 export interface ICanvasImage extends IImage {
 	asImageData(): ImageData;
