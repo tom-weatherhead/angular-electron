@@ -27,8 +27,8 @@ import * as _ from 'lodash';
 // } from 'thaw-common-utilities.ts';
 
 import {
-	modeBicubic,
-	resampleImageFromBuffer
+	resampleImageFromBuffer,
+	ResamplingMode
 } from 'thaw-image-processing.ts';
 
 // Interfaces
@@ -119,6 +119,12 @@ import { PaletteComponent } from '../palette/palette.component';
 export class DashboardComponent implements AfterContentChecked, OnInit {
 	@ViewChild('imageCanvas', { static: false })
 	imageCanvas: ElementRef<HTMLCanvasElement>;
+
+	@ViewChild('srcImageCanvas', { static: false })
+	srcImageCanvas: ElementRef<HTMLCanvasElement>;
+
+	@ViewChild('dstImageCanvas', { static: false })
+	dstImageCanvas: ElementRef<HTMLCanvasElement>;
 
 	@ViewChild('palette', { static: false })
 	palette: PaletteComponent;
@@ -279,20 +285,55 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	}
 
 	public async onClickImageTest(): Promise<void> {
-		const path = this.electronService.path.join(
+		const imagesDir = this.electronService.path.join(
 			this.electronService.cwd(),
-			'src/assets/images/image256x256.jpg'
+			'src',
+			'assets',
+			'images'
 		);
-		const image2 = await this.fileService.loadJpegImageFromFile(path);
-		const image = resampleImageFromBuffer(image2, 200, 100, modeBicubic);
+		const path256 = this.electronService.path.join(
+			imagesDir,
+			'image256x256.jpg'
+		);
+		const path512 = this.electronService.path.join(
+			imagesDir,
+			'image512x512.jpg'
+		);
+		const image256x256 = await this.fileService.loadJpegImageFromFile(
+			path256
+		);
+		const image = resampleImageFromBuffer(
+			image256x256,
+			200,
+			100,
+			ResamplingMode.Bicubic
+		);
+		// BUG in bicubic upsampling? Investigate.
+		const image512x512 = await this.fileService.loadJpegImageFromFile(
+			path512
+		);
 		const canvasImage = createCanvasImage(this.imageCanvas);
+		const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
+		const canvasDstImage = createCanvasImage(this.dstImageCanvas);
 
-		canvasImage.copyFromArray(
-			image.width,
-			image.height,
-			Uint8ClampedArray.from(image.data)
-		);
+		// TODO: canvasImage.copyFromImage(image);
+		canvasImage.copyFromArray(image.width, image.height, image.data);
 		canvasImage.drawOnCanvas(0, 0);
+
+		canvasSrcImage.copyFromArray(
+			image512x512.width,
+			image512x512.height,
+			image512x512.data
+		);
+		canvasSrcImage.drawOnCanvas(0, 0);
+
+		canvasDstImage.copyFromArray(
+			image512x512.width,
+			image512x512.height,
+			image512x512.data
+		);
+		canvasDstImage.drawOnCanvas(0, 0);
+
 		this.changeDetectorRef.detectChanges();
 	}
 

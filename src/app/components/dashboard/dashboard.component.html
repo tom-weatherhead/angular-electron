@@ -20,7 +20,15 @@
 	<div class="centre" style="padding-top: 10px">
 		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()" tooltip="Auto-Placed Tooltip" autoPlacement="true">Image Test</button>
 	</div>
-	<div *ngIf="isCanvasVisible" class="centre" style="padding-top: 10px">
+	<div class="centre" style="padding-top: 10px">
+		<div style="float: left; width: 50%">
+			<canvas #srcImageCanvas style="float: unset" width="512" height="512"></canvas>
+		</div>
+		<div style="float: right; width: 50%">
+			<canvas #dstImageCanvas style="float: unset" width="512" height="512"></canvas>
+		</div>
+	</div>
+	<div *ngIf="isCanvasVisible" style="float: unset" class="centre" style="padding-top: 10px">
 		<canvas #imageCanvas width="256" height="256"></canvas>
 	</div>
 	<div class="centre" style="padding-top: 10px">
