@@ -27,6 +27,7 @@ import * as _ from 'lodash';
 // } from 'thaw-common-utilities.ts';
 
 import {
+	pixelateImageFromBuffer,
 	resampleImageFromBuffer,
 	ResamplingMode
 } from 'thaw-image-processing.ts';
@@ -309,9 +310,11 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			ResamplingMode.Bicubic
 		);
 		// BUG in bicubic upsampling? Investigate.
-		const image512x512 = await this.fileService.loadJpegImageFromFile(
+		const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
 			path512
 		);
+		const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+
 		const canvasImage = createCanvasImage(this.imageCanvas);
 		const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
 		const canvasDstImage = createCanvasImage(this.dstImageCanvas);
@@ -321,16 +324,16 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		canvasImage.drawOnCanvas(0, 0);
 
 		canvasSrcImage.copyFromArray(
-			image512x512.width,
-			image512x512.height,
-			image512x512.data
+			srcImage512x512.width,
+			srcImage512x512.height,
+			srcImage512x512.data
 		);
 		canvasSrcImage.drawOnCanvas(0, 0);
 
 		canvasDstImage.copyFromArray(
-			image512x512.width,
-			image512x512.height,
-			image512x512.data
+			dstImage512x512.width,
+			dstImage512x512.height,
+			dstImage512x512.data
 		);
 		canvasDstImage.drawOnCanvas(0, 0);
 
