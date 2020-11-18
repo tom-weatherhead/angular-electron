@@ -28,10 +28,14 @@ Obligatory BadgeFest:
 <table>
 	<tr>
 		<td>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" width="100" />
+			<a href="https://github.com/angular/angular">
+				<img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg" width="100" />
+			</a>
 		</td>
 		<td>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg" width="100" />
+			<a href="https://github.com/electron/electron">
+				<img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Electron_Software_Framework_Logo.svg" width="100" />
+			</a>
 		</td>
 	</tr>
 </table>

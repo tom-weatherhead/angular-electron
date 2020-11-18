@@ -27,6 +27,7 @@ import * as _ from 'lodash';
 // } from 'thaw-common-utilities.ts';
 
 import {
+	gaussianBlurImage,
 	pixelateImageFromBuffer,
 	resampleImageFromBuffer,
 	ResamplingMode
@@ -313,7 +314,15 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
 			path512
 		);
-		const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+		// const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+
+		const sigma = 4.0;
+		const kernelSize = 21; // kernelSize must be an odd positive integer smaller than 999.
+		const dstImage512x512 = gaussianBlurImage(
+			srcImage512x512,
+			sigma,
+			kernelSize
+		);
 
 		const canvasImage = createCanvasImage(this.imageCanvas);
 		const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
