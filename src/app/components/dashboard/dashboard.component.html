@@ -17,8 +17,19 @@
 	<div class="centre" style="padding-top: 10px">
 		<button class="btn-primary" ngbButtonLabel (click)="onClickProgress()">Progress</button>
 	</div>
-	<div class="centre" style="padding-top: 10px">
+	<!-- <div class="centre" style="padding-top: 10px">
 		<button class="btn-primary" ngbButtonLabel (click)="onClickImageTest()" tooltip="Auto-Placed Tooltip" autoPlacement="true">Image Test</button>
+	</div> -->
+	<div class="centre" style="padding-top: 10px">
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('composite')">Composite</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('desaturate')">Desaturate</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('flip')">Flip</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('gaussian-blur')">Gaussian Blur</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('mirror')">Mirror</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('pixelate')">Pixelate</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('rot90cw')">Rot 90 CW</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('rot180')">Rot 180</button>
+		<button class="btn-primary" ngbButtonLabel (click)="onClickProcessImage('rot90ccw')">Rot 90 CCW</button>
 	</div>
 	<div class="centre" style="padding-top: 10px">
 		<div style="float: left; width: 50%">
@@ -28,9 +39,9 @@
 			<canvas #dstImageCanvas style="float: unset" width="512" height="512"></canvas>
 		</div>
 	</div>
-	<div *ngIf="isCanvasVisible" style="float: unset" class="centre" style="padding-top: 10px">
+	<!-- <div *ngIf="isCanvasVisible" style="float: unset" class="centre" style="padding-top: 10px">
 		<canvas #imageCanvas width="256" height="256"></canvas>
-	</div>
+	</div> -->
 	<div class="centre" style="padding-top: 10px">
 		<app-palette #palette></app-palette>
 	</div>

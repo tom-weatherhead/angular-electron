@@ -2,6 +2,8 @@
 
 // import { ElementRef } from '@angular/core';
 
+import { IThAWImage } from 'thaw-image-processing.ts';
+
 export interface ICreateImageOptions {
 	bytesPerPixel?: number;
 	bytesPerLine?: number;
@@ -65,5 +67,7 @@ export interface ICanvasImage extends IImage {
 	asImageData(): ImageData;
 	asImageBitmap(): Promise<ImageBitmap>;
 
+	clearCanvas(): void;
+	copyFromImage(image: IThAWImage): void;
 	drawOnCanvas(dx: number, dy: number): Promise<void>;
 }

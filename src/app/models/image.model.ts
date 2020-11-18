@@ -17,8 +17,9 @@ import { ElementRef } from '@angular/core';
 // 	getTypeString
 // } from 'thaw-common-utilities.ts';
 
-// import { createThAWImage, IThAWImage } from 'thaw-image-processing.ts';
-import { defaultBytesPerPixel } from 'thaw-image-processing.ts';
+import { Colours } from 'thaw-colour';
+
+import { defaultBytesPerPixel, IThAWImage } from 'thaw-image-processing.ts';
 
 import {
 	ICanvasImage,
@@ -26,8 +27,6 @@ import {
 	IImage // ,
 	// IOffscreenImage
 } from '../interfaces/iimage.interface';
-
-// const defaultBytesPerPixel = 4;
 
 // In JavaScript's ImageData interface,
 // pixel data is always in the order RGBA.
@@ -227,12 +226,49 @@ class CanvasImage extends ImageBase implements ICanvasImage {
 		this.imageData = imageData;
 	}
 
+	private get canvasWidth(): number {
+		return typeof this.canvas !== 'undefined' &&
+			typeof this.canvas.nativeElement !== 'undefined'
+			? this.canvas.nativeElement.width
+			: NaN;
+	}
+
+	private get canvasHeight(): number {
+		return typeof this.canvas !== 'undefined' &&
+			typeof this.canvas.nativeElement !== 'undefined'
+			? this.canvas.nativeElement.height
+			: NaN;
+	}
+
 	public asImageData(): ImageData {
 		return this.imageData;
 	}
 
 	public async asImageBitmap(): Promise<ImageBitmap> {
 		return await createImageBitmap(this.asImageData());
+	}
+
+	public drawFilledRectangle(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		fillColour: string
+	): void {
+		if (this.context) {
+			this.context.fillStyle = fillColour;
+			this.context.fillRect(x, y, width, height);
+		}
+	}
+
+	public clearCanvas(): void {
+		this.drawFilledRectangle(
+			0,
+			0,
+			this.canvasWidth,
+			this.canvasHeight,
+			Colours.black
+		);
 	}
 
 	public copyFromArray(
@@ -260,6 +296,10 @@ class CanvasImage extends ImageBase implements ICanvasImage {
 
 			rowOffset += srcBytesPerLine;
 		}
+	}
+
+	public copyFromImage(image: IThAWImage): void {
+		this.copyFromArray(image.width, image.height, image.data);
 	}
 
 	public async drawOnCanvas(dx = 0, dy = 0): Promise<void> {

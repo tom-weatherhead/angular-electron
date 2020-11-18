@@ -12,8 +12,6 @@ Obligatory BadgeFest:
 [![forks][forks-badge-image]][forks-url]
 [![repo dependents][repo-dependents-badge-image]][repo-dependents-url]
 [![pkg dependents][pkg-dependents-badge-image]][pkg-dependents-url]
-<!-- [![types][types-badge-image]][types-url] -->
-<!-- [![install size][install-size-badge-image]][install-size-url] -->
 [![known vulnerabilities][known-vulnerabilities-badge-image]][known-vulnerabilities-url]
 [![lines of code][lines-of-code-badge-image]][lines-of-code-url]
 [![technical debt][technical-debt-badge-image]][technical-debt-url]
@@ -22,7 +20,9 @@ Obligatory BadgeFest:
 [![code style: prettier][prettier-badge-image]][prettier-url]
 [![license][license-badge-image]][license-url]
 [![FOSSA Status][fossa-badge-image]][fossa-badge-url]
-<!-- [![commits][commits-badge-image]][commits-url]
+<!-- [![types][types-badge-image]][types-url]
+[![install size][install-size-badge-image]][install-size-url]
+[![commits][commits-badge-image]][commits-url]
 [![last commit][last-commit-badge-image]][last-commit-url] -->
 
 <table>

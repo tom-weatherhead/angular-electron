@@ -27,10 +27,19 @@ import * as _ from 'lodash';
 // } from 'thaw-common-utilities.ts';
 
 import {
+	compositeTest,
+	desaturateRGBA,
+	flipImage,
 	gaussianBlurImage,
+	IThAWImage,
+	mapColoursInImageFromBuffer,
+	mirrorImage,
 	pixelateImageFromBuffer,
-	resampleImageFromBuffer,
-	ResamplingMode
+	// resampleImageFromBuffer,
+	// ResamplingMode,
+	rotate180DegreesFromImage,
+	rotate90DegreesClockwiseFromImage,
+	rotate90DegreesCounterclockwiseFromImage
 } from 'thaw-image-processing.ts';
 
 // Interfaces
@@ -119,8 +128,8 @@ import { PaletteComponent } from '../palette/palette.component';
 })
 /* implements AfterContentChecked */
 export class DashboardComponent implements AfterContentChecked, OnInit {
-	@ViewChild('imageCanvas', { static: false })
-	imageCanvas: ElementRef<HTMLCanvasElement>;
+	// @ViewChild('imageCanvas', { static: false })
+	// imageCanvas: ElementRef<HTMLCanvasElement>;
 
 	@ViewChild('srcImageCanvas', { static: false })
 	srcImageCanvas: ElementRef<HTMLCanvasElement>;
@@ -134,11 +143,13 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 	@ViewChild('basicCanvas', { static: false })
 	basicCanvas: BasicCanvasComponent;
 
-	public isCanvasVisible = true;
+	// public isCanvasVisible = true;
 	public configObsoText = '';
 	public ipcPongSpanText = '';
 
 	private subscribedToSelectedColourObservable = false;
+
+	private haveImagesBeenInitialized = false;
 
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
@@ -168,10 +179,10 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 		}
 	}
 
-	public ngAfterContentChecked(): void {
-		if (!this.subscribedToSelectedColourObservable) {
-			console.log('DashboardComponent.ngAfterContentChecked()');
-		}
+	public async ngAfterContentChecked(): Promise<void> {
+		// if (!this.subscribedToSelectedColourObservable) {
+		// 	console.log('DashboardComponent.ngAfterContentChecked()');
+		// }
 
 		// 2020-10-30 : Successful test of file system access via Electron:
 
@@ -218,6 +229,41 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 				}
 			);
 			this.subscribedToSelectedColourObservable = true;
+		}
+
+		if (!this.haveImagesBeenInitialized) {
+			const imagesDir = this.electronService.path.join(
+				this.electronService.cwd(),
+				'src',
+				'assets',
+				'images'
+			);
+
+			const path512 = this.electronService.path.join(
+				imagesDir,
+				'image512x512.jpg'
+			);
+			const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
+				path512
+			);
+
+			const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
+			const canvasDstImage = createCanvasImage(this.dstImageCanvas);
+
+			// TODO:
+			canvasSrcImage.copyFromImage(srcImage512x512);
+			// canvasSrcImage.copyFromArray(
+			// 	srcImage512x512.width,
+			// 	srcImage512x512.height,
+			// 	srcImage512x512.data
+			// );
+			canvasSrcImage.drawOnCanvas(0, 0);
+
+			canvasDstImage.clearCanvas();
+
+			this.changeDetectorRef.detectChanges();
+
+			this.haveImagesBeenInitialized = true;
 		}
 	}
 
@@ -286,58 +332,142 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			});
 	}
 
-	public async onClickImageTest(): Promise<void> {
+	// public async onClickImageTest(): Promise<void> {
+	// 	const imagesDir = this.electronService.path.join(
+	// 		this.electronService.cwd(),
+	// 		'src',
+	// 		'assets',
+	// 		'images'
+	// 	);
+	// 	const path256 = this.electronService.path.join(
+	// 		imagesDir,
+	// 		'image256x256.jpg'
+	// 	);
+	// 	const path512 = this.electronService.path.join(
+	// 		imagesDir,
+	// 		'image512x512.jpg'
+	// 	);
+	// 	const image256x256 = await this.fileService.loadJpegImageFromFile(
+	// 		path256
+	// 	);
+	// 	const image = resampleImageFromBuffer(
+	// 		image256x256,
+	// 		200,
+	// 		100,
+	// 		ResamplingMode.Bicubic
+	// 	);
+	// 	// BUG in bicubic upsampling? Investigate.
+	// 	const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
+	// 		path512
+	// 	);
+	// 	// const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+
+	// 	const sigma = 4.0;
+	// 	const kernelSize = 21; // kernelSize must be an odd positive integer smaller than 999.
+	// 	const dstImage512x512 = gaussianBlurImage(
+	// 		srcImage512x512,
+	// 		sigma,
+	// 		kernelSize
+	// 	);
+
+	// 	const canvasImage = createCanvasImage(this.imageCanvas);
+	// 	const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
+	// 	const canvasDstImage = createCanvasImage(this.dstImageCanvas);
+
+	// 	// TODO: canvasImage.copyFromImage(image);
+	// 	canvasImage.copyFromArray(image.width, image.height, image.data);
+	// 	canvasImage.drawOnCanvas(0, 0);
+
+	// 	canvasSrcImage.copyFromArray(
+	// 		srcImage512x512.width,
+	// 		srcImage512x512.height,
+	// 		srcImage512x512.data
+	// 	);
+	// 	canvasSrcImage.drawOnCanvas(0, 0);
+
+	// 	canvasDstImage.copyFromArray(
+	// 		dstImage512x512.width,
+	// 		dstImage512x512.height,
+	// 		dstImage512x512.data
+	// 	);
+	// 	canvasDstImage.drawOnCanvas(0, 0);
+
+	// 	this.changeDetectorRef.detectChanges();
+	// }
+
+	public async onClickProcessImage(operator: string): Promise<void> {
 		const imagesDir = this.electronService.path.join(
 			this.electronService.cwd(),
 			'src',
 			'assets',
 			'images'
 		);
-		const path256 = this.electronService.path.join(
-			imagesDir,
-			'image256x256.jpg'
-		);
 		const path512 = this.electronService.path.join(
 			imagesDir,
 			'image512x512.jpg'
 		);
-		const image256x256 = await this.fileService.loadJpegImageFromFile(
-			path256
-		);
-		const image = resampleImageFromBuffer(
-			image256x256,
-			200,
-			100,
-			ResamplingMode.Bicubic
-		);
-		// BUG in bicubic upsampling? Investigate.
 		const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
 			path512
 		);
-		// const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+
+		let dstImage512x512: IThAWImage;
 
 		const sigma = 4.0;
 		const kernelSize = 21; // kernelSize must be an odd positive integer smaller than 999.
-		const dstImage512x512 = gaussianBlurImage(
-			srcImage512x512,
-			sigma,
-			kernelSize
-		);
 
-		const canvasImage = createCanvasImage(this.imageCanvas);
-		const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
+		switch (operator) {
+			case 'composite':
+				dstImage512x512 = compositeTest(srcImage512x512);
+				break;
+
+			case 'desaturate':
+				dstImage512x512 = mapColoursInImageFromBuffer(
+					srcImage512x512,
+					desaturateRGBA
+				);
+				break;
+
+			case 'flip':
+				dstImage512x512 = flipImage(srcImage512x512);
+				break;
+
+			case 'gaussian-blur':
+				dstImage512x512 = gaussianBlurImage(
+					srcImage512x512,
+					sigma,
+					kernelSize
+				);
+				break;
+
+			case 'mirror':
+				dstImage512x512 = mirrorImage(srcImage512x512);
+				break;
+
+			case 'pixelate':
+				dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+				break;
+
+			case 'rot90cw':
+				dstImage512x512 = rotate90DegreesClockwiseFromImage(
+					srcImage512x512
+				);
+				break;
+
+			case 'rot180':
+				dstImage512x512 = rotate180DegreesFromImage(srcImage512x512);
+				break;
+
+			case 'rot90ccw':
+				dstImage512x512 = rotate90DegreesCounterclockwiseFromImage(
+					srcImage512x512
+				);
+				break;
+
+			default:
+				throw new Error(`Unsupported image operation '${operator}'`);
+		}
+
 		const canvasDstImage = createCanvasImage(this.dstImageCanvas);
-
-		// TODO: canvasImage.copyFromImage(image);
-		canvasImage.copyFromArray(image.width, image.height, image.data);
-		canvasImage.drawOnCanvas(0, 0);
-
-		canvasSrcImage.copyFromArray(
-			srcImage512x512.width,
-			srcImage512x512.height,
-			srcImage512x512.data
-		);
-		canvasSrcImage.drawOnCanvas(0, 0);
 
 		canvasDstImage.copyFromArray(
 			dstImage512x512.width,
