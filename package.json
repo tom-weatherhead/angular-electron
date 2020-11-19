@@ -82,7 +82,6 @@
 		"popper.js": "^1.16.1",
 		"rxjs": "^6.6.3",
 		"sass": "^1.29.0",
-		"thaw-angular-service-library": "^0.0.0",
 		"thaw-colour": "0.0.3",
 		"thaw-common-utilities.ts": "^0.0.3",
 		"thaw-image-processing.ts": "^0.0.1",
@@ -131,7 +130,8 @@
 		"typescript": "~4.0.5",
 		"webdriver-manager": "^12.1.7"
 	},
-	"// bundledDependencies": "... is an array of package names",
+	"// bundleDependencies": "... is an array of package names",
+	"bundleDependencies": [],
 	"// build": {
 		"appId": "org.2hrd4u.app.angular-electron",
 		"icon": "dist/assets/icons/tom-weatherhead-512x512.png"
@@ -156,6 +156,5 @@
 		"Sgt. Pepper <shoot1st@thinkl8r.mil>"
 	],
 	"author": "Tom Weatherhead <thaw@2hrd4u.org> (https://github.com/tom-weatherhead)",
-	"license": "MIT",
-	"bundleDependencies": []
+	"license": "MIT"
 }
