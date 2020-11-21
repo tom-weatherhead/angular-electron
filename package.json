@@ -76,7 +76,6 @@
 		"@ng-bootstrap/ng-bootstrap": "^8.0.0",
 		"bootstrap": "^4.5.3",
 		"core-js": "^3.7.0",
-		"jpeg-js": "^0.4.2",
 		"jquery": "^3.5.1",
 		"ng2-tooltip-directive": "^2.9.22",
 		"popper.js": "^1.16.1",
@@ -84,7 +83,7 @@
 		"sass": "^1.29.0",
 		"thaw-colour": "0.0.3",
 		"thaw-common-utilities.ts": "^0.0.3",
-		"thaw-image-processing.ts": "^0.0.1",
+		"thaw-image-processing.ts": "file:thaw-image-processing.ts.tgz",
 		"tslib": "^2.0.3",
 		"zone.js": "~0.10.3"
 	},

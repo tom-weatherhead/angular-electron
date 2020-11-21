@@ -10,7 +10,10 @@ import {
 	BrowserWindow,
 	ipcMain,
 	Menu,
+	MenuItem,
+	MenuItemConstructorOptions,
 	screen,
+	shell,
 	TouchBar,
 	Tray
 } from 'electron';
@@ -86,6 +89,181 @@ function setDockMenu() {
 
 	app.dock.setMenu(dockMenu);
 	app.dock.setIcon(macOsAppIconFilePath);
+}
+
+function setApplicationMenu() {
+	const isMac = process.platform === 'darwin';
+
+	const appMenuTemplate: MenuItemConstructorOptions = {
+		label: app.name,
+		submenu: [
+			{ role: 'about' },
+			{ type: 'separator' },
+			{ role: 'services' },
+			{ type: 'separator' },
+			{ role: 'hide' },
+			// { role: 'hideothers' },
+			{ role: 'unhide' },
+			{ type: 'separator' },
+			{ role: 'quit' }
+		]
+	};
+	const template: (MenuItemConstructorOptions | MenuItem)[] = [
+		// { role: 'fileMenu' }
+		{
+			label: 'File',
+			submenu: [isMac ? { role: 'close' } : { role: 'quit' }]
+		},
+		// { role: 'editMenu' }
+		{
+			/* eslint-disable no-mixed-spaces-and-tabs */
+			label: 'Edit',
+			submenu: isMac
+				? [
+						{ role: 'undo' },
+						{ role: 'redo' },
+						{ type: 'separator' },
+						{ role: 'cut' },
+						{ role: 'copy' },
+						{ role: 'paste' },
+						{ role: 'pasteAndMatchStyle' },
+						{ role: 'delete' },
+						{ role: 'selectAll' },
+						{ type: 'separator' },
+						{
+							label: 'Speech',
+							submenu: [
+								{ role: 'startSpeaking' },
+								{ role: 'stopSpeaking' }
+							]
+						}
+				  ]
+				: [
+						{ role: 'undo' },
+						{ role: 'redo' },
+						{ type: 'separator' },
+						{ role: 'cut' },
+						{ role: 'copy' },
+						{ role: 'paste' },
+						{ role: 'delete' },
+						{ type: 'separator' },
+						{ role: 'selectAll' }
+				  ]
+			/* eslint-enable no-mixed-spaces-and-tabs */
+		},
+		// { role: 'viewMenu' }
+		{
+			label: 'View',
+			submenu: [
+				{ role: 'reload' },
+				{ role: 'forceReload' },
+				{ role: 'toggleDevTools' },
+				{ type: 'separator' },
+				{ role: 'resetZoom' },
+				{ role: 'zoomIn' },
+				{ role: 'zoomOut' },
+				{ type: 'separator' },
+				{ role: 'togglefullscreen' }
+			]
+		},
+		// { role: 'effectsMenu' }
+		{
+			label: 'Effects',
+			submenu: [
+				{
+					label: 'Composite',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Desaturate',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Flip',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Gaussian Blur',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Mirror',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Pixelate',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Rotate 90 CW',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Rotate 180',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				},
+				{
+					label: 'Rotate 90 CCW',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				}
+			]
+		},
+		// { role: 'windowMenu' }
+		{
+			/* eslint-disable no-mixed-spaces-and-tabs */
+			label: 'Window',
+			submenu: isMac
+				? [
+						{ role: 'minimize' },
+						{ role: 'zoom' },
+						{ type: 'separator' },
+						{ role: 'front' },
+						{ type: 'separator' },
+						{ role: 'window' }
+				  ]
+				: [{ role: 'minimize' }, { role: 'zoom' }, { role: 'close' }]
+			/* eslint-enable no-mixed-spaces-and-tabs */
+		},
+		// { role: 'helpMenu' }
+		{
+			role: 'help',
+			submenu: [
+				{
+					label: 'Learn More',
+					click: async () => {
+						await shell.openExternal('https://electronjs.org');
+					}
+				}
+			]
+		}
+	];
+	// ]);
+
+	const macTemplate: (MenuItemConstructorOptions | MenuItem)[] = [
+		appMenuTemplate,
+		...template
+	];
+	const menu = Menu.buildFromTemplate(isMac ? macTemplate : template);
+
+	Menu.setApplicationMenu(menu);
 }
 
 function turnTouchBarOn() {
@@ -435,6 +613,7 @@ function createWindow() {
 	// });
 
 	setDockMenu(); // macOS only
+	setApplicationMenu();
 }
 
 // Create the browser window upon Electron intialization:

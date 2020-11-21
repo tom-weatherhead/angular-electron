@@ -34,7 +34,7 @@ import {
 	IThAWImage,
 	mapColoursInImageFromBuffer,
 	mirrorImage,
-	pixelateImageFromBuffer,
+	pixelateImage,
 	// resampleImageFromBuffer,
 	// ResamplingMode,
 	rotate180DegreesFromImage,
@@ -243,9 +243,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 				imagesDir,
 				'image512x512.jpg'
 			);
-			const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
-				path512
-			);
+			const srcImage512x512 = await this.fileService.loadImage(path512);
 
 			const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
 			const canvasDstImage = createCanvasImage(this.dstImageCanvas);
@@ -332,69 +330,6 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			});
 	}
 
-	// public async onClickImageTest(): Promise<void> {
-	// 	const imagesDir = this.electronService.path.join(
-	// 		this.electronService.cwd(),
-	// 		'src',
-	// 		'assets',
-	// 		'images'
-	// 	);
-	// 	const path256 = this.electronService.path.join(
-	// 		imagesDir,
-	// 		'image256x256.jpg'
-	// 	);
-	// 	const path512 = this.electronService.path.join(
-	// 		imagesDir,
-	// 		'image512x512.jpg'
-	// 	);
-	// 	const image256x256 = await this.fileService.loadJpegImageFromFile(
-	// 		path256
-	// 	);
-	// 	const image = resampleImageFromBuffer(
-	// 		image256x256,
-	// 		200,
-	// 		100,
-	// 		ResamplingMode.Bicubic
-	// 	);
-	// 	// BUG in bicubic upsampling? Investigate.
-	// 	const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
-	// 		path512
-	// 	);
-	// 	// const dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
-
-	// 	const sigma = 4.0;
-	// 	const kernelSize = 21; // kernelSize must be an odd positive integer smaller than 999.
-	// 	const dstImage512x512 = gaussianBlurImage(
-	// 		srcImage512x512,
-	// 		sigma,
-	// 		kernelSize
-	// 	);
-
-	// 	const canvasImage = createCanvasImage(this.imageCanvas);
-	// 	const canvasSrcImage = createCanvasImage(this.srcImageCanvas);
-	// 	const canvasDstImage = createCanvasImage(this.dstImageCanvas);
-
-	// 	// TODO: canvasImage.copyFromImage(image);
-	// 	canvasImage.copyFromArray(image.width, image.height, image.data);
-	// 	canvasImage.drawOnCanvas(0, 0);
-
-	// 	canvasSrcImage.copyFromArray(
-	// 		srcImage512x512.width,
-	// 		srcImage512x512.height,
-	// 		srcImage512x512.data
-	// 	);
-	// 	canvasSrcImage.drawOnCanvas(0, 0);
-
-	// 	canvasDstImage.copyFromArray(
-	// 		dstImage512x512.width,
-	// 		dstImage512x512.height,
-	// 		dstImage512x512.data
-	// 	);
-	// 	canvasDstImage.drawOnCanvas(0, 0);
-
-	// 	this.changeDetectorRef.detectChanges();
-	// }
-
 	public async onClickProcessImage(operator: string): Promise<void> {
 		const imagesDir = this.electronService.path.join(
 			this.electronService.cwd(),
@@ -406,9 +341,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 			imagesDir,
 			'image512x512.jpg'
 		);
-		const srcImage512x512 = await this.fileService.loadJpegImageFromFile(
-			path512
-		);
+		const srcImage512x512 = await this.fileService.loadImage(path512);
 
 		let dstImage512x512: IThAWImage;
 
@@ -425,6 +358,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 					srcImage512x512,
 					desaturateRGBA
 				);
+				// TODO: dstImage512x512 = desaturateImage(srcImage512x512);
 				break;
 
 			case 'flip':
@@ -444,7 +378,7 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 				break;
 
 			case 'pixelate':
-				dstImage512x512 = pixelateImageFromBuffer(srcImage512x512, 8);
+				dstImage512x512 = pixelateImage(srcImage512x512, 8);
 				break;
 
 			case 'rot90cw':
