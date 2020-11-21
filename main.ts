@@ -1,5 +1,8 @@
 // angular-electron/main.ts
 
+// Æ æ
+// See https://en.wikipedia.org/wiki/%C3%86
+
 // import * as fs from 'fs';
 import * as os from 'os';
 
@@ -21,7 +24,8 @@ import {
 // The line below requires "resolveJsonModule": true in the compilerOptions in tsconfig.main.json
 import * as packageJson from './package.json';
 
-const applicationName = packageJson.name;
+// const applicationName = packageJson.name;
+const applicationName = 'Æ';
 const applicationVersion = packageJson.version;
 
 // console.log('screen is', typeof screen, screen);
@@ -172,56 +176,80 @@ function setApplicationMenu() {
 			submenu: [
 				{
 					label: 'Composite',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'composite');
+						}
 					}
 				},
 				{
 					label: 'Desaturate',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send(
+								'apply-effect',
+								'desaturate'
+							);
+						}
 					}
 				},
 				{
 					label: 'Flip',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'flip');
+						}
 					}
 				},
 				{
 					label: 'Gaussian Blur',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send(
+								'apply-effect',
+								'gaussian-blur'
+							);
+						}
 					}
 				},
 				{
 					label: 'Mirror',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'mirror');
+						}
 					}
 				},
 				{
 					label: 'Pixelate',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'pixelate');
+						}
 					}
 				},
 				{
 					label: 'Rotate 90 CW',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'rot90cw');
+						}
 					}
 				},
 				{
 					label: 'Rotate 180',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'rot180');
+						}
 					}
 				},
 				{
 					label: 'Rotate 90 CCW',
-					click: async () => {
-						await shell.openExternal('https://electronjs.org');
+					click: () => {
+						if (win) {
+							win.webContents.send('apply-effect', 'rot90ccw');
+						}
 					}
 				}
 			]

@@ -69,7 +69,7 @@ export class ElectronService {
 	private clipboard: typeof clipboard;
 	private crashReporter: typeof crashReporter;
 	private desktopCapturer: typeof desktopCapturer;
-	private ipcRenderer: typeof ipcRenderer;
+	private _ipcRenderer: typeof ipcRenderer;
 	private process: typeof process;
 	private remote: typeof remote;
 	private screen: typeof screen;
@@ -91,7 +91,7 @@ export class ElectronService {
 			this.clipboard = electron.clipboard;
 			this.crashReporter = electron.crashReporter;
 			this.desktopCapturer = electron.desktopCapturer;
-			this.ipcRenderer = electron.ipcRenderer;
+			this._ipcRenderer = electron.ipcRenderer;
 			this.process = electron.remote.process;
 			this.screen = electron.screen;
 			this.shell = electron.shell;
@@ -197,6 +197,10 @@ export class ElectronService {
 
 	public get isAvailable(): boolean {
 		return isElectronAvailable();
+	}
+
+	public get ipcRenderer(): typeof ipcRenderer {
+		return this._ipcRenderer;
 	}
 
 	public get childProcess(): typeof childProcess {

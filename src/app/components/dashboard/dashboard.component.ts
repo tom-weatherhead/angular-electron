@@ -261,6 +261,19 @@ export class DashboardComponent implements AfterContentChecked, OnInit {
 
 			this.changeDetectorRef.detectChanges();
 
+			this.electronService.ipcRenderer.on(
+				'apply-effect',
+				(event, message) => {
+					// console.log(
+					// 	'apply-effect: message is:',
+					// 	typeof message,
+					// 	message
+					// );
+
+					this.onClickProcessImage(message);
+				}
+			);
+
 			this.haveImagesBeenInitialized = true;
 		}
 	}
