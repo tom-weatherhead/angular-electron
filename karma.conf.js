@@ -33,7 +33,7 @@ module.exports = (config) => {
 				{
 					type: 'lcovonly',
 					subdir: '.',
-					file: 'report-lcovonly.txt'
+					file: 'lcov.info'
 				},
 				// { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
 				// { type: 'text', subdir: '.', file: 'text.txt' },
