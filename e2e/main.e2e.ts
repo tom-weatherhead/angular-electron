@@ -18,6 +18,20 @@ import { expect } from 'chai';
 // chai.should(); // Use chai's 'should' style instead of the expect or the assert style
 // chai.use(chaiAsPromised);
 
+function delay(ms: number): Promise<void> {
+	return new Promise<void>(
+		(
+			resolve: (value?: void) => void,
+			/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+			reject: (reason?: unknown) => void
+		): void => {
+			setTimeout(() => {
+				resolve();
+			}, ms);
+		}
+	);
+}
+
 describe('Application launch', function () {
 	this.timeout(10000);
 	// commonSetup.apply(this);
@@ -129,6 +143,10 @@ describe('Application launch', function () {
 		const buttonElement = await this.app.client.$('button*=Config');
 
 		buttonElement.click();
+
+		// Delay for a second or two, so that the button click event handler
+		// has time to run.
+		await delay(2000);
 
 		const spanElement = await this.app.client.$('span#configObso');
 		const text = await spanElement.getText();
