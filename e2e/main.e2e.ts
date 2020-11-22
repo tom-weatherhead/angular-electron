@@ -125,34 +125,33 @@ describe('Application launch', function () {
 
 	// Version 1:
 
-	// it("Click 'Read Config' and check for Obso1337", async function () {
-	// 	const buttonElement = await this.app.client.$('button*=Config');
-	// 	buttonElement.click();
+	it("Click 'Read Config' and check for Obso1337", async function () {
+		const buttonElement = await this.app.client.$('button*=Config');
 
-	// 	// sleep(1);
+		buttonElement.click();
 
-	// 	const spanElement = await this.app.client.$('span#configObso');
-	// 	const text = await spanElement.getText();
+		const spanElement = await this.app.client.$('span#configObso');
+		const text = await spanElement.getText();
 
-	// 	expect(text).to.equal('Obso1337');
-	// });
+		expect(text).to.equal('Obso1337');
+	});
 
 	// Version 2:
 
-	it("Click 'Read Config' and check for Obso1337", function (done) {
-		this.app.client
-			.$('button*=Config')
-			.then((buttonElement: { click: () => void }) => {
-				buttonElement.click();
+	// it("Click 'Read Config' and check for Obso1337", function (done) {
+	// 	this.app.client
+	// 		.$('button*=Config')
+	// 		.then((buttonElement: { click: () => void }) => {
+	// 			buttonElement.click();
 
-				return this.app.client.$('span#configObso');
-			})
-			.then((spanElement: { getText: () => Promise<string> }) =>
-				spanElement.getText()
-			)
-			.then((text: string) => {
-				expect(text).to.equal('Obso1337');
-				done();
-			});
-	});
+	// 			return this.app.client.$('span#configObso');
+	// 		})
+	// 		.then((spanElement: { getText: () => Promise<string> }) =>
+	// 			spanElement.getText()
+	// 		)
+	// 		.then((text: string) => {
+	// 			expect(text).to.equal('Obso1337');
+	// 			done();
+	// 		});
+	// });
 });
