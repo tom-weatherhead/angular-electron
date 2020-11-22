@@ -48,13 +48,20 @@ import { createCanvasImage } from '../../models/image.model';
 
 // Services
 
-import { ConfigurationService } from '../../services/configuration/configuration.service';
+// import { ConfigurationService } from '../../services/configuration/configuration.service';
 
-import { ElectronService } from '../../services/electron/electron.service';
+// import { ElectronService } from '../../services/electron/electron.service';
 
-import { FileService } from '../../services/file/file.service';
+// import { FileService } from '../../services/file/file.service';
 
-import { LoggerService } from '../../services/logger/logger.service';
+// import { LoggerService } from '../../services/logger/logger.service';
+
+import {
+	ConfigurationService,
+	ElectronService,
+	FileService,
+	LoggerService
+} from 'thaw-angular-electron-service-library';
 
 // Components
 

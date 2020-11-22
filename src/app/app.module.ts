@@ -30,13 +30,20 @@ import { TooltipModule } from 'ng2-tooltip-directive';
 
 // import { HttpJsonClientModule } from 'thaw-angular-service-library';
 
+import {
+	ConfigurationModule,
+	ElectronModule,
+	FileModule,
+	LoggerModule
+} from 'thaw-angular-electron-service-library';
+
 import { AppRoutingModule } from './app-routing.module';
 
 // **** Services ****
-import { ConfigurationService } from './services/configuration/configuration.service';
-import { ElectronService } from './services/electron/electron.service';
-import { FileService } from './services/file/file.service';
-import { LoggerService } from './services/logger/logger.service';
+// import { ConfigurationService } from './services/configuration/configuration.service';
+// import { ElectronService } from './services/electron/electron.service';
+// import { FileService } from './services/file/file.service';
+// import { LoggerService } from './services/logger/logger.service';
 import { MessageService } from './services/message/message.service';
 
 // **** Components ****
@@ -66,10 +73,16 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 		NgbButtonsModule,
 		NgbDropdownModule,
 
-		TooltipModule // ,
+		TooltipModule,
 
 		// Service modules from thaw-angular-service-library
 		// HttpJsonClientModule
+
+		// Service modules from thaw-angular-electron-service-library
+		ConfigurationModule,
+		ElectronModule,
+		FileModule,
+		LoggerModule
 	],
 	declarations: [
 		AppComponent,
@@ -81,10 +94,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 		PaletteComponent
 	],
 	providers: [
-		ConfigurationService,
-		ElectronService,
-		FileService,
-		LoggerService,
+		// ConfigurationService,
+		// ElectronService,
+		// FileService,
+		// LoggerService,
 		MessageService
 	],
 	// exports: [],

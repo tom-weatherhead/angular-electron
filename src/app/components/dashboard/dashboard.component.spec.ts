@@ -10,11 +10,11 @@ import {
 
 import { FormsModule /*, ReactiveFormsModule */ } from '@angular/forms';
 
-import { ConfigurationService } from '../../services/configuration/configuration.service';
+// import { ConfigurationService } from '../../services/configuration/configuration.service';
 
-import { ElectronService } from '../../services/electron/electron.service';
+// import { ElectronService } from '../../services/electron/electron.service';
 
-import { LoggerService } from '../../services/logger/logger.service';
+// import { LoggerService } from '../../services/logger/logger.service';
 
 import { BasicCanvasComponent } from '../basic-canvas/basic-canvas.component';
 
@@ -39,9 +39,9 @@ describe('DashboardComponent', () => {
 					PaletteComponent
 				],
 				providers: [
-					ConfigurationService,
-					ElectronService,
-					LoggerService
+					// ConfigurationService,
+					// ElectronService,
+					// LoggerService
 				]
 			})
 				.compileComponents()
